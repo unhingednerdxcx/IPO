@@ -18,7 +18,7 @@ def view():
             "Select to toggle",
             choices=choices
         ).ask()
-        if not(task == """ >> Back to main menu"""):
+        if not(task == len(choices)-1):
             toggle(task, data)
 
 def preetify(content):
@@ -40,7 +40,7 @@ def toggle(task, data):
     items= list(data.items())
     key, value = items[task]
     value["complete"] = not(value["complete"])
-    value["hide"] = False
+    value["hide"] = True
     data = dict(items) 
     with open(TASK_PATH, 'w') as file:
         json.dump(data, file, indent=4)
@@ -61,17 +61,35 @@ def add():
         
     print(f"""==== Added task: {new_task} ! ====""")
 
+def clearAll():
+    with open(TASK_PATH, 'r') as file:
+        data = json.load(file)
+    toDelete = []
+    for taskName, taskData in data.items():
+        if taskData["hide"] == True:
+            toDelete.append(taskName)
+    for taskName in toDelete:
+        del data[taskName]
+    with open(TASK_PATH, 'w') as file:
+        json.dump(data, file, indent=4)
+    print("Deleted completed tasks!")
+
 def main():
-    print("START")
-    action = questionary.select(
-        "Pick an action",
-        choices=['view', 'add']
-    ).ask()
-    match action:
-        case "view":
-            view()
-        case "add":
-            add()
+    while True:
+        action = questionary.select(
+            "Pick an action",
+            choices=['view', 'add', 'clear all completed task', 'stop']
+        ).ask()
+        match action:
+            case "view":
+                view()
+            case "add":
+                add()
+            case "clear all completed task":
+                clearAll()
+            case "stop":
+                print("Goodbye!")
+                break
 
 if __name__ == "__main__":
     main()
