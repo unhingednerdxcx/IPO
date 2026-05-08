@@ -5,6 +5,8 @@ import os
 
 TASK_PATH = os.path.join("data", "tasks.json")
 SPACE_MIN = 2
+
+### VIEW ###
 def view():
     print("""
     ===== View tasks =====""")
@@ -20,7 +22,10 @@ def view():
         ).ask()
         if not(task == len(choices)-1):
             toggle(task, data)
+    print("")
 
+
+### PREETIFY ###
 def preetify(content):
     preety_array = []
     longest = len(max(content.keys(), key=len)) + SPACE_MIN
@@ -36,6 +41,8 @@ def preetify(content):
     preety_array.append(""" >> Back to main menu""")
     return preety_array
 
+
+### TOGGLE ###
 def toggle(task, data):
     items= list(data.items())
     key, value = items[task]
@@ -46,6 +53,7 @@ def toggle(task, data):
         json.dump(data, file, indent=4)
 
 
+### ADD ###
 def add():
     print("""
     ===== Enter a new task =====""")
@@ -59,8 +67,10 @@ def add():
     with open(TASK_PATH, 'w') as file:
         json.dump(data, file, indent=4)
         
-    print(f"""==== Added task: {new_task} ! ====""")
+    print(f"""==== Added task: {new_task} ! ====\n""")
 
+
+### CLEAR ###
 def clearAll():
     with open(TASK_PATH, 'r') as file:
         data = json.load(file)
@@ -72,8 +82,10 @@ def clearAll():
         del data[taskName]
     with open(TASK_PATH, 'w') as file:
         json.dump(data, file, indent=4)
-    print("Deleted completed tasks!")
+    print("Deleted completed tasks!\n")
 
+
+### MAIN ###
 def main():
     while True:
         action = questionary.select(
@@ -88,8 +100,10 @@ def main():
             case "clear all completed task":
                 clearAll()
             case "stop":
-                print("Goodbye!")
+                print("Goodbye user!\n")
                 break
+
+
 
 if __name__ == "__main__":
     main()
