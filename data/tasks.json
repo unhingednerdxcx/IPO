@@ -1,11 +1,11 @@
 {
     "task_name": {
-        "complete": true,
+        "complete": false,
         "hide": true
     },
     "another_task": {
-        "complete": true,
-        "hide": true
+        "complete": false,
+        "hide": false
     },
     "New_task": {
         "complete": false,
