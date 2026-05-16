@@ -96,6 +96,94 @@
                 width: 73vw;
                 height: 100vh;
             }
+            .hide-all {
+                display: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background-color: rgba(113, 113, 113, 0.48);
+            }
+            .context-menu {
+                display: inherit;
+                position: absolute;
+                width: 600px;
+                height: 350px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border-radius: 15px;
+                background-color: #b4fcb4;
+            }
+
+
+            .default {
+                display: block; /* set to block NOT FLEX to activate */
+                padding: 48px 48px;
+            }
+            .default-icon {
+                font-size: 200;
+                margin-top: 30vh;
+                margin-left: 10vw;
+            }
+            .default-content {
+                display: inherit;
+                color: #2f4f44d0;
+            }
+            .default-text {
+                margin-top: -18vh;
+                margin-left: 23vw;
+                font-family: 'Sour Gummy', sans-serif;
+                font-size: 350%;
+                font-weight: 700;
+            }
+            .Today {
+                display: none;
+                padding: 48px 48px;
+            }
+            .tasks {
+                display: inherit;
+                flex-direction: column;
+                color: #263a33;
+                font-family: 'Sour Gummy', sans-serif;
+                font-size: 100%;
+                font-weight: 500;
+                gap: 20px;
+            }
+            .task {
+                display: inherit;
+                padding: 12px;
+                width: 63vw;
+                border-radius: 10px;
+                background: #b4fcb4;
+                align-items: center;
+            }
+            .toggle-task {
+                all: unset;
+                display: inherit;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background-color: #93fa93;
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+                box-sizing: border-box;
+                transition: background-color 0.5s ease;
+            }
+            .toggle-task:hover {
+                background-color: #70f670;
+            }
+            .task-description {
+                font-size: 30px;
+                padding: 0px 15px;
+            }
+            .check-task {
+                font-size: 250%;
+                margin: 0;
+                color: #3a2626;
+            }
         </style>
     </head>
     <body>
@@ -199,6 +287,37 @@
             </div>
         </div>
 
-        <div class="main"></div>
+        <div class="main">
+            <div class="default">
+                <div class="default-content">
+                    <span class="material-symbols-outlined default-icon">
+                        assignment
+                    </span>
+                    <div class="default-text">Let's get to work! </div>
+                </div>
+            </div>
+
+            <div class="Today">
+                <ul class="tasks">
+                    <li class="task">
+                        <button class="toggle-task">
+                            <span class="material-symbols-outlined default-icon check-task">
+                                check_small
+                            </span>
+                        </button>
+                        <span class="task-description">sss</span>
+                    </li>
+                    <li class="task">
+                        <button class="toggle-task">
+                        </button>
+                        <span class="task-description">sss</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="hide-all">
+            <div class="context-menu"></div>
+        </div>
     </body>
 </html>
