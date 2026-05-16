@@ -13,6 +13,9 @@
         />
     </head>
     <body>
+        <div class="msg-box" id="msg-box">
+            <span id="msg-text" class="msg-text">kj</span>
+        </div>
         <div class="side-bar">
             <div class="tabs">
                 <div class="tab" id="side-search">
@@ -23,7 +26,7 @@
                         <div class="tab-description">Search</div>
                     </div>
                 </div>
-                <div class="tab">
+                <div class="tab" id="side-Today">
                     <div class="tab-content">
                         <span class="material-symbols-outlined">
                             today
@@ -31,7 +34,7 @@
                         <div class="tab-description">Today</div>
                     </div>
                 </div>
-                <div class="tab">
+                <div class="tab" id="side-upcoming">
                     <div class="tab-content">
                         <span class="material-symbols-outlined">
                             calendar_today
@@ -114,7 +117,7 @@
         </div>
 
         <div class="main">
-            <div class="default">
+            <div class="default" id="Default">
                 <div class="default-content">
                     <span class="material-symbols-outlined default-icon">
                         assignment
@@ -123,7 +126,7 @@
                 </div>
             </div>
 
-            <div class="Today">
+            <div class="Today" id="Today">
                 <ul class="tasks">
                     <li class="task">
                         <button class="toggle-task">
@@ -148,6 +151,8 @@
                 <input type="text" class="context-input" id="context-input">
             </div>
         </div>
-        <script type="module" src="dist/script.js"></script>
+
+
+        <script type="module" src="./script.js"></script>
     </body>
 </html>

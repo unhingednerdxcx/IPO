@@ -1,5 +1,4 @@
 .venv/
 PLAN.txt
 data/tasks.json
-web/node_modules
-web/dist
+node_modules

@@ -113,13 +113,15 @@
 .context-input {
     all: unset;
     display: inherit;
-    width: 90%;
+    width: 80%;
     height: 40%;
-    margin-left: 5%;
+    margin-left: 6%;
     margin-top: 5%;
     background-color: #70f670;
     color: #1B4D1B;
     font-family: 'Sour Gummy', sans-serif;
+    border-radius: 10px;
+    padding: 0 12px;
 }
 
 .default {
@@ -195,4 +197,29 @@
     font-size: 150%;
     padding: 24px 0px;
     margin-left: 5%;
+}
+
+.msg-box {
+    position: absolute;
+    display: block;
+    z-index: 10000;
+    width: 18vw;
+    height: 15vh;
+    background-color: #97ffca;
+    border-radius: 20px;
+    padding: 24px 24px;
+    right: -21.5%;
+    top: 30px;
+    transition: right 0.5s ease;
+}
+.msg-box.show {
+    right: 10
+}
+.msg-text {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 25;
+    font-weight: 500;
+}
+body {
+    overflow-x: hidden;
 }

@@ -1,9 +1,16 @@
+import time
 import eel
 import os
 
-# FOLDERS:-
+start = time.time()
+
 FOLDER = os.path.dirname(os.path.abspath(__file__))
 WFOLDER = os.path.join(FOLDER, "web")
-eel.init(WFOLDER)
-eel.start('index.html', port=0)
 
+print("Init starting")
+eel.init(WFOLDER)
+
+print("Starting Eel")
+eel.start('index.html', port=8000)
+
+print("Total time:", time.time() - start)

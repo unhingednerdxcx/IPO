@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", main);
+let current = "Default";
 function main() {
     document.getElementById("side-search")?.addEventListener("click", async() => {
         const input = document.getElementById("context-input") as HTMLInputElement
@@ -31,7 +32,9 @@ function main() {
         console.log("shwoing context...");
         let name = "";
         let nameEntered = false;
+        let dateEntered = false;
         let date = "";
+        let total_time = "";
         const text = "Enter the name of the new task"
         const el = document.querySelector("#hide-all") as HTMLElement | null;
         const description = document.getElementById("context-description");
@@ -52,13 +55,39 @@ function main() {
                 }
             }
             let date_handler: any;
-            date_handler = (e: any) => {
+            date_handler = () => {
                 if (nameEntered) {
                     date = input.value
                     input.value = ""
+                    input.type = "time"
                     input.removeEventListener("change", date_handler)
-                    el.style.display = "none"
-                    console.log(name, date)
+                    dateEntered = true
+                    input.addEventListener("change", time_handler);
+                }
+            }
+            let time_handler: any;
+            time_handler = () => {
+                if (dateEntered) {
+                    let time = input.value
+                    input.value = ""
+                    input.type = "time"
+                    input.removeEventListener("change", time_handler)
+                    let in_date = new Date(date);
+                    let today = new Date();
+                    const [hour, minute] = time.split(':').map(Number)
+                    if (hour && minute){
+                        in_date.setHours(hour, minute, 0, 0);
+                        today.setHours(0, 0, 0, 0);
+                        if (in_date >= today) {
+                            el.style.display = "none"
+                            console.log(in_date)
+                        } else {
+                            el.style.display = "none"
+                            showmsgbox("Date cannot be before today")
+                        }
+                    } else {
+                        el.style.display = "none"
+                    }
                 }
             }
 
@@ -66,4 +95,37 @@ function main() {
             input.addEventListener("change", date_handler);
         }
     });
+
+    document.getElementById("side-Today")?.addEventListener('click', () => {
+        const today = document.querySelector("#Today") as HTMLElement | null;
+        const current_element = document.querySelector(`#${current}`) as HTMLElement | null;
+        if (today && current_element) {
+            current_element.style.display = "none"
+            today.style.display = "flex"
+            current = "Today"
+        }
+    });
+    document.getElementById("side-upcoming")?.addEventListener('click', () => {
+        const today = document.querySelector("#Today") as HTMLElement | null;
+        const current_element = document.querySelector(`#${current}`) as HTMLElement | null;
+        if (today && current_element) {
+            current_element.style.display = "none"
+            today.style.display = "flex"
+            current = "Today"
+        }
+    });
 }
+
+function showmsgbox(text: string) {
+    let box = document.querySelector("#msg-box") as HTMLElement | null;
+    let msg = document.getElementById("msg-text") as HTMLElement | null;
+    if (box && msg) {
+        msg.innerText = text;
+        box.classList.add("show")
+        setTimeout(() => {
+            box.classList.remove("show")
+        }, 3000)
+    }
+}
+
+

@@ -1,2 +1,10 @@
 {
+    "taskA": {
+        "complete": false,
+        "date": "2026-05-17",
+        "group": [
+            "programming",
+            "todo"
+        ]
+    }
 }
