@@ -1,10 +1,12 @@
 document.addEventListener("DOMContentLoaded", main);
+const eel = (window as any).eel;
+console.log(eel)
 let current = "Default";
 function main() {
     document.getElementById("side-search")?.addEventListener("click", async() => {
         const input = document.getElementById("context-input") as HTMLInputElement
         input.type = "text";
-        console.log("shwoing context...");
+        console.log("showing context...");
         let value = ""
         const text = "Enter the task you want to search for"
         const el = document.querySelector("#hide-all") as HTMLElement | null;
@@ -18,7 +20,7 @@ function main() {
                     el.style.display = "none";
                     let value = input.value;
                     input.value= "";
-                    console.log(value) //here we will call eel
+                    await eel.searchTask(value)
                     input.removeEventListener("keydown", search_handler)
                 }
             }
@@ -52,22 +54,24 @@ function main() {
                     input.removeEventListener("keydown", name_handler)
                     nameEntered = true
                     input.addEventListener("change", date_handler);
-
+                    description.innerHTML = "Enter the date of the new task"
                 }
             }
             let date_handler: any;
             date_handler = () => {
-                if (nameEntered) {
+                const description = document.getElementById("context-description");
+                if (nameEntered && description) {
                     date = input.value
                     input.value = ""
                     input.type = "time"
                     input.removeEventListener("change", date_handler)
                     dateEntered = true
                     input.addEventListener("change", time_handler);
+                    description.innerHTML = "Enter the time of the new task"
                 }
             }
             let time_handler: any;
-            time_handler = () => {
+            time_handler = async() => {
                 if (dateEntered) {
                     let time = input.value
                     input.value = ""
@@ -81,7 +85,7 @@ function main() {
                         today.setHours(0, 0, 0, 0);
                         if (in_date >= today) {
                             el.style.display = "none"
-                            console.log(in_date)
+                            await eel.addTask(name, "catagory will be soon added", in_date) // TODO: add catagory (yes haha, todo cause im making a todo list (: ))
                         } else {
                             el.style.display = "none"
                             showmsgbox("Date cannot be before today")
@@ -96,31 +100,33 @@ function main() {
         }
     });
 
-    document.getElementById("side-Today")?.addEventListener('click', () => {
+    document.getElementById("side-Today")?.addEventListener('click', async() => {
         const today = document.querySelector("#Today") as HTMLElement | null;
         const current_element = document.querySelector(`#${current}`) as HTMLElement | null;
         if (today && current_element) {
             current_element.style.display = "none"
             today.style.display = "flex"
             current = "Today"
+            await eel.listTask()
         }
     });
-    document.getElementById("side-upcoming")?.addEventListener('click', () => {
+    document.getElementById("side-upcoming")?.addEventListener('click', async() => {
         const today = document.querySelector("#Today") as HTMLElement | null;
         const current_element = document.querySelector(`#${current}`) as HTMLElement | null;
         if (today && current_element) {
             current_element.style.display = "none"
             today.style.display = "flex"
             current = "Today"
+            await eel.listTask()
         }
     });
 
     document.getElementById('side-group')?.addEventListener('click', async() => {
         const input = document.getElementById("context-input") as HTMLInputElement
         input.type = "text";
-        console.log("shwoing context...");
+        console.log("showing context...");
         let value = ""
-        const text = "Enter the task you want to search for"
+        const text = "Enter the new group you want to make"
         const el = document.querySelector("#hide-all") as HTMLElement | null;
         const description = document.getElementById("context-description");
         if (el && description) {
@@ -132,7 +138,7 @@ function main() {
                     el.style.display = "none";
                     let value = input.value;
                     input.value= "";
-                    console.log(value) //here we will call eel
+                    await eel.addNewGroup(value)
                     input.removeEventListener("keydown", search_handler)
                 }
             }
