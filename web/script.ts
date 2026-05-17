@@ -29,7 +29,7 @@ function main() {
 
     
     document.getElementById("side-new-task")?.addEventListener("click", async() => {
-        console.log("shwoing context...");
+        console.log("showing context...");
         let name = "";
         let nameEntered = false;
         let dateEntered = false;
@@ -51,6 +51,7 @@ function main() {
                     input.type = "date"
                     input.removeEventListener("keydown", name_handler)
                     nameEntered = true
+                    input.addEventListener("change", date_handler);
 
                 }
             }
@@ -92,7 +93,6 @@ function main() {
             }
 
             input.addEventListener("keydown", name_handler);
-            input.addEventListener("change", date_handler);
         }
     });
 
@@ -114,6 +114,32 @@ function main() {
             current = "Today"
         }
     });
+
+    document.getElementById('side-group')?.addEventListener('click', async() => {
+        const input = document.getElementById("context-input") as HTMLInputElement
+        input.type = "text";
+        console.log("shwoing context...");
+        let value = ""
+        const text = "Enter the task you want to search for"
+        const el = document.querySelector("#hide-all") as HTMLElement | null;
+        const description = document.getElementById("context-description");
+        if (el && description) {
+            description.innerHTML = text;
+            el.style.display = "block";
+            let search_handler: any = ""
+            async function search(e: any, el:any, input:any) {
+                if (e.key == "Enter") {
+                    el.style.display = "none";
+                    let value = input.value;
+                    input.value= "";
+                    console.log(value) //here we will call eel
+                    input.removeEventListener("keydown", search_handler)
+                }
+            }
+            search_handler = (e: KeyboardEvent) => search(e, el, input);
+            input.addEventListener("keydown", search_handler)
+        }
+    })
 }
 
 function showmsgbox(text: string) {

@@ -37,6 +37,9 @@
 .tab:hover {
     background-color: #b4fcb4;
 }
+.tab.active {
+    background-color: #b4fcb4;
+}
 .tab-content {
     display: flex;
     justify-content: center;

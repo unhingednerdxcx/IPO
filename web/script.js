@@ -27,7 +27,7 @@ function main() {
         }
     });
     document.getElementById("side-new-task")?.addEventListener("click", async () => {
-        console.log("shwoing context...");
+        console.log("showing context...");
         let name = "";
         let nameEntered = false;
         let dateEntered = false;
@@ -49,6 +49,7 @@ function main() {
                     input.type = "date";
                     input.removeEventListener("keydown", name_handler);
                     nameEntered = true;
+                    input.addEventListener("change", date_handler);
                 }
             };
             let date_handler;
@@ -90,7 +91,6 @@ function main() {
                 }
             };
             input.addEventListener("keydown", name_handler);
-            input.addEventListener("change", date_handler);
         }
     });
     document.getElementById("side-Today")?.addEventListener('click', () => {
@@ -109,6 +109,31 @@ function main() {
             current_element.style.display = "none";
             today.style.display = "flex";
             current = "Today";
+        }
+    });
+    document.getElementById('side-group')?.addEventListener('click', async () => {
+        const input = document.getElementById("context-input");
+        input.type = "text";
+        console.log("shwoing context...");
+        let value = "";
+        const text = "Enter the task you want to search for";
+        const el = document.querySelector("#hide-all");
+        const description = document.getElementById("context-description");
+        if (el && description) {
+            description.innerHTML = text;
+            el.style.display = "block";
+            let search_handler = "";
+            async function search(e, el, input) {
+                if (e.key == "Enter") {
+                    el.style.display = "none";
+                    let value = input.value;
+                    input.value = "";
+                    console.log(value); //here we will call eel
+                    input.removeEventListener("keydown", search_handler);
+                }
+            }
+            search_handler = (e) => search(e, el, input);
+            input.addEventListener("keydown", search_handler);
         }
     });
 }
