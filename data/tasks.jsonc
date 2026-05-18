@@ -1,8 +1,11 @@
 /* example task
 {
-    "task_name": {
-        "complete": true,
-        "hide": true
+  "catagory": {
+    "subcatagory": {
+      "name": {
+        "data": "data"
+      }
     }
+  }
 }
 */

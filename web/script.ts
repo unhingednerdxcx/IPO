@@ -85,7 +85,7 @@ function main() {
                         today.setHours(0, 0, 0, 0);
                         if (in_date >= today) {
                             el.style.display = "none"
-                            await eel.addTask(name, "catagory will be soon added", in_date) // TODO: add catagory (yes haha, todo cause im making a todo list (: ))
+                            await eel.addTask(name, "My projects", "My projects", in_date) // TODO: add catagory (yes haha, todo cause im making a todo list (: ))
                         } else {
                             el.style.display = "none"
                             showmsgbox("Date cannot be before today")
@@ -107,7 +107,7 @@ function main() {
             current_element.style.display = "none"
             today.style.display = "flex"
             current = "Today"
-            await eel.listTask()
+            await eel.listTask("My projects", "Programing")()
         }
     });
     document.getElementById("side-upcoming")?.addEventListener('click', async() => {
