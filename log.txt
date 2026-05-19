@@ -52,3 +52,7 @@
 - Searching for a new task {name}..
 - Making new group {name}..
 - Making new task li, My projects, My projects 2026-05-21T18:51:00.000Z..
+- Listing task My projects..
+- {'My projects': {'a': {'work': {'date': '2026-05-19T19:44:00.000Z'}, 'cry': {'date': '2026-07-01T09:59:00.000Z'}}, 'My projects': {'li': {'date': '2026-05-21T18:51:00.000Z'}}}, 'lone': {}, 'see': {}}
+- dict_items([('a', {'work': {'date': '2026-05-19T19:44:00.000Z'}, 'cry': {'date': '2026-07-01T09:59:00.000Z'}}), ('My projects', {'li': {'date': '2026-05-21T18:51:00.000Z'}})])
+- {'a': {'work': {'date': '2026-05-19T19:44:00.000Z'}, 'cry': {'date': '2026-07-01T09:59:00.000Z'}}, 'My projects': {'li': {'date': '2026-05-21T18:51:00.000Z'}}}
