@@ -1,6 +1,7 @@
 import eel
 import os
 import json
+from rapidfuzz import process
 
 FOLDER = os.path.dirname(os.path.abspath(__file__))
 WFOLDER = os.path.join(FOLDER, "web")
@@ -49,8 +50,35 @@ def addTask(name="", catagory="", subcatagory="", date=""):
 @eel.expose
 def searchTask(name):
     log("Searching for a new task {name}..")
+    res_dict = []
+    data = TaskManager('r')
+    taskArr = []
+    taskMap = []
+    c = data
+    i = 0
+    for catagory, subcat in data.items():
+        for sub, tasks in subcat.items():
+            for task in list(tasks.keys()):
+                taskArr.append(task)
+                taskMap.append(f"{catagory}/{list(subcat.keys())[i]}/{task}")
+            i += 1
+        i = 0
+    for i in range(0, len(taskArr)):
+        print(taskArr[i])
+        #print(taskMap[i])
+    matches = process.extract(name, taskArr, limit=4)
+    for match, score, index in matches:
+        res_dict.append({
+            "name": match,
+            "map": taskMap[index]
+        })
+    return res_dict
 
 @eel.expose
 def addNewGroup(name):
     log("Making new group {name}..")
+    data = TaskManager('r')
+    data[name] = {}
+    TaskManager('w', data)
+
 eel.start('index.html', port=8000)

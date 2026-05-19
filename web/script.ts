@@ -20,7 +20,8 @@ function main() {
                     el.style.display = "none";
                     let value = input.value;
                     input.value= "";
-                    await eel.searchTask(value)
+                    let search_val = await eel.searchTask(value)
+                    console.log(search_val)
                     input.removeEventListener("keydown", search_handler)
                 }
             }

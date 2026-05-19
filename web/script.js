@@ -20,7 +20,8 @@ function main() {
                     el.style.display = "none";
                     let value = input.value;
                     input.value = "";
-                    await eel.searchTask(value);
+                    let search_val = await eel.searchTask(value);
+                    console.log(search_val);
                     input.removeEventListener("keydown", search_handler);
                 }
             }
@@ -83,7 +84,7 @@ function main() {
                         today.setHours(0, 0, 0, 0);
                         if (in_date >= today) {
                             el.style.display = "none";
-                            await eel.addTask(name, "d", "s", in_date); // TODO: add catagory (yes haha, todo cause im making a todo list (: ))
+                            await eel.addTask(name, "My projects", "My projects", in_date); // TODO: add catagory (yes haha, todo cause im making a todo list (: ))
                         }
                         else {
                             el.style.display = "none";
