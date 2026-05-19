@@ -156,5 +156,27 @@ function showmsgbox(text) {
         }, 3000);
     }
 }
+function makeNewSubGroup(catagory) {
+    const input = document.getElementById("context-input");
+    input.type = "text";
+    console.log("showing context...");
+    let value = "";
+    const text = "Enter the name of the new subgroup";
+    const el = document.querySelector("#hide-all");
+    const description = document.getElementById("context-description");
+    if (el && description) {
+        el.style.display = "block";
+        description.innerHTML = text;
+        input.addEventListener("keydown", async (e) => {
+            if (e.key == "Enter") {
+                el.style.display = "none";
+                let value = input.value;
+                input.value = "";
+                await eel.newSubGroup(catagory, value);
+            }
+        });
+    }
+}
+window.makeNewSubGroup = makeNewSubGroup;
 export {};
 //# sourceMappingURL=script.js.map

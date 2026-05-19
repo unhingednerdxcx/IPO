@@ -226,3 +226,20 @@
 body {
     overflow-x: hidden;
 }
+
+.subgroup-wrap{
+    position: relative;
+    left: -100;
+    border-radius: 10px;
+    transition: background-color 0.5s ease;
+    font-size: 22;
+}
+
+.subgroup-wrap:hover{
+    background-color: #b4fcb4;
+}
+
+.sub-icon {
+    position: relative;
+    top: 5px
+}

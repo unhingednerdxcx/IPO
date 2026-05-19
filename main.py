@@ -3,6 +3,7 @@ import os
 import json
 from rapidfuzz import process
 
+
 FOLDER = os.path.dirname(os.path.abspath(__file__))
 WFOLDER = os.path.join(FOLDER, "web")
 LOGFILE = os.path.join(FOLDER, "log.txt")
@@ -80,5 +81,16 @@ def addNewGroup(name):
     data = TaskManager('r')
     data[name] = {}
     TaskManager('w', data)
+
+@eel.expose
+def newSubGroup(catagory, sub):
+    log("Making new subgroup {catagory}..")
+    data = TaskManager('r')
+    data.setdefault(catagory, {})
+    data[catagory] = {
+        sub: {}
+    }
+    TaskManager('w', data)
+
 
 eel.start('index.html', port=8000)
