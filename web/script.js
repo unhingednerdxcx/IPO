@@ -22,6 +22,7 @@ function main() {
                     input.value = "";
                     let search_val = await eel.searchTask(value);
                     console.log(search_val);
+                    searchBoxShow(search_val, value);
                     input.removeEventListener("keydown", search_handler);
                 }
             }
@@ -29,6 +30,12 @@ function main() {
             input.addEventListener("keydown", search_handler);
         }
     });
+    function searchBoxShow(searches, value) {
+        let hideall = document.getElementById("hide-all-search") || null;
+        if (hideall) {
+            hideall.style.display = "flex";
+        }
+    }
     document.getElementById("side-new-task")?.addEventListener("click", async () => {
         console.log("showing context...");
         let name = "";
@@ -130,18 +137,18 @@ function main() {
         if (el && description) {
             description.innerHTML = text;
             el.style.display = "block";
-            let search_handler = "";
-            async function search(e, el, input) {
+            let NewGroup_handler = "";
+            async function NewGroup(e, el, input) {
                 if (e.key == "Enter") {
                     el.style.display = "none";
                     let value = input.value;
                     input.value = "";
                     await eel.addNewGroup(value);
-                    input.removeEventListener("keydown", search_handler);
+                    input.removeEventListener("keydown", NewGroup_handler);
                 }
             }
-            search_handler = (e) => search(e, el, input);
-            input.addEventListener("keydown", search_handler);
+            NewGroup_handler = (e) => NewGroup(e, el, input);
+            input.addEventListener("keydown", NewGroup_handler);
         }
     });
 }

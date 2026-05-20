@@ -243,3 +243,51 @@ body {
     position: relative;
     top: 5px
 }
+
+.search-box { 
+    position: absolute;
+    height: 55vh;
+    width: 45vw;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #97ffca;
+    border-radius: 30px;
+}
+
+.search-title {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 90;
+    font-weight: 500;
+    margin-left: 3vw;
+    margin-top: 3vh;
+}
+
+.search-ress {
+    display: flex;
+    flex-direction: column;
+    outline: 1px solid #1B4D1B;
+    height: 53%;
+    width: 80%;
+    margin-left: 3.5vw;
+    border-radius: 10px;
+    padding: 30px 23px;
+    overflow: auto;
+    gap: 20px;
+}
+
+.search-res {
+    outline: 1px solid #263a33;
+    width: 100%;
+    height: fit-content;
+    border-radius: 10px;
+    padding: 10px 0px;
+}
+
+.search-content {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 30;
+    font-weight: 500;
+    margin-left: 1.3vw;
+}

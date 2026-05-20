@@ -9,6 +9,8 @@ WFOLDER = os.path.join(FOLDER, "web")
 LOGFILE = os.path.join(FOLDER, "log.txt")
 TASKFILE = os.path.join(FOLDER, "data", "tasks.json")
 eel.init(WFOLDER)
+
+
 def log(msg):
     with open(LOGFILE, 'a') as f:
         f.write(f"- {msg}\n")

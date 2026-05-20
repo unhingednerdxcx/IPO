@@ -64,3 +64,7 @@
 - Making new subgroup {catagory}..
 - Making new subgroup {catagory}..
 - Making new subgroup {catagory}..
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026-05-19T19:44:00.000Z'}, 'cry': {'date': '2026-07-01T09:59:00.000Z'}}}, 'lone': {}, 'see': {}, 'Programing project': {'Test': {}}}
+- Searching for a new task {name}..
+- Searching for a new task {name}..
