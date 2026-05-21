@@ -252,7 +252,7 @@ body {
     transform: translateY(-50%);
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #97ffca;
+    background-color: #b4fcb4;
     border-radius: 30px;
 }
 
@@ -290,4 +290,11 @@ body {
     font-size: 30;
     font-weight: 500;
     margin-left: 1.3vw;
+}
+
+.test-panel {
+    position: absolute;
+    width: 30vw;
+    height: 10vh;
+    left: 20vh;
 }

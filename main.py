@@ -2,6 +2,7 @@ import eel
 import os
 import json
 from rapidfuzz import process
+import time
 
 
 FOLDER = os.path.dirname(os.path.abspath(__file__))
@@ -15,11 +16,15 @@ def log(msg):
     with open(LOGFILE, 'a') as f:
         f.write(f"- {msg}\n")
 
-def TaskManager(mode, val=""):
+@eel.expose
+def TaskManager(mode, val="", req=""):
     match mode:
         case "r":
             with open(TASKFILE, 'r') as file:
-                return json.load(file)
+                val = json.load(file)
+                if req == "arr":
+                    return list(val)
+                return val
         case "w":
             with open(TASKFILE, 'w') as file:
                 json.dump(val, file, indent=4)
@@ -30,12 +35,15 @@ def listTask(catagory="", subcatagory=""):
     data = TaskManager('r')
     log(f"{data}")
     for loopCat, val in data.items():
+
         if loopCat == catagory:
+
             log(data[loopCat].items())
             log(data[loopCat])
+
             for loopSubCat, val in data[loopCat].items():
                 if loopSubCat == subcatagory:
-                    return val
+                    return list(val)
 
 
 @eel.expose
@@ -94,5 +102,20 @@ def newSubGroup(catagory, sub):
     }
     TaskManager('w', data)
 
+@eel.expose
+def listAllSubGrp(catagory):
+    res_arr = []
+    data = TaskManager('r')
+    for grp, subgrp in data.items():
+        for i in range(0, len(list(subgrp.keys())) ):
+            res_arr.append(list(subgrp.keys())[i])
+    print(res_arr)
+    return res_arr
 
+@eel.expose
+def listGroupDict():
+    data = TaskManager('r')
+    for grp in data.keys():
+        print(list(data[grp].keys()))
+listGroupDict()
 eel.start('index.html', port=8000)

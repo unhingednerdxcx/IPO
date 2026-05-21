@@ -113,7 +113,10 @@ function main() {
             current_element.style.display = "none";
             today.style.display = "flex";
             current = "Today";
-            await eel.listTask("My projects", "Programing")();
+            let val = await eel.listTask("My projects", "a")();
+            console.log(typeof (val));
+            console.log(val);
+            list_items(val);
         }
     });
     document.getElementById("side-upcoming")?.addEventListener('click', async () => {
@@ -150,6 +153,40 @@ function main() {
             NewGroup_handler = (e) => NewGroup(e, el, input);
             input.addEventListener("keydown", NewGroup_handler);
         }
+    });
+    async function list_items(tasks) {
+        let lists = document.getElementById('tasks') || null;
+        if (tasks && lists) {
+            lists.innerHTML = '';
+            tasks.forEach(task => {
+                console.log(task);
+                let task_par = document.createElement('li');
+                task_par.classList = 'task';
+                let task_btn = document.createElement('button');
+                task_btn.classList = 'toggle-task';
+                let ico = document.createElement('span');
+                ico.classList = 'material-symbols-outlined default-icon check-task';
+                let task_desc = document.createElement('span');
+                task_desc.classList = "task-description";
+                task_desc.innerText = String(task);
+                task_btn.appendChild(ico);
+                task_par.appendChild(task_btn);
+                task_par.appendChild(task_desc);
+                lists?.appendChild(task_par);
+                console.log("done with:-", task_par);
+            });
+            console.log("done with:-", lists);
+        }
+    }
+    makeSubGroupTree();
+}
+async function makeSubGroupTree() {
+    let grps = await eel.TaskManager('r', '')();
+    Object.entries(grps).forEach(([key, grp]) => {
+        console.log(grp);
+        Object.entries(grps).forEach(([key, subgrps]) => {
+            console.log(subgrps);
+        });
     });
 }
 function showmsgbox(text) {
