@@ -76,13 +76,13 @@ def searchTask(name):
         i = 0
     for i in range(0, len(taskArr)):
         print(taskArr[i])
-        #print(taskMap[i])
     matches = process.extract(name, taskArr, limit=4)
     for match, score, index in matches:
         res_dict.append({
             "name": match,
             "map": taskMap[index]
         })
+    print(res_dict)
     return res_dict
 
 @eel.expose

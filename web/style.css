@@ -246,7 +246,7 @@ body {
 
 .search-box { 
     position: absolute;
-    height: 55vh;
+    height: 45vh;
     width: 45vw;
     top: 50%;
     transform: translateY(-50%);
@@ -258,7 +258,7 @@ body {
 
 .search-title {
     font-family: 'Sour Gummy', sans-serif;
-    font-size: 90;
+    font-size: 40;
     font-weight: 500;
     margin-left: 3vw;
     margin-top: 3vh;
@@ -280,17 +280,11 @@ body {
 .search-res {
     outline: 1px solid #263a33;
     width: 100%;
-    height: fit-content;
+    height: 5vh;
     border-radius: 10px;
     padding: 10px 0px;
 }
 
-.search-content {
-    font-family: 'Sour Gummy', sans-serif;
-    font-size: 30;
-    font-weight: 500;
-    margin-left: 1.3vw;
-}
 
 .test-panel {
     position: absolute;
@@ -302,4 +296,19 @@ body {
 .subtab-description {
     font-family: 'Sour Gummy', sans-serif;
     font-size: 100%;
+}
+
+.search-content {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 20;
+    font-weight: 500;
+    margin-left: 1.3vw;
+}
+
+.search-map {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 10;
+    font-weight: 500;
+    margin-left: 2vw;
+    margin-bottom: 10vh;
 }

@@ -20,7 +20,7 @@ function main() {
                     el.style.display = "none";
                     let value = input.value;
                     input.value = "";
-                    let search_val = await eel.searchTask(value);
+                    let search_val = await eel.searchTask(value)();
                     console.log(search_val);
                     searchBoxShow(search_val, value);
                     input.removeEventListener("keydown", search_handler);
@@ -34,6 +34,30 @@ function main() {
         let hideall = document.getElementById("hide-all-search") || null;
         if (hideall) {
             hideall.style.display = "flex";
+            let title = document.getElementById('search-title') || null;
+            title.innerText = `Searching for: ${value}`;
+            let results_par = document.getElementById('search-ress') || null;
+            Object.entries(searches).forEach(([k, v]) => {
+                console.log("$$", k, v.name, v);
+                let li = document.createElement('li');
+                li.classList = 'search-res';
+                let name = document.createElement('div');
+                name.classList = "search-content";
+                name.innerText = v.name;
+                let map = document.createElement('div');
+                map.classList = "search-map";
+                map.innerText = v.map;
+                li.appendChild(name);
+                li.appendChild(map);
+                results_par.appendChild(li);
+            });
+            let hideallhandle = (e) => {
+                if (e.key == 'Escape') {
+                    hideall.style.display = "none";
+                    document.removeEventListener('keydown', hideallhandle);
+                }
+            };
+            document.addEventListener('keydown', hideallhandle);
         }
     }
     document.getElementById("side-new-task")?.addEventListener("click", async () => {
