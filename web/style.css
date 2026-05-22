@@ -298,3 +298,8 @@ body {
     height: 10vh;
     left: 20vh;
 }
+
+.subtab-description {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 100%;
+}

@@ -114,8 +114,12 @@ def listAllSubGrp(catagory):
 
 @eel.expose
 def listGroupDict():
+    res_arr = []
     data = TaskManager('r')
-    for grp in data.keys():
-        print(list(data[grp].keys()))
+    data = {
+        key: list(value.keys())
+        for key, value in data.items()
+    }
+    return data
 listGroupDict()
 eel.start('index.html', port=8000)

@@ -197,12 +197,65 @@ function main() {
 }
 
 async function makeSubGroupTree() {
-    let grps = await eel.TaskManager('r', '')()
-    Object.entries(grps).forEach(([key, grp]) => {
-        Object.entries(grps).forEach(([key, subgrps]) => {
-            console.log(subgrps)
+    type Grps = Record<string, any[]>;
+    let grps = await eel.listGroupDict()() as Grps
+    let grps_htm = document.getElementById('groups') as HTMLElement || null;
+    if (grps_htm){
+        Object.entries(grps).forEach(([grp, subgrps]) => {
+            let group_par = document.createElement('div')
+            group_par.classList = 'group'
+
+            let group_title = document.createElement('div')
+            group_title.classList = 'group-title'
+            group_title.innerText = grp
+
+            let subgroup_btn_par = document.createElement('div')
+            subgroup_btn_par.classList = 'subgroup-wrap'
+            subgroup_btn_par.onclick = () => {
+                makeNewSubGroup('Programing project')
+            }
+
+            let content = document.createElement('div')
+            content.classList = 'tab-content'
+
+            let span = document.createElement('span')
+            span.classList = 'material-symbols-outlined sub-icon'
+            span.innerText = 'add'
+
+
+            let span_desc = document.createElement('div')
+            span_desc.classList = 'subtab-description'
+            span_desc.innerText = 'New sub group'
+
+            content.appendChild(span)
+            content.appendChild(span_desc)
+            subgroup_btn_par.appendChild(content)
+
+            group_par.appendChild(group_title)
+            group_par.appendChild(subgroup_btn_par)
+            
+            let subgrp_par = document.createElement('div')
+            subgrp_par.classList = 'group-tabs'
+
+            subgrps.forEach((subgrp: string) => {
+                let subgrp_desc = document.createElement('div')
+                subgrp_desc.classList = 'tab-description'
+
+                let subgrp_ico = document.createElement('span')
+                subgrp_ico.classList = 'material-symbols-outlined'
+                subgrp_ico.innerText = 'tag'
+
+                let subgrp_name = document.createTextNode(subgrp)
+
+                subgrp_desc.appendChild(subgrp_ico)
+                subgrp_desc.appendChild(subgrp_name)
+
+                subgrp_par.appendChild(subgrp_desc)
+            })
+            group_par.appendChild(subgrp_par)
+            grps_htm.appendChild(group_par)
         });
-    });
+    }
 }
 
 function showmsgbox(text: string) {
