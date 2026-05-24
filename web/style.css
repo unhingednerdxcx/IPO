@@ -54,6 +54,12 @@
     margin-left: 10px;
     font-size: 125%;
 }
+.newtab-description {
+    font-family: 'Sour Gummy', sans-serif;
+    margin-left: 30px;
+    margin-top: 1vh;
+    font-size: 125%;
+}
 .groups {
     display: flex;
     flex-direction: column;

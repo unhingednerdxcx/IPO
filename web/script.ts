@@ -128,7 +128,15 @@ function main() {
                         today.setHours(0, 0, 0, 0);
                         if (in_date >= today) {
                             el.style.display = "none"
-                            await eel.addTask(name, "My projects", "My projects", in_date) // TODO: add catagory (yes haha, todo cause im making a todo list (: ))
+                            let clean_date = [
+                                in_date.getFullYear(),
+                                String(in_date.getMonth() + 1),
+                                String(in_date.getDate()),
+                                String(in_date.getHours()),
+                                String(in_date.getMinutes())
+                            ].join('/')
+                            console.log(clean_date)
+                            await eel.addTask(name, "My projects", "My projects", clean_date)
                         } else {
                             el.style.display = "none"
                             showmsgbox("Date cannot be before today")
@@ -150,7 +158,7 @@ function main() {
             current_element.style.display = "none"
             today.style.display = "flex"
             current = "Today"
-            let val = await eel.listTask("My projects", "a")()
+            let val = await eel.listTask("", "", "today")()
             console.log(typeof(val))
             console.log(val)
             list_items(val)
@@ -240,7 +248,7 @@ async function makeSubGroupTree() {
             let subgroup_btn_par = document.createElement('div')
             subgroup_btn_par.classList = 'subgroup-wrap'
             subgroup_btn_par.onclick = () => {
-                makeNewSubGroup('Programing project')
+                makeNewSubGroup(grp)
             }
 
             let content = document.createElement('div')

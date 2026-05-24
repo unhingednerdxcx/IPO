@@ -3,6 +3,7 @@ import os
 import json
 from rapidfuzz import process
 import time
+from datetime import datetime
 
 
 FOLDER = os.path.dirname(os.path.abspath(__file__))
@@ -30,10 +31,22 @@ def TaskManager(mode, val="", req=""):
                 json.dump(val, file, indent=4)
 
 @eel.expose
-def listTask(catagory="", subcatagory=""):
+def listTask(catagory="", subcatagory="", op=""):
     log(f"Listing task {catagory}..")
     data = TaskManager('r')
     log(f"{data}")
+    if op != "":
+        if op == "today":
+            now = datetime.now()
+            formated = "/".join([
+                str(now.year),
+                str(now.month),
+                str(now.day),
+                str(now.hour),
+                str(now.minute)
+            ])
+            print(formated)
+            values = listAllTasksDate()
     for loopCat, val in data.items():
 
         if loopCat == catagory:
@@ -97,9 +110,9 @@ def newSubGroup(catagory, sub):
     log("Making new subgroup {catagory}..")
     data = TaskManager('r')
     data.setdefault(catagory, {})
-    data[catagory] = {
+    data[catagory].update({
         sub: {}
-    }
+    })
     TaskManager('w', data)
 
 @eel.expose
@@ -114,12 +127,20 @@ def listAllSubGrp(catagory):
 
 @eel.expose
 def listGroupDict():
-    res_arr = []
     data = TaskManager('r')
     data = {
         key: list(value.keys())
         for key, value in data.items()
     }
     return data
-listGroupDict()
-eel.start('index.html', port=8000)
+
+def listAllTasksDate():
+    res_arr = [[], []]
+    data = TaskManager('r')
+    for cat, subcat in data.items():
+        for subcatt, task in subcat.items():
+            for taskt, date in task.items():
+                res_arr[0].append(taskt)
+                res_arr[1].append(date['date'])
+    return res_arr
+eel.start('index.html', port=0)
