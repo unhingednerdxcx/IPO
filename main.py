@@ -37,6 +37,7 @@ def listTask(catagory="", subcatagory="", op=""):
     log(f"{data}")
     if op != "":
         if op == "today":
+            res = []
             now = datetime.now()
             formated = "/".join([
                 str(now.year),
@@ -45,8 +46,17 @@ def listTask(catagory="", subcatagory="", op=""):
                 str(now.hour),
                 str(now.minute)
             ])
-            print(formated)
             values = listAllTasksDate()
+            key = 0
+            for date in values[1]:
+                date_arr = date.split('/')
+                if int(date_arr[0]) == now.year and int(date_arr[1]) == now.month and int(date_arr[2]) == now.day:
+                    print(key)
+                    selected = values[0][key].split("-")
+                    res.append(selected[0])
+                key += 1
+            print(res)
+            return res
     for loopCat, val in data.items():
 
         if loopCat == catagory:
@@ -140,7 +150,7 @@ def listAllTasksDate():
     for cat, subcat in data.items():
         for subcatt, task in subcat.items():
             for taskt, date in task.items():
-                res_arr[0].append(taskt)
+                res_arr[0].append(f"{taskt}-{cat}/{subcatt}")
                 res_arr[1].append(date['date'])
     return res_arr
 eel.start('index.html', port=0)
