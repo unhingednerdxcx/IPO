@@ -57,6 +57,27 @@ def listTask(catagory="", subcatagory="", op=""):
                 key += 1
             print(res)
             return res
+        if op == "upcomming":
+            res = []
+            now = datetime.now()
+            formated = "/".join([
+                str(now.year),
+                str(now.month),
+                str(now.day),
+                str(now.hour),
+                str(now.minute)
+            ])
+            values = listAllTasksDate()
+            key = 0
+            for date in values[1]:
+                date_arr = date.split('/')
+                if not(int(date_arr[0]) == now.year and int(date_arr[1]) == now.month and int(date_arr[2]) == now.day):
+                    print(key)
+                    selected = values[0][key].split("-")
+                    res.append(selected[0])
+                key += 1
+            print(res)
+            return res
     for loopCat, val in data.items():
 
         if loopCat == catagory:

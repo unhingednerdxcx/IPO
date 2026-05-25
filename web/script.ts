@@ -171,7 +171,10 @@ function main() {
             current_element.style.display = "none"
             today.style.display = "flex"
             current = "Today"
-            await eel.listTask()
+            let value = await eel.listTask("", "", "upcomming")()
+            console.log(value)
+            console.log(typeof(value))
+            list_items(value)
         }
     });
 
