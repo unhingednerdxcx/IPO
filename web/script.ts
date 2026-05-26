@@ -208,16 +208,38 @@ function main() {
         let lists = document.getElementById('tasks') as HTMLElement|| null
         if (tasks && lists) {
             lists.innerHTML = ''
+            let taskKey = 0
             tasks.forEach(task => {
+                taskKey += 1
                 console.log(task)
                 let task_par = document.createElement('li')
                 task_par.classList = 'task'
 
                 let task_btn = document.createElement('button')
                 task_btn.classList = 'toggle-task'
+                task_btn.id = `task-btn${taskKey}`
+                task_btn.onclick = () => {
+                    toggle(task_btn.id)
+                }
+
+                function toggle(id: String){
+                    console.log(id.split('task-btn'))
+                    let key = id.split('task-btn')[1]
+                    let icon = document.getElementById(`task_ico${key}`) as HTMLElement || null
+                    if (icon) {
+                        if (icon.innerText == "check_small") {
+                            icon.innerText = ""
+                        } else {
+                            icon.innerText = "check_small"
+                        }
+                    }
+                }
+
 
                 let ico = document.createElement('span')
                 ico.classList = 'material-symbols-outlined default-icon check-task'
+                ico.id = `task_ico${taskKey}`
+
 
                 let task_desc = document.createElement('span')
                 task_desc.classList = "task-description"
@@ -228,6 +250,7 @@ function main() {
                 task_par.appendChild(task_desc)
                 lists?.appendChild(task_par)
                 console.log("done with:-", task_par)
+                console.log(document.getElementById(`task-btn${taskKey}`))
             });
             console.log("done with:-", lists)
         }
