@@ -174,4 +174,11 @@ def listAllTasksDate():
                 res_arr[0].append(f"{taskt}-{cat}/{subcatt}")
                 res_arr[1].append(date['date'])
     return res_arr
+
+@eel.expose
+def listCatItems(cat, subcat):
+    data = TaskManager('r')
+    print(list(data[cat][subcat]))
+    return list(data[cat][subcat])
+listCatItems("My projects", "a")
 eel.start('index.html', port=0)

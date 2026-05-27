@@ -189,52 +189,52 @@ function main() {
             input.addEventListener("keydown", NewGroup_handler);
         }
     });
-    async function list_items(tasks) {
-        let lists = document.getElementById('tasks') || null;
-        if (tasks && lists) {
-            lists.innerHTML = '';
-            let taskKey = 0;
-            tasks.forEach(task => {
-                taskKey += 1;
-                console.log(task);
-                let task_par = document.createElement('li');
-                task_par.classList = 'task';
-                let task_btn = document.createElement('button');
-                task_btn.classList = 'toggle-task';
-                task_btn.id = `task-btn${taskKey}`;
-                task_btn.onclick = () => {
-                    toggle(task_btn.id);
-                };
-                function toggle(id) {
-                    console.log(id.split('task-btn'));
-                    let key = id.split('task-btn')[1];
-                    let icon = document.getElementById(`task_ico${key}`) || null;
-                    if (icon) {
-                        if (icon.innerText == "check_small") {
-                            icon.innerText = "";
-                        }
-                        else {
-                            icon.innerText = "check_small";
-                        }
+    makeSubGroupTree();
+}
+async function list_items(tasks) {
+    let lists = document.getElementById('tasks') || null;
+    if (tasks && lists) {
+        lists.innerHTML = '';
+        let taskKey = 0;
+        tasks.forEach(task => {
+            taskKey += 1;
+            console.log(task);
+            let task_par = document.createElement('li');
+            task_par.classList = 'task';
+            let task_btn = document.createElement('button');
+            task_btn.classList = 'toggle-task';
+            task_btn.id = `task-btn${taskKey}`;
+            task_btn.onclick = () => {
+                toggle(task_btn.id);
+            };
+            function toggle(id) {
+                console.log(id.split('task-btn'));
+                let key = id.split('task-btn')[1];
+                let icon = document.getElementById(`task_ico${key}`) || null;
+                if (icon) {
+                    if (icon.innerText == "check_small") {
+                        icon.innerText = "";
+                    }
+                    else {
+                        icon.innerText = "check_small";
                     }
                 }
-                let ico = document.createElement('span');
-                ico.classList = 'material-symbols-outlined default-icon check-task';
-                ico.id = `task_ico${taskKey}`;
-                let task_desc = document.createElement('span');
-                task_desc.classList = "task-description";
-                task_desc.innerText = String(task);
-                task_btn.appendChild(ico);
-                task_par.appendChild(task_btn);
-                task_par.appendChild(task_desc);
-                lists?.appendChild(task_par);
-                console.log("done with:-", task_par);
-                console.log(document.getElementById(`task-btn${taskKey}`));
-            });
-            console.log("done with:-", lists);
-        }
+            }
+            let ico = document.createElement('span');
+            ico.classList = 'material-symbols-outlined default-icon check-task';
+            ico.id = `task_ico${taskKey}`;
+            let task_desc = document.createElement('span');
+            task_desc.classList = "task-description";
+            task_desc.innerText = String(task);
+            task_btn.appendChild(ico);
+            task_par.appendChild(task_btn);
+            task_par.appendChild(task_desc);
+            lists?.appendChild(task_par);
+            console.log("done with:-", task_par);
+            console.log(document.getElementById(`task-btn${taskKey}`));
+        });
+        console.log("done with:-", lists);
     }
-    makeSubGroupTree();
 }
 async function makeSubGroupTree() {
     let grps = await eel.listGroupDict()();
@@ -266,9 +266,17 @@ async function makeSubGroupTree() {
             group_par.appendChild(subgroup_btn_par);
             let subgrp_par = document.createElement('div');
             subgrp_par.classList = 'group-tabs';
-            subgrps.forEach((subgrp) => {
+            subgrps.forEach((subgrp, key) => {
                 let subgrp_desc = document.createElement('div');
                 subgrp_desc.classList = 'tab-description';
+                subgrp_desc.id = `desc${key}`;
+                subgrp_desc.dataset.grp = grp;
+                subgrp_desc.dataset.subgrp = subgrp;
+                subgrp_desc.onclick = async () => {
+                    let val = await eel.listCatItems(subgrp_desc.dataset.grp, subgrp_desc.dataset.subgrp)();
+                    console.log(val);
+                    list_items(val);
+                };
                 let subgrp_ico = document.createElement('span');
                 subgrp_ico.classList = 'material-symbols-outlined';
                 subgrp_ico.innerText = 'tag';

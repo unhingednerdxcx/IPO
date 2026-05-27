@@ -505,3 +505,33 @@
 - {'My projects': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'b': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'My projects': {'dd': {'date': '2026/5/26/22/45'}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}}}
 - Listing task ..
 - {'My projects': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'b': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'My projects': {'dd': {'date': '2026/5/26/22/45'}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}}}
+- Searching for a new task {name}..
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'b': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'My projects': {'dd': {'date': '2026/5/26/22/45'}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'b': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'My projects': {'dd': {'date': '2026/5/26/22/45'}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'b': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'My projects': {'dd': {'date': '2026/5/26/22/45'}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'b': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'My projects': {'dd': {'date': '2026/5/26/22/45'}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}}}
+- Making new subgroup {catagory}..
+- Making new group {name}..
+- Making new subgroup {catagory}..
+- Making new group {name}..
+- Making new subgroup {catagory}..
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'b': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'My projects': {'dd': {'date': '2026/5/26/22/45'}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'b': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'My projects': {'dd': {'date': '2026/5/26/22/45'}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'b': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'My projects': {'dd': {'date': '2026/5/26/22/45'}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'b': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'My projects': {'dd': {'date': '2026/5/26/22/45'}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'b': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'My projects': {'dd': {'date': '2026/5/26/22/45'}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'b': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'My projects': {'dd': {'date': '2026/5/26/22/45'}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'b': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'My projects': {'dd': {'date': '2026/5/26/22/45'}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'b': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}, 'My projects': {'dd': {'date': '2026/5/26/22/45'}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44'}, 'cry': {'date': '2026/07/01/09/59'}}}, 'x': {'k': {}}}
