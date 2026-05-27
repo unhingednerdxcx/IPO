@@ -180,5 +180,4 @@ def listCatItems(cat, subcat):
     data = TaskManager('r')
     print(list(data[cat][subcat]))
     return list(data[cat][subcat])
-listCatItems("My projects", "a")
 eel.start('index.html', port=0)

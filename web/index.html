@@ -53,6 +53,14 @@
                         <div class="tab-description">New task</div>
                     </div>
                 </div>
+                <div class="tab" id="side-Today">
+                    <div class="tab-content">
+                        <span class="material-symbols-outlined">
+                            routine
+                        </span>
+                        <div class="tab-description">Routine</div>
+                    </div>
+                </div>
             </div>
             <hr style="border-color: #263a33; width: 90%; margin-top: 6%;">
             <div class="tab" id="side-group">
@@ -65,8 +73,7 @@
                     </div>
                 </div>
             </div>
-            <div class="groups" id="groups">
-            </div>
+            <div class="groups" id="groups"></div>
         </div>
 
         <div class="main">
@@ -83,6 +90,57 @@
                 <ul class="tasks" id="tasks">
                 </ul>
             </div>
+
+            <div class="routine" id="routine">
+                <div class="all-routine">
+                    <div class="add-routine" id="new-routine">
+                        <span class="material-symbols-outlined add-routine-icon">
+                            add
+                        </span>
+                        Add a new routine
+                    </div>
+                    <ul class="routine-list">
+                        <li class="user-routine">
+                            <div class="routine-title">Gym</div>
+                            <ul>
+                                <li class="routine-task">Work out</li>
+                            </ul>
+                        </li>
+
+                        <li class="user-routine">
+                            <div class="routine-title">Gym</div>
+                            <ul>
+                                <li class="routine-task">Work out</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="routine-stats">
+                    <div class="routine-stats-title">
+                        <span class="material-symbols-outlined">
+                            tag
+                        </span>
+                        Gym
+                    </div>
+
+                    <ul class="tasks" id="routine-tasks">
+                        <!--same as the example in today-->
+                    </ul>
+
+                    <br>
+
+                    <div class="routine-stat">
+                        <div class="freq"></div>
+                        <div class="consistancy"></div>
+                        <div class="other-info">
+                            <div class="Most ignored task"></div>
+                            <div class="Most tiring task"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <div class="hide-all" id="hide-all">
