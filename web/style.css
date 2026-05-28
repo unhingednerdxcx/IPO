@@ -155,8 +155,7 @@
     font-weight: 700;
 }
 .Today {
-    display: none;
-    padding: 48px 48px;
+    display: flex;
 }
 
 .routine {
@@ -166,21 +165,23 @@
 }
 
 .all-routine {
-    display: none;
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    gap: 10px;
 }
 .add-routine {
-    position: absolute;
     font-family: 'Sour Gummy', sans-serif;
     left: 3vw;
-    top: 10vh;
     font-size: 30;
     border-radius: 20px;
     padding: 8px 8px;
     background: #b4fcb483;
     outline: 1px solid #263a33;
     transition: background 0.2s ease;
+    height: 5vh;
+    width: 12vw;
 }
 
 .add-routine:hover {
@@ -188,12 +189,12 @@
 }
 
 .routine-stats {
-    display: block; /* USE BLOCK NOT FLEX */
+    display: none; /* USE BLOCK NOT FLEX */
 }
 
 .routine-stats-title {
     font-family: 'Sour Gummy', sans-serif;
-    font-size: 40;
+    font-size: 40px;
 }
 
 .tasks {
@@ -452,4 +453,37 @@ body {
 }
 ul {
   list-style-type: none;
+}
+
+.routine-time-text {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 40px;
+}
+
+.routines {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    outline: 2px solid #2f4f44;
+    max-width: 100%;
+    min-width: 0; 
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 30vh;
+    align-items: center;
+    white-space: nowrap;
+    gap: 20px;
+    border-radius: 10px;
+}
+
+
+
+.routine-block {
+    flex-shrink: 0; 
+    width: 20vw;
+    height: 20vh;
+    border-radius: 20px;
+    outline: 1px solid #1B4D1B;
+    background-color: #b4fcb483;
+    font-family: 'Sour Gummy', sans-serif;
 }
