@@ -186,7 +186,7 @@
 }
 
 .routine-stats {
-    display: flex;
+    display: block; /* USE BLOCK NOT FLEX */
 }
 
 .routine-stats-title {

@@ -3,6 +3,11 @@ const eel = window.eel;
 console.log(eel);
 let current = "Default";
 function main() {
+    window.requestAnimationFrame(() => {
+        setTimeout(() => {
+            makeChart();
+        }, 50);
+    });
     document.getElementById("side-search")?.addEventListener("click", async () => {
         const input = document.getElementById("context-input");
         input.type = "text";
@@ -320,6 +325,58 @@ function makeNewSubGroup(catagory) {
                 await eel.newSubGroup(catagory, value);
             }
         });
+    }
+}
+function makeChart() {
+    console.log('here');
+    const canvas = document.getElementById('myChart');
+    if (canvas) {
+        console.log('here');
+        const config = {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Sun',
+                    'Mon',
+                    'Tue'
+                ],
+                datasets: [{
+                        label: 'Progress (%)',
+                        data: [10, 20, 30],
+                        borderRadius: 10,
+                        borderWidth: 2,
+                        borderSkipped: false,
+                        backgroundColor: 'rgba(0, 0, 0, 1)'
+                    }]
+            },
+            options: {
+                indexAxis: 'x',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0)'
+                        }
+                    },
+                    y: {
+                        max: 100,
+                        grid: {
+                            color: 'rgb(137, 234, 171)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    }
+                }
+            }
+        };
+        console.log('here');
+        const _ = new Chart(canvas, config);
+        console.log('here');
     }
 }
 window.makeNewSubGroup = makeNewSubGroup;
