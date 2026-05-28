@@ -6,6 +6,7 @@ function main() {
     window.requestAnimationFrame(() => {
         setTimeout(() => {
             makeChart();
+            makeTestChart();
         }, 50);
     });
     document.getElementById("side-search")?.addEventListener("click", async () => {
@@ -380,6 +381,65 @@ function makeChart() {
                     legend: {
                         display: true,
                         position: 'top',
+                    }
+                }
+            }
+        };
+        console.log('here');
+        const _ = new Chart(canvas, config);
+        console.log('here');
+    }
+}
+function makeTestChart() {
+    console.log('here');
+    const canvas = document.getElementById('routine-block-graph');
+    if (canvas) {
+        console.log('here');
+        const config = {
+            type: "line",
+            data: {
+                labels: [
+                    'Sun',
+                    'Mon',
+                    'Tue'
+                ],
+                datasets: [{
+                        label: 'Progress (%)',
+                        data: [10, 20, 30],
+                        borderWidth: 2,
+                        backgroundColor: 'rgba(0, 0, 0, 0.56)'
+                    }]
+            },
+            options: {
+                indexAxis: 'x',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0)'
+                        }
+                    },
+                    y: {
+                        max: 100,
+                        grid: {
+                            color: 'rgb(137, 234, 171)'
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        backgroundColor: '#33333380',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        footerColor: '#70f67079',
+                        borderColor: '#33333387',
+                        borderWidth: 1,
+                        displayColors: true,
+                        boxPadding: 3
+                    },
+                    legend: {
+                        display: false
                     }
                 }
             }

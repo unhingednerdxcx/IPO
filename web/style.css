@@ -479,6 +479,8 @@ ul {
 
 
 .routine-block {
+    display: flex;
+    flex-flow: column wrap;
     flex-shrink: 0; 
     width: 20vw;
     height: 20vh;
@@ -486,4 +488,22 @@ ul {
     outline: 1px solid #1B4D1B;
     background-color: #b4fcb483;
     font-family: 'Sour Gummy', sans-serif;
+    padding: 10px;
+}
+
+.routine-block-text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+}
+.routine-block-summary {
+    display: inherit;
+    gap: 3px;
+    flex-direction: column;
+    max-width: 10vw;
+    overflow-y: auto;
+}
+
+.routine-block-title {
+    font-size: 40px;
 }
