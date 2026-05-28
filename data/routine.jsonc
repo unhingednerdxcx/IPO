@@ -1,0 +1,45 @@
+// Example routine:-
+
+{
+    // summary
+    "name": {
+        "tasks": [],
+        "Complete till": "task",
+        "streaks": 1,
+
+        "Most difficult": {
+            "name": "task",
+            "score": 1
+        },
+        "Most easiest": {
+            "name": "task",
+            "score": 1
+        },
+        
+        "stops": []
+    },
+
+    "Work out plan": {
+        "tasks": [
+            "Running",
+            "Lifting",
+            "Push ups",
+            "Dead lift"
+        ],
+        "Complete till": "Push ups",
+        "Streak": 3,
+        "Most difficult": {
+            "name": "Push ups",
+            "dif-score": 3 // Meaning, for 3 days, user stoped at Push ups
+        },
+        "Most easiest": {
+            "name": "Running",
+            "dif-score": 1 // Meaning, for 1 day, user stoped at running
+        },
+        "stops": [ // This is to note which task the user has stoped on (to update the most difficult/easiest task this will be handy)
+            "Lifting",
+            "Lifting",
+            "Running"
+        ]
+    }
+}

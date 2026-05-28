@@ -392,14 +392,14 @@ body {
 .other-info {
     display: inherit;
     flex-direction: column;
-    gap: 10%;
+    gap: 5%;
 }
 .task-stat-block {
-    height: 45%;
+    height: 30%;
     outline: 1px solid #1B4D1B;
     background-color: #70f67079;
     border-radius: 10px;
-    width: 25vw;
+    width: 24vw;
     text-align: center;
     padding: 1vh;
     font-family: 'Sour Gummy', sans-serif;

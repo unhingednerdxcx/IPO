@@ -346,7 +346,7 @@ function makeChart() {
                         borderRadius: 10,
                         borderWidth: 2,
                         borderSkipped: false,
-                        backgroundColor: 'rgba(112, 246, 192, 0.8)'
+                        backgroundColor: 'rgba(0, 0, 0, 0.56)'
                     }]
             },
             options: {
@@ -369,8 +369,8 @@ function makeChart() {
                 plugins: {
                     tooltip: {
                         backgroundColor: '#33333380',
-                        titleColor: '#000000',
-                        bodyColor: '#000000',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
                         footerColor: '#70f67079',
                         borderColor: '#33333387',
                         borderWidth: 1,
