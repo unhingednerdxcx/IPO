@@ -387,7 +387,7 @@ function makeChart(){
                     borderRadius: 10,
                     borderWidth: 2,
                     borderSkipped: false,
-                    backgroundColor: 'rgba(0, 0, 0, 1)'
+                    backgroundColor: 'rgba(112, 246, 192, 0.8)'
                 }]
             },
             options: {
@@ -408,6 +408,16 @@ function makeChart(){
                     }
                 },
                 plugins: {
+                    tooltip: {
+                        backgroundColor: '#33333380',
+                        titleColor: '#000000',
+                        bodyColor: '#000000',
+                        footerColor: '#70f67079',
+                        borderColor: '#33333387',
+                        borderWidth: 1,
+                        displayColors: true,
+                        boxPadding: 3
+                    },
                     legend: {
                         display: true,
                         position: 'top',

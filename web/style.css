@@ -378,3 +378,39 @@ body {
     background: #CCFFCC;
     outline: 1px solid #1B4D1B;
 }
+
+.routine-stat{
+    display: flex; /* ONLY FLEX */
+    gap: 2vw;
+}
+
+.break-line {
+    outline: 1px solid #263a33;
+    margin-left: -2vw;
+}
+
+.other-info {
+    display: inherit;
+    flex-direction: column;
+    gap: 10%;
+}
+.task-stat-block {
+    height: 45%;
+    outline: 1px solid #1B4D1B;
+    background-color: #70f67079;
+    border-radius: 10px;
+    width: 25vw;
+    text-align: center;
+    padding: 1vh;
+    font-family: 'Sour Gummy', sans-serif;
+}
+
+.stat-title{
+    margin-top: 2vh;
+    font-size: 30px;
+}
+
+.stat-disc {
+    margin-top: 0.5vh;
+    font-size: 25px;
+}
