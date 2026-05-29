@@ -217,11 +217,14 @@ async function list_items(tasks: Array<String>) {
     if (tasks && lists) {
         lists.innerHTML = ''
         let taskKey = 0
+        console.log("taskssssssss: ", tasks)
         tasks.forEach(task => {
             taskKey += 1
-            console.log(task)
+            console.log("task: ", task)
             let task_par = document.createElement('li')
             task_par.classList = 'task'
+            task_par.dataset.path = task[1]
+            task_par.id = `task_par${taskKey}`
 
             let task_btn = document.createElement('button')
             task_btn.classList = 'toggle-task'
@@ -230,15 +233,38 @@ async function list_items(tasks: Array<String>) {
                 toggle(task_btn.id)
             }
 
+            async function setcheck(key: any) {
+                key = String(key)
+                console.log(key)
+                let icon = document.getElementById(`task_ico${key}`) as HTMLElement || null
+                let task_par = document.getElementById(`task_par${key}`) as HTMLElement || null
+                let task_desc = document.getElementById(`task_desc${key}`) as HTMLElement || null
+                if (icon && task_par && task_desc) {
+                    let path = task_par.dataset.path
+                    let donestatus = await eel.donestatus(`${path}/${task_desc.innerText}`)()
+                    console.log("STATUS", donestatus)
+                    if (!donestatus) {
+                        icon.innerText = ""
+                    } else {
+                        icon.innerText = "check_small"
+                    }
+                } else {
+                    console.log("DDD", icon, task_par, task_desc)
+                }
+            }
+
             function toggle(id: String){
                 console.log(id.split('task-btn'))
                 let key = id.split('task-btn')[1]
                 let icon = document.getElementById(`task_ico${key}`) as HTMLElement || null
-                if (icon) {
+                let task_par = document.getElementById(`task_par${key}`) as HTMLElement || null
+                if (icon && task_par) {
                     if (icon.innerText == "check_small") {
                         icon.innerText = ""
+                        eel.toggletask(`${task_par.dataset.path}/${task_desc.innerText}`, false)
                     } else {
                         icon.innerText = "check_small"
+                        eel.toggletask(`${task_par.dataset.path}/${task_desc.innerText}`, true)
                     }
                 }
             }
@@ -251,14 +277,14 @@ async function list_items(tasks: Array<String>) {
 
             let task_desc = document.createElement('span')
             task_desc.classList = "task-description"
-            task_desc.innerText = String(task)
+            task_desc.innerText = String(task[0])
+            task_desc.id = `task_desc${taskKey}`
 
             task_btn.appendChild(ico)
             task_par.appendChild(task_btn)
             task_par.appendChild(task_desc)
             lists?.appendChild(task_par)
-            console.log("done with:-", task_par)
-            console.log(document.getElementById(`task-btn${taskKey}`))
+            setcheck(taskKey)
         });
         console.log("done with:-", lists)
     }
@@ -313,8 +339,14 @@ async function makeSubGroupTree() {
                 subgrp_desc.dataset.subgrp = subgrp
                 subgrp_desc.onclick = async() => {
                     let val = await eel.listCatItems(subgrp_desc.dataset.grp, subgrp_desc.dataset.subgrp)()
+                    let fmt_val: any[] = []
                     console.log(val)
-                    list_items(val)
+                    val.forEach((task: any) => {
+                        console.log(`${grp}/${subgrp} ${task}`)
+                        fmt_val.push([task, `${grp}/${subgrp}`])
+                    })
+                    console.log(fmt_val)
+                    list_items(fmt_val)
                 }
 
                 let subgrp_ico = document.createElement('span')

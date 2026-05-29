@@ -52,11 +52,13 @@ def listTask(catagory="", subcatagory="", op=""):
                 date_arr = date.split('/')
                 if int(date_arr[0]) == now.year and int(date_arr[1]) == now.month and int(date_arr[2]) == now.day:
                     print(key)
-                    selected = values[0][key].split("-")
+                    selected = (values[0][key].split("-"), values[1][key].split("-"))
+                    print(selected)
                     res.append(selected[0])
                 key += 1
             print(res)
             return res
+
         if op == "upcomming":
             res = []
             now = datetime.now()
@@ -73,7 +75,7 @@ def listTask(catagory="", subcatagory="", op=""):
                 date_arr = date.split('/')
                 if not(int(date_arr[0]) == now.year and int(date_arr[1]) == now.month and int(date_arr[2]) == now.day):
                     print(key)
-                    selected = values[0][key].split("-")
+                    selected = (values[0][key].split("-"), values[1][key].split("-"))
                     res.append(selected[0])
                 key += 1
             print(res)
@@ -180,4 +182,19 @@ def listCatItems(cat, subcat):
     data = TaskManager('r')
     print(list(data[cat][subcat]))
     return list(data[cat][subcat])
+
+@eel.expose
+def toggletask(path, setto):
+    path_arr = path.split('/')
+    data = TaskManager('r')
+    print(path_arr)
+    data[path_arr[0]][path_arr[1]][path_arr[2]]['done'] = setto
+    print("DATA:", data[path_arr[0]][path_arr[1]][path_arr[2]]['done'])
+    TaskManager('w', data)
+
+@eel.expose
+def donestatus(path):
+    path_arr = path.split('/')
+    data = TaskManager('r')
+    return data[path_arr[0]][path_arr[1]][path_arr[2]]['done']
 eel.start('index.html', port=0)

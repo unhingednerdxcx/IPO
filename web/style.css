@@ -94,8 +94,10 @@
     left: 27%;
     background-color: #e8ffe8;
     width: 73vw;
+    height: 100vh;
     max-height: 100vh;
     overflow-y: auto;
+
 }
 .hide-all {
     display: none;
@@ -135,23 +137,23 @@
 }
 
 .default {
-    display: none; /* set to block NOT FLEX to activate */
-    padding: 48px 48px;
-}
-.default-icon {
-    font-size: 200;
-    margin-top: 30vh;
+    display: flex;
+    align-items: center;
+    height: 100vh;
     margin-left: 10vw;
+}
+
+.default-icon {
+    font-size: 10vw;
 }
 .default-content {
     display: inherit;
     color: #2f4f44d0;
 }
 .default-text {
-    margin-top: -18vh;
-    margin-left: 23vw;
     font-family: 'Sour Gummy', sans-serif;
-    font-size: 350%;
+    font-size: 5vw;
+    margin-top: 2vh;
     font-weight: 700;
 }
 .Today {
@@ -159,7 +161,7 @@
 }
 
 .routine {
-    display: flex;
+    display: none;
     max-height: 100vh;
     padding: 48px 48px;
 }
@@ -333,10 +335,12 @@ body {
 
 
 .test-panel {
+    display: none;
     position: absolute;
     width: 30vw;
     height: 10vh;
     left: 20vh;
+    outline: 1px solid #1B4D1B;
 }
 
 .subtab-description {
