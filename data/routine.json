@@ -1,0 +1,302 @@
+{
+    "daily": [
+        {
+            "Work out plan": {
+                "tasks": [
+                    "Running",
+                    "Lifting",
+                    "Push ups",
+                    "Dead lift"
+                ],
+                "Complete till": "Push ups",
+                "Streak": 3,
+                "Most difficult": {
+                    "name": "Push ups",
+                    "dif-score": 3
+                },
+                "Most easiest": {
+                    "name": "Running",
+                    "dif-score": 1
+                },
+                "stops": [
+                    "Lifting",
+                    "Lifting",
+                    "Running"
+                ]
+            }
+        },
+        {
+            "Morning Routine": {
+                "tasks": [
+                    "Make bed",
+                    "Meditate",
+                    "Journal",
+                    "Hydrate"
+                ],
+                "Complete till": "Journal",
+                "Streak": 5,
+                "Most difficult": {
+                    "name": "Meditate",
+                    "dif-score": 4
+                },
+                "Most easiest": {
+                    "name": "Make bed",
+                    "dif-score": 0
+                },
+                "stops": [
+                    "Meditate",
+                    "Meditate",
+                    "Journal"
+                ]
+            }
+        },
+        {
+            "Skin Care": {
+                "tasks": [
+                    "Cleanser",
+                    "Toner",
+                    "Serum",
+                    "Moisturizer"
+                ],
+                "Complete till": "Moisturizer",
+                "Streak": 12,
+                "Most difficult": {
+                    "name": "Serum",
+                    "dif-score": 2
+                },
+                "Most easiest": {
+                    "name": "Cleanser",
+                    "dif-score": 1
+                },
+                "stops": [
+                    "Serum",
+                    "Toner"
+                ]
+            }
+        },
+        {
+            "Night Wind-down": {
+                "tasks": [
+                    "No screens",
+                    "Read book",
+                    "Stretch",
+                    "Plan tomorrow"
+                ],
+                "Complete till": "Read book",
+                "Streak": 2,
+                "Most difficult": {
+                    "name": "No screens",
+                    "dif-score": 6
+                },
+                "Most easiest": {
+                    "name": "Stretch",
+                    "dif-score": 1
+                },
+                "stops": [
+                    "No screens",
+                    "No screens",
+                    "Read book"
+                ]
+            }
+        }
+    ],
+    "weekly": [
+        {
+            "House Cleaning": {
+                "tasks": [
+                    "Vacuuming",
+                    "Mopping",
+                    "Dusting",
+                    "Bathroom scrub"
+                ],
+                "Complete till": "Dusting",
+                "Streak": 4,
+                "Most difficult": {
+                    "name": "Bathroom scrub",
+                    "dif-score": 5
+                },
+                "Most easiest": {
+                    "name": "Vacuuming",
+                    "dif-score": 1
+                },
+                "stops": [
+                    "Dusting",
+                    "Mopping",
+                    "Dusting"
+                ]
+            }
+        },
+        {
+            "Meal Prep": {
+                "tasks": [
+                    "Inventory check",
+                    "Grocery shopping",
+                    "Chopping veggies",
+                    "Cooking batches"
+                ],
+                "Complete till": "Cooking batches",
+                "Streak": 8,
+                "Most difficult": {
+                    "name": "Grocery shopping",
+                    "dif-score": 3
+                },
+                "Most easiest": {
+                    "name": "Inventory check",
+                    "dif-score": 0
+                },
+                "stops": [
+                    "Grocery shopping",
+                    "Chopping veggies"
+                ]
+            }
+        },
+        {
+            "Financial Review": {
+                "tasks": [
+                    "Track expenses",
+                    "Update budget",
+                    "Pay bills",
+                    "Transfer to savings"
+                ],
+                "Complete till": "Update budget",
+                "Streak": 1,
+                "Most difficult": {
+                    "name": "Update budget",
+                    "dif-score": 4
+                },
+                "Most easiest": {
+                    "name": "Track expenses",
+                    "dif-score": 1
+                },
+                "stops": [
+                    "Update budget",
+                    "Track expenses",
+                    "Pay bills"
+                ]
+            }
+        },
+        {
+            "Self-Care Weekend": {
+                "tasks": [
+                    "Long bath",
+                    "Hair mask",
+                    "Manicure",
+                    "Call a friend"
+                ],
+                "Complete till": "Hair mask",
+                "Streak": 3,
+                "Most difficult": {
+                    "name": "Manicure",
+                    "dif-score": 2
+                },
+                "Most easiest": {
+                    "name": "Long bath",
+                    "dif-score": 1
+                },
+                "stops": [
+                    "Hair mask",
+                    "Manicure"
+                ]
+            }
+        }
+    ],
+    "monthly": [
+        {
+            "Deep Home Maintenance": {
+                "tasks": [
+                    "Clean AC filters",
+                    "Wash curtains",
+                    "Wipe windows",
+                    "Organize closet"
+                ],
+                "Complete till": "Wash curtains",
+                "Streak": 2,
+                "Most difficult": {
+                    "name": "Organize closet",
+                    "dif-score": 4
+                },
+                "Most easiest": {
+                    "name": "Clean AC filters",
+                    "dif-score": 1
+                },
+                "stops": [
+                    "Wipe windows",
+                    "Wash curtains",
+                    "Wipe windows"
+                ]
+            }
+        },
+        {
+            "Business Goal Tracking": {
+                "tasks": [
+                    "Review Analytics",
+                    "Client feedback audit",
+                    "Update portfolio",
+                    "Set next KPIs"
+                ],
+                "Complete till": "Review Analytics",
+                "Streak": 6,
+                "Most difficult": {
+                    "name": "Update portfolio",
+                    "dif-score": 3
+                },
+                "Most easiest": {
+                    "name": "Review Analytics",
+                    "dif-score": 1
+                },
+                "stops": [
+                    "Review Analytics",
+                    "Client feedback audit"
+                ]
+            }
+        },
+        {
+            "Car Care": {
+                "tasks": [
+                    "Car wash",
+                    "Interior vacuum",
+                    "Fluid level check",
+                    "Tire pressure check"
+                ],
+                "Complete till": "Tire pressure check",
+                "Streak": 10,
+                "Most difficult": {
+                    "name": "Interior vacuum",
+                    "dif-score": 2
+                },
+                "Most easiest": {
+                    "name": "Car wash",
+                    "dif-score": 0
+                },
+                "stops": [
+                    "Interior vacuum"
+                ]
+            }
+        },
+        {
+            "Personal Development": {
+                "tasks": [
+                    "Finish 1 book",
+                    "Watch a documentary",
+                    "Attend a webinar",
+                    "Update resume"
+                ],
+                "Complete till": "Watch a documentary",
+                "Streak": 1,
+                "Most difficult": {
+                    "name": "Update resume",
+                    "dif-score": 5
+                },
+                "Most easiest": {
+                    "name": "Finish 1 book",
+                    "dif-score": 2
+                },
+                "stops": [
+                    "Watch a documentary",
+                    "Attend a webinar",
+                    "Update resume"
+                ]
+            }
+        }
+    ]
+}

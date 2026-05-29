@@ -43,6 +43,62 @@ function main() {
             input.addEventListener("keydown", search_handler)
         }
     });
+
+    document.getElementById('side-routine')?.addEventListener('click', async() => {
+        let routine = document.getElementById('routine') as HTMLElement || null;
+        if (routine) {
+            routine.style.display = "flex"
+                let val = await eel.listAllRoutineNames()()
+                let key = 0
+                val.forEach((task: any) => {
+                    key += 1
+                    console.log(task)
+                    let routine = document.getElementById(`${task[0]}-routines`) as HTMLElement || null
+                    if (routine) {
+                        let li = document.createElement('li')
+                        li.classList = "routine-block"
+
+                        let main_info = document.createElement('div')
+                        main_info.classList = "routine-block-text"
+
+                        let main_info_title = document.createElement('div')
+                        main_info_title.classList = "routine-block-title"
+                        main_info_title.innerText = task[1]
+
+                        let main_info_descript = document.createElement('div')
+                        main_info_descript.classList = "routine-block-summary"
+
+                        let main_info_descript_hardest = document.createElement('div')
+                        main_info_descript_hardest.innerText = `Hardest task: ${task[0]}`
+                        let main_info_descript_easiest = document.createElement('div')
+                        main_info_descript_easiest.innerText = 'Hardest task: {push-ups}'
+                        let streak = document.createTextNode("Day: 89 Killing it!")
+
+
+                        let chart_par = document.createElement('div')
+                        chart_par.classList = 'chart-container'
+
+                        let graph = document.createElement('canvas')
+                        graph.id = `graph${key}`
+
+                        main_info_descript.appendChild(main_info_descript_hardest)
+                        main_info_descript.appendChild(main_info_descript_easiest)
+                        main_info_descript.appendChild(streak)
+
+                        main_info.appendChild(main_info_title)
+                        main_info.appendChild(main_info_descript)
+
+                        chart_par.appendChild(graph)
+
+                        li.appendChild(main_info)
+                        li.appendChild(chart_par)
+
+                        routine.appendChild(li)
+                    }
+                })
+        }
+    })
+
     function searchBoxShow(searches: Object, value: string ) {
         let hideall = document.getElementById("hide-all-search") as HTMLElement || null
         if (hideall) {

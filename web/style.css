@@ -493,6 +493,11 @@ ul {
     background-color: #b4fcb483;
     font-family: 'Sour Gummy', sans-serif;
     padding: 10px;
+    transition: background-color 1.0s ease;
+}
+
+.routine-block:hover {
+    background-color: #70f6709c;
 }
 
 .routine-block-text {
@@ -510,4 +515,13 @@ ul {
 
 .routine-block-title {
     font-size: 40px;
+    max-width: 9vw;
+    overflow-y: auto;
+}
+
+.routine-block-graph {
+    position: relative;
+    margin-top: 3vh;
+    height:15vh;
+    width:8vw;
 }

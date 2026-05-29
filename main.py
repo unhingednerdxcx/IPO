@@ -10,6 +10,7 @@ FOLDER = os.path.dirname(os.path.abspath(__file__))
 WFOLDER = os.path.join(FOLDER, "web")
 LOGFILE = os.path.join(FOLDER, "log.txt")
 TASKFILE = os.path.join(FOLDER, "data", "tasks.json")
+ROUTINEFILE =  os.path.join(FOLDER, "data", "routine.json")
 eel.init(WFOLDER)
 
 
@@ -28,6 +29,18 @@ def TaskManager(mode, val="", req=""):
                 return val
         case "w":
             with open(TASKFILE, 'w') as file:
+                json.dump(val, file, indent=4)
+
+def RoutineManager(mode, val="", req=""):
+    match mode:
+        case "r":
+            with open(ROUTINEFILE, 'r') as file:
+                val = json.load(file)
+                if req == "arr":
+                    return list(val)
+                return val
+        case "w":
+            with open(ROUTINEFILE, 'w') as file:
                 json.dump(val, file, indent=4)
 
 @eel.expose
@@ -197,4 +210,14 @@ def donestatus(path):
     path_arr = path.split('/')
     data = TaskManager('r')
     return data[path_arr[0]][path_arr[1]][path_arr[2]]['done']
+
+@eel.expose
+def listAllRoutineNames():
+    data = RoutineManager('r')
+    res_arr = []
+    for time in data:
+        for routineName in data[time]:
+            res_arr.append([time, list(routineName)[0]])
+    print(res_arr)
+    return res_arr
 eel.start('index.html', port=0)
