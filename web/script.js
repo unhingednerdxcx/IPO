@@ -1,4 +1,57 @@
 document.addEventListener("DOMContentLoaded", main);
+let config = {
+    type: 'bar',
+    data: {
+        labels: [],
+        datasets: [{
+                label: 'Progress (%)',
+                data: [],
+                borderRadius: 10,
+                borderWidth: 2,
+                borderSkipped: false,
+                backgroundColor: 'rgba(0, 0, 0, 0.56)'
+            }]
+    },
+    options: {
+        indexAxis: 'x',
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+                grid: {
+                    color: 'rgba(0, 0, 0, 0)'
+                }
+            },
+            y: {
+                max: 100,
+                grid: {
+                    color: 'rgb(137, 234, 171)'
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+                backgroundColor: '#33333380',
+                titleColor: '#ffffff',
+                bodyColor: '#ffffff',
+                footerColor: '#70f67079',
+                borderColor: '#33333387',
+                borderWidth: 1,
+                displayColors: true,
+                boxPadding: 3
+            },
+            legend: {
+                display: true,
+                position: 'top',
+            }
+        }
+    }
+};
+let chart = "";
+const canvas = document.getElementById('myChart');
+if (canvas) {
+    chart = new Chart(canvas, config);
+}
 const eel = window.eel;
 console.log(eel);
 let current = "Default";
@@ -42,13 +95,20 @@ function main() {
             routine.style.display = "flex";
             let val = await eel.listAllRoutineNames()();
             let key = 0;
-            val.forEach((task) => {
+            val.forEach(async (task) => {
                 key += 1;
                 console.log(task);
                 let routine = document.getElementById(`${task[0]}-routines`) || null;
                 if (routine) {
+                    let info = await eel.listRoutineTraits(task[0], task[1])();
+                    console.log(info);
+                    console.log(info.tasks);
                     let li = document.createElement('li');
                     li.classList = "routine-block";
+                    li.dataset.path = `${task[0]}/${task[1]}`;
+                    li.onclick = () => {
+                        showroutinedetails(String(li.dataset.path));
+                    };
                     let main_info = document.createElement('div');
                     main_info.classList = "routine-block-text";
                     let main_info_title = document.createElement('div');
@@ -57,10 +117,10 @@ function main() {
                     let main_info_descript = document.createElement('div');
                     main_info_descript.classList = "routine-block-summary";
                     let main_info_descript_hardest = document.createElement('div');
-                    main_info_descript_hardest.innerText = `Hardest task: ${task[0]}`;
+                    main_info_descript_hardest.innerText = `Hardest task: ${info['Most difficult'].name}`;
                     let main_info_descript_easiest = document.createElement('div');
-                    main_info_descript_easiest.innerText = 'Hardest task: {push-ups}';
-                    let streak = document.createTextNode("Day: 89 Killing it!");
+                    main_info_descript_easiest.innerText = `Hardest task: ${info['Most easiest'].name}`;
+                    let streak = document.createTextNode(`Day: ${info.Streak} Killing it!`);
                     let chart_par = document.createElement('div');
                     chart_par.classList = 'chart-container';
                     let graph = document.createElement('canvas');
@@ -76,6 +136,48 @@ function main() {
                     routine.appendChild(li);
                 }
             });
+        }
+        async function showroutinedetails(path) {
+            console.log('HERExxx');
+            const el = document.getElementById("routine-stats") || null;
+            const title = document.getElementById('routine-stat-title') || null;
+            const diff = document.getElementById('most-difficult-task') || null;
+            const easy = document.getElementById('most-easiest-task') || null;
+            const streak = document.getElementById('streak') || null;
+            const path_arr = path.split('/');
+            const canvas = document.getElementById('myChart');
+            const data = await eel.listRoutineTraits(path_arr[0], path_arr[1])();
+            if (el && title && diff && easy && streak && canvas && path_arr) {
+                el.style.display = 'block';
+                title.innerText = String(path_arr[1]);
+                diff.innerText = data['Most difficult'].name;
+                easy.innerText = data['Most easiest'].name;
+                streak.innerText = data.Streak;
+                let labels = {
+                    "daily": ['Sun', 'Mon', 'Tue', 'Thu', 'Fri', 'Sat'],
+                    "weekly": ['W1', 'W2', 'W3', 'W4'],
+                    "monthly": ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+                };
+                let label = [];
+                switch (path_arr[0]) {
+                    case "daily": {
+                        label = labels['daily'];
+                        break;
+                    }
+                    case "weekly": {
+                        label = labels['weekly'];
+                        break;
+                    }
+                    case "monthly": {
+                        label = labels['monthly'];
+                        break;
+                    }
+                }
+                console.log(label);
+                config.data.labels = label;
+                config.data.datasets[0].data = data['consistancy'];
+                chart.update();
+            }
         }
     });
     function searchBoxShow(searches, value) {
@@ -405,65 +507,6 @@ function makeNewSubGroup(catagory) {
 }
 function makeChart() {
     console.log('here');
-    const canvas = document.getElementById('myChart');
-    if (canvas) {
-        console.log('here');
-        const config = {
-            type: 'bar',
-            data: {
-                labels: [
-                    'Sun',
-                    'Mon',
-                    'Tue'
-                ],
-                datasets: [{
-                        label: 'Progress (%)',
-                        data: [10, 20, 30],
-                        borderRadius: 10,
-                        borderWidth: 2,
-                        borderSkipped: false,
-                        backgroundColor: 'rgba(0, 0, 0, 0.56)'
-                    }]
-            },
-            options: {
-                indexAxis: 'x',
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        grid: {
-                            color: 'rgba(0, 0, 0, 0)'
-                        }
-                    },
-                    y: {
-                        max: 100,
-                        grid: {
-                            color: 'rgb(137, 234, 171)'
-                        }
-                    }
-                },
-                plugins: {
-                    tooltip: {
-                        backgroundColor: '#33333380',
-                        titleColor: '#ffffff',
-                        bodyColor: '#ffffff',
-                        footerColor: '#70f67079',
-                        borderColor: '#33333387',
-                        borderWidth: 1,
-                        displayColors: true,
-                        boxPadding: 3
-                    },
-                    legend: {
-                        display: true,
-                        position: 'top',
-                    }
-                }
-            }
-        };
-        console.log('here');
-        const _ = new Chart(canvas, config);
-        console.log('here');
-    }
 }
 function makeTestChart() {
     console.log('here');

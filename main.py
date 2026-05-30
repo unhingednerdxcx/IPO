@@ -65,7 +65,7 @@ def listTask(catagory="", subcatagory="", op=""):
                 date_arr = date.split('/')
                 if int(date_arr[0]) == now.year and int(date_arr[1]) == now.month and int(date_arr[2]) == now.day:
                     print(key)
-                    selected = (values[0][key].split("-"), values[1][key].split("-"))
+                    selected = (values[0][key].split("\\"), values[1][key].split("\\"))
                     print(selected)
                     res.append(selected[0])
                 key += 1
@@ -88,7 +88,7 @@ def listTask(catagory="", subcatagory="", op=""):
                 date_arr = date.split('/')
                 if not(int(date_arr[0]) == now.year and int(date_arr[1]) == now.month and int(date_arr[2]) == now.day):
                     print(key)
-                    selected = (values[0][key].split("-"), values[1][key].split("-"))
+                    selected = (values[0][key].split("\\"), values[1][key].split("\\"))
                     res.append(selected[0])
                 key += 1
             print(res)
@@ -186,7 +186,7 @@ def listAllTasksDate():
     for cat, subcat in data.items():
         for subcatt, task in subcat.items():
             for taskt, date in task.items():
-                res_arr[0].append(f"{taskt}-{cat}/{subcatt}")
+                res_arr[0].append(f"{taskt}\\{cat}/{subcatt}")
                 res_arr[1].append(date['date'])
     return res_arr
 
@@ -220,4 +220,14 @@ def listAllRoutineNames():
             res_arr.append([time, list(routineName)[0]])
     print(res_arr)
     return res_arr
+
+@eel.expose
+def listRoutineTraits(time, routineName):
+    data = RoutineManager('r')
+    if data[time]:
+        for testRoutineName in data[time]:
+            print(list(testRoutineName)[0])
+            if list(testRoutineName)[0] == routineName:
+                return testRoutineName[next(iter(testRoutineName))]
+
 eel.start('index.html', port=0)

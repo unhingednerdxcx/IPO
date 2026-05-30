@@ -486,7 +486,7 @@ ul {
     display: flex;
     flex-flow: column wrap;
     flex-shrink: 0; 
-    width: 20vw;
+    width: 25vw;
     height: 20vh;
     border-radius: 20px;
     outline: 1px solid #1B4D1B;
@@ -509,13 +509,13 @@ ul {
     display: inherit;
     gap: 3px;
     flex-direction: column;
-    max-width: 10vw;
+    max-width: 14vw;
     overflow-y: auto;
 }
 
 .routine-block-title {
     font-size: 40px;
-    max-width: 9vw;
+    max-width: 14vw;
     overflow-y: auto;
 }
 
