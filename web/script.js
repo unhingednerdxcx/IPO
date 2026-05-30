@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", main);
+let current = "Default";
 let config = {
     type: 'bar',
     data: {
@@ -48,13 +49,12 @@ let config = {
     }
 };
 let chart = "";
-const canvas = document.getElementById('myChart');
+const canvas = document.getElementById('routineChart');
 if (canvas) {
     chart = new Chart(canvas, config);
 }
 const eel = window.eel;
 console.log(eel);
-let current = "Default";
 function main() {
     window.requestAnimationFrame(() => {
         setTimeout(() => {
@@ -91,7 +91,13 @@ function main() {
     });
     document.getElementById('side-routine')?.addEventListener('click', async () => {
         let routine = document.getElementById('routine') || null;
-        if (routine) {
+        let current_el = document.getElementById(`${current}`) || null;
+        let all_el = document.getElementById('all-routine') || null;
+        console.log(all_el);
+        if (routine && current_el && all_el) {
+            current_el.style.display = "none";
+            all_el.style.display = "flex";
+            current = "all-routine";
             routine.style.display = "flex";
             let val = await eel.listAllRoutineNames()();
             let key = 0;
@@ -138,16 +144,18 @@ function main() {
             });
         }
         async function showroutinedetails(path) {
-            console.log('HERExxx');
+            const current_element = document.getElementById(`${current}`);
             const el = document.getElementById("routine-stats") || null;
             const title = document.getElementById('routine-stat-title') || null;
             const diff = document.getElementById('most-difficult-task') || null;
             const easy = document.getElementById('most-easiest-task') || null;
             const streak = document.getElementById('streak') || null;
             const path_arr = path.split('/');
-            const canvas = document.getElementById('myChart');
+            const canvas = document.getElementById('routineChart');
             const data = await eel.listRoutineTraits(path_arr[0], path_arr[1])();
-            if (el && title && diff && easy && streak && canvas && path_arr) {
+            if (el && title && diff && easy && streak && canvas && path_arr && current_element) {
+                current_element.style.display = "none";
+                current = "routine-stats";
                 el.style.display = 'block';
                 title.innerText = String(path_arr[1]);
                 diff.innerText = data['Most difficult'].name;
@@ -177,6 +185,40 @@ function main() {
                 config.data.labels = label;
                 config.data.datasets[0].data = data['consistancy'];
                 chart.update();
+                populate_routine_tasks(data['tasks'], data["Complete till"]);
+            }
+        }
+        function populate_routine_tasks(tasks, complete) {
+            console.log("HereXx");
+            let complete_reach = true;
+            let tree = document.getElementById('routine-task-tree') || null;
+            if (tree) {
+                tree.innerHTML = "";
+                tasks.forEach((task) => {
+                    let li = document.createElement('li');
+                    li.classList = 'routine-step';
+                    let btn = document.createElement('div');
+                    btn.classList = 'routine-task-button';
+                    let desc = document.createElement('div');
+                    desc.classList = 'routine-discript';
+                    desc.innerText = String(task);
+                    if (task == complete) {
+                        complete_reach = false;
+                        setComplete(btn);
+                    }
+                    else if (complete_reach) {
+                        setComplete(btn);
+                    }
+                    function setComplete(btn) {
+                        let check = document.createElement('span');
+                        check.classList = "material-symbols-outlined routine-complete-icon";
+                        check.innerText = 'check';
+                        btn.appendChild(check);
+                    }
+                    li.appendChild(btn);
+                    li.appendChild(desc);
+                    tree.appendChild(li);
+                });
             }
         }
     });
@@ -290,11 +332,12 @@ function main() {
     });
     document.getElementById("side-Today")?.addEventListener('click', async () => {
         const today = document.querySelector("#Today");
-        const current_element = document.querySelector(`#${current}`);
+        const current_element = document.getElementById(`${current}`);
+        console.log(current_element);
         if (today && current_element) {
+            current = "Today";
             current_element.style.display = "none";
             today.style.display = "flex";
-            current = "Today";
             let val = await eel.listTask("", "", "today")();
             console.log(typeof (val));
             console.log(val);
@@ -303,11 +346,12 @@ function main() {
     });
     document.getElementById("side-upcoming")?.addEventListener('click', async () => {
         const today = document.querySelector("#Today");
-        const current_element = document.querySelector(`#${current}`);
+        const current_element = document.getElementById(`${current}`);
+        console.log(current_element);
         if (today && current_element) {
+            current = "Today";
             current_element.style.display = "none";
             today.style.display = "flex";
-            current = "Today";
             let value = await eel.listTask("", "", "upcomming")();
             console.log(value);
             console.log(typeof (value));

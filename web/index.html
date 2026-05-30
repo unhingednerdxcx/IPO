@@ -94,7 +94,7 @@
             </div>
 
             <div class="routine" id="routine">
-                <div class="all-routine">
+                <div class="all-routine" id="all-routine">
                     <div class="add-routine" id="new-routine">
                         <span class="material-symbols-outlined add-routine-icon">
                             add
@@ -140,22 +140,14 @@
 
                     <ul class="routine-steps">
                         <div class="side-line"></div>
-                        <div style="display: flex; flex-direction: column; margin-top: 5vh; gap: 5vh">
+                        <div style="display: flex; flex-direction: column; margin-top: 5vh; gap: 5vh" id="routine-task-tree">
                             <li class="routine-step">
-                                <div class="routine-task-button"></div>
+                                <div class="routine-task-button">                        
+                                    <span class="material-symbols-outlined routine-complete-icon">
+                                        check
+                                    </span>
+                                </div>
                                 <div class="routine-discript">Running</div>
-                            </li>
-                            <li class="routine-step">
-                                <div class="routine-task-button"></div>
-                                <div class="routine-discript">Lifting</div>
-                            </li>
-                            <li class="routine-step">
-                                <div class="routine-task-button"></div>
-                                <div class="routine-discript">Push ups</div>
-                            </li>
-                            <li class="routine-step">
-                                <div class="routine-task-button"></div>
-                                <div class="routine-discript">Dead lift</div>
                             </li>
                         </div>
                     </ul>

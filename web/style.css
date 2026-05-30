@@ -454,6 +454,7 @@ body {
     margin-left: -3.9vw;
     background-color: #70f670;
     border: 2px solid #263a33;
+    text-align: center;
 }
 ul {
   list-style-type: none;
@@ -524,4 +525,9 @@ ul {
     margin-top: 3vh;
     height:15vh;
     width:8vw;
+}
+
+.routine-complete-icon {
+    font-size: 5vh;
+    margin-top: 12%;
 }
