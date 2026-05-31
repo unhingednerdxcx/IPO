@@ -144,10 +144,85 @@ function main() {
 
 
                         let chart_par = document.createElement('div')
-                        chart_par.classList = 'chart-container'
 
                         let graph = document.createElement('canvas')
                         graph.id = `graph${key}`
+                        chart_par.classList = 'routine-block-graph'
+
+                        let labels: any = {
+                            "daily": ['Sun', 'Tue', 'Thu', 'Sat'],
+                            "weekly": ['W1', 'W2', 'W3', 'W4'],
+                            "monthly": ['Jan', 'May', 'Sept', 'Dec']
+                        }
+                        let fix_dataPoints: any = []
+                        let label: String[] = []
+                        switch (task[0]) {
+                            case "daily": {
+                                label = labels['daily']
+                                fix_dataPoints = [info['consistancy'][0], info['consistancy'][2], info['consistancy'][4], info['consistancy'][6]]
+                                break;
+                            }
+                            case "weekly": {
+                                label = labels['weekly']
+                                fix_dataPoints = info['consistancy']
+                                break;
+                            }
+                            case "monthly": {
+                                label = labels['monthly']
+                                fix_dataPoints = [info['consistancy'][0], info['consistancy'][4], info['consistancy'][8], info['consistancy'][11]]
+                                break;
+                            }
+                        }
+                        let config: import('chart.js').ChartConfiguration<'line'> = {
+                            type: 'line',
+                            data: {
+                                labels: label,
+                                datasets: [{
+                                    label: 'Progress (%)',
+                                    data: fix_dataPoints,
+                                    borderWidth: 2,
+                                    backgroundColor: 'rgba(0, 0, 0, 0.56)'
+                                }]
+                            },
+                            options: {
+                                indexAxis: 'x',
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    x: {
+                                        grid: {
+                                            color: 'rgba(0, 0, 0, 0)'
+                                        }
+                                    },
+                                    y: {
+                                        max: 100,
+                                        grid: {
+                                            color: 'rgb(137, 234, 171)'
+                                        }
+                                    }
+                                },
+                                plugins: {
+                                    tooltip: {
+                                        backgroundColor: '#33333380',
+                                        titleColor: '#ffffff',
+                                        bodyColor: '#ffffff',
+                                        footerColor: '#70f67079',
+                                        borderColor: '#33333387',
+                                        borderWidth: 1,
+                                        displayColors: true,
+                                        boxPadding: 3
+                                    },
+                                    legend: {
+                                        display: false,
+                                    }
+                                }
+                            }
+                        };
+
+                        let chart: any = ""
+                        if (canvas) {
+                            chart = new Chart(graph, config);
+                        }
 
                         main_info_descript.appendChild(main_info_descript_hardest)
                         main_info_descript.appendChild(main_info_descript_easiest)
@@ -427,7 +502,9 @@ async function list_items(tasks: Array<String>) {
     if (tasks && lists) {
         lists.innerHTML = ''
         let taskKey = 0
-        console.log("taskssssssss: ", tasks)
+        let margin = document.createElement('div')
+        margin.style.height = '2vh'
+        lists.appendChild(margin)
         tasks.forEach(task => {
             taskKey += 1
             console.log("task: ", task)
@@ -528,7 +605,7 @@ async function makeSubGroupTree() {
 
 
             let span_desc = document.createElement('div')
-            span_desc.classList = 'subtab-description'
+            span_desc.classList = 'new-sub-grp'
             span_desc.innerText = 'New sub group'
 
             content.appendChild(span)

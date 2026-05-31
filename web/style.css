@@ -289,7 +289,8 @@ body {
 
 .sub-icon {
     position: relative;
-    top: 5px
+    top: 5px;
+    margin-left: -15vw
 }
 
 .search-box { 
@@ -530,4 +531,15 @@ ul {
 .routine-complete-icon {
     font-size: 5vh;
     margin-top: 12%;
+}
+
+.chart-container {
+    display: flex; height:15vh; width:8vw; align-content: center;
+}
+
+.new-sub-grp {
+    margin-left: 0.5vw;
+    margin-top: 0.85vh;
+    font-family: 'Sour Gummy';
+    font-size: 2vh;
 }
