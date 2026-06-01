@@ -185,14 +185,7 @@ function main() {
                             },
                             plugins: {
                                 tooltip: {
-                                    backgroundColor: '#33333380',
-                                    titleColor: '#ffffff',
-                                    bodyColor: '#ffffff',
-                                    footerColor: '#70f67079',
-                                    borderColor: '#33333387',
-                                    borderWidth: 1,
-                                    displayColors: true,
-                                    boxPadding: 3
+                                    enabled: false,
                                 },
                                 legend: {
                                     display: false,
@@ -460,7 +453,9 @@ function main() {
 }
 async function list_items(tasks) {
     let lists = document.getElementById('tasks') || null;
-    if (tasks && lists) {
+    let today = document.getElementById('Today') || null;
+    let nothing = document.getElementById('nothingHere') || null;
+    if (tasks && lists && today) {
         lists.innerHTML = '';
         let taskKey = 0;
         let margin = document.createElement('div');
@@ -529,6 +524,12 @@ async function list_items(tasks) {
             lists?.appendChild(task_par);
             setcheck(taskKey);
         });
+        console.log(taskKey);
+        if (taskKey == 0) {
+            today.style.display = 'none';
+            nothing.style.display = 'flex';
+            current = "nothingHere";
+        }
         console.log("done with:-", lists);
     }
 }

@@ -4,7 +4,8 @@ import json
 from rapidfuzz import process
 import time
 from datetime import datetime
-
+from datetime import date as datetime_date
+import sys
 
 FOLDER = os.path.dirname(os.path.abspath(__file__))
 WFOLDER = os.path.join(FOLDER, "web")
@@ -112,7 +113,8 @@ def addTask(name="", catagory="", subcatagory="", date=""):
     data.setdefault(catagory, {}).setdefault(subcatagory, {})
     data[catagory][subcatagory].update({
         name: {
-            "date": date
+            "date": date,
+            "done": False
         }
     })
     TaskManager('w', data)
@@ -181,13 +183,14 @@ def listGroupDict():
     return data
 
 def listAllTasksDate():
-    res_arr = [[], []]
+    res_arr = [[], [], []]
     data = TaskManager('r')
     for cat, subcat in data.items():
         for subcatt, task in subcat.items():
-            for taskt, date in task.items():
+            for taskt, info in task.items():
                 res_arr[0].append(f"{taskt}\\{cat}/{subcatt}")
-                res_arr[1].append(date['date'])
+                res_arr[1].append(info['date'])
+                res_arr[2].append(info["done"])
     return res_arr
 
 @eel.expose
@@ -230,4 +233,38 @@ def listRoutineTraits(time, routineName):
             if list(testRoutineName)[0] == routineName:
                 return testRoutineName[next(iter(testRoutineName))]
 
-eel.start('index.html', port=0)
+@eel.expose
+def CleanUp():
+    data = TaskManager('r')
+    now = datetime.now()
+    formated = "/".join([
+        str(now.year),
+        str(now.month),
+        str(now.day),
+        str(now.hour),
+        str(now.minute)
+    ])
+    values = listAllTasksDate()
+    key = 0
+    new_data = data
+    for date in values[1]:
+        date_arr = date.split('/')
+        target_date = datetime_date(int(date_arr[0]), int(date_arr[1]), int(date_arr[2]))
+        if target_date < now.date():
+            taskname = values[0][key].split('\\')[0]
+            taskpath = values[0][key].split('\\')[1].split('/')
+            print(taskname, taskpath)
+            del new_data[taskpath[0]][taskpath[1]][taskname]
+        key += 1
+    print(new_data)
+    TaskManager('w', new_data)
+    time.sleep(1)
+    sys.exit()
+
+def exitCode(page_route, remaining_websockets):
+    if not remaining_websockets:
+        CleanUp()
+
+eel.start('index.html', port=0, close_callback=exitCode)
+CleanUp()
+

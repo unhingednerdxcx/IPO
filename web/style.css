@@ -156,6 +156,33 @@
     margin-top: 2vh;
     font-weight: 700;
 }
+
+.nothingHere {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    scale: 1;
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 5vh;
+}
+.nothing-title {
+    position: absolute;
+    margin-top: -7.5vh;
+}
+.nothing-icon {
+    font-size: 6vh;
+    margin-left: -4vw;
+}
+.nothing-main {
+    margin-left: -12vw;
+}
+.nothing-side-comment {
+    scale: 0.5;
+    color: #1B4D1B;
+}
 .Today {
     display: flex;
 }
@@ -367,7 +394,7 @@ body {
 
 .add-routine-icon {
     position: relative;
-    top: 0.5vh;
+    top: 0.2vh;
 }
 
 .routine-list {
@@ -542,4 +569,24 @@ ul {
     margin-top: 0.85vh;
     font-family: 'Sour Gummy';
     font-size: 2vh;
+}
+
+.newgroup-description {
+    position: relative;
+    top: -10%;
+    font-family: 'Sour Gummy', sans-serif;
+    height: 5vh;
+    text-align: center;
+    padding: 1vh 2vw;
+}
+
+.newgroup-icon {
+    position: relative;
+    top: 16%
+}
+
+.add-routine-text {
+    position: relative;
+    margin-top: -2.7vh;
+    margin-left: 1.7vw;
 }
