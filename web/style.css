@@ -1,3 +1,24 @@
+:root {
+    --primary-background-color: #e8ffe8;
+    --secondary-background-color: #CCFFCC;
+    --tertiary-background-color: #befebe;
+    --primary-highlight-color: #b4fcb4;
+    --secondary-highlight-color: #93fa93;
+
+    --dark-text-color: #263a2d;
+    --text-color: #1B4D1B;
+    --outline-color: #2f4f44;
+
+    --text-l1: 12vw;
+    --text-l2: 6vw;
+    --text-l3: 3vw;
+    --text-l4: 1vw;
+    --text-l5: 0.5vw;
+    --border-radi: 10px;
+    --border-extra-radi: 20px;
+    --outline-weight: 1px;
+    --outline-heavy-weight: 2px;
+}
 
 .title {
     font-family: 'Sour Gummy', sans-serif;
@@ -8,7 +29,7 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    background-color: #CCFFCC;
+    background-color: var(--secondary-background-color);
     width: 27%;
     height: 100vh;
     left: 0;
@@ -30,15 +51,15 @@
     width: 90%;
     margin: 0 auto;
     border-radius: 20px;
-    outline: 1px solid #2f4f44;
+    outline: 1px solid var(--outline-color);
     box-sizing: border-box; 
     transition: background-color 0.5s ease;
 }
 .tab:hover {
-    background-color: #b4fcb4;
+    background-color: var(--primary-highlight-color);
 }
 .tab.active {
-    background-color: #b4fcb4;
+    background-color: var(--primary-highlight-color);
 }
 .tab-content {
     display: flex;
@@ -47,7 +68,7 @@
     margin-top: 3%;
 }
 .tab-icon {
-    color: #1B4D1B;
+    color: var(--text-color);
 }
 .tab-description {
     font-family: 'Sour Gummy', sans-serif;
@@ -86,13 +107,13 @@
 }
 .group-tabs div:hover {
     border-radius: 10px;
-    background-color: #b4fcb4;
+    background-color: var(--primary-highlight-color);
 }
 .main {
     position: absolute;
     top: 0;
     left: 27%;
-    background-color: #e8ffe8;
+    background-color: var(--primary-background-color);
     width: 73vw;
     height: 100vh;
     max-height: 100vh;
@@ -118,8 +139,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 15px;
-    background-color: #b4fcb4;
+    background-color: var(--secondary-background-color);
     padding: 24px 24px;
+    outline: 2px solid var(--outline-color);
 }
 
 .context-input {
@@ -129,8 +151,8 @@
     height: 40%;
     margin-left: 6%;
     margin-top: 5%;
-    background-color: #70f670;
-    color: #1B4D1B;
+    background-color: var(--secondary-highlight-color);
+    color: var(--text-color);
     font-family: 'Sour Gummy', sans-serif;
     border-radius: 10px;
     padding: 0 12px;
@@ -148,7 +170,7 @@
 }
 .default-content {
     display: inherit;
-    color: #2f4f44d0;
+    color: var(--dark-text-color);
 }
 .default-text {
     font-family: 'Sour Gummy', sans-serif;
@@ -167,6 +189,7 @@
     scale: 1;
     font-family: 'Sour Gummy', sans-serif;
     font-size: 5vh;
+    color: var(--dark-text-color);
 }
 .nothing-title {
     position: absolute;
@@ -181,7 +204,7 @@
 }
 .nothing-side-comment {
     scale: 0.5;
-    color: #1B4D1B;
+    color: var(--dark-text-color);
 }
 .Today {
     display: flex;
@@ -206,15 +229,15 @@
     font-size: 30;
     border-radius: 20px;
     padding: 8px 8px;
-    background: #b4fcb483;
-    outline: 1px solid #263a33;
+    background: var(--tertiary-background-color);
+    outline: 2px solid var(--outline-color);
     transition: background 0.2s ease;
     height: 5vh;
     width: 12vw;
 }
 
 .add-routine:hover {
-    background: #b4fcb4e2;
+    background: var(--secondary-highlight-color);
 }
 
 .routine-stats {
@@ -229,7 +252,7 @@
 .tasks {
     display: inherit;
     flex-direction: column;
-    color: #263a33;
+    color: var(--text-color);
     font-family: 'Sour Gummy', sans-serif;
     font-size: 100%;
     font-weight: 500;
@@ -240,7 +263,7 @@
     padding: 12px;
     width: 63vw;
     border-radius: 10px;
-    background: #b4fcb4;
+    background: var(--secondary-background-color);
     align-items: center;
 }
 .toggle-task {
@@ -249,7 +272,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #93fa93;
+    background-color: var(--primary-highlight-color);
     cursor: pointer;
     align-items: center;
     justify-content: center;
@@ -257,7 +280,7 @@
     transition: background-color 0.5s ease;
 }
 .toggle-task:hover {
-    background-color: #70f670;
+    background-color: var(--secondary-highlight-color);
 }
 .task-description {
     font-size: 30px;
@@ -266,7 +289,7 @@
 .check-task {
     font-size: 250%;
     margin: 0;
-    color: #3a2626;
+    color: var(--text-color);
 }
 
 .context-description {
@@ -283,7 +306,7 @@
     z-index: 10000;
     width: 18vw;
     height: 15vh;
-    background-color: #97ffca;
+    background-color: var(--secondary-highlight-color);
     border-radius: 20px;
     padding: 24px 24px;
     right: -21.5%;
@@ -311,7 +334,7 @@ body {
 }
 
 .subgroup-wrap:hover{
-    background-color: #b4fcb4;
+    background-color: var(--primary-highlight-color);
 }
 
 .sub-icon {
@@ -328,7 +351,7 @@ body {
     transform: translateY(-50%);
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #b4fcb4;
+    background-color: var(--secondary-background-color);
     border-radius: 30px;
 }
 
@@ -343,7 +366,7 @@ body {
 .search-ress {
     display: flex;
     flex-direction: column;
-    outline: 1px solid #1B4D1B;
+    outline: 1px solid var(--outline-color);
     height: 53%;
     width: 80%;
     margin-left: 3.5vw;
@@ -354,7 +377,7 @@ body {
 }
 
 .search-res {
-    outline: 1px solid #263a33;
+    outline: 1px solid var(--outline-color);
     width: 100%;
     height: 5vh;
     border-radius: 10px;
@@ -368,7 +391,7 @@ body {
     width: 30vw;
     height: 10vh;
     left: 20vh;
-    outline: 1px solid #1B4D1B;
+    outline: 1px solid #000000;
 }
 
 .subtab-description {
@@ -410,8 +433,8 @@ body {
     padding: 8px 8px;
     width: 65vw;
     border-radius: 10px;
-    background: #CCFFCC;
-    outline: 1px solid #1B4D1B;
+    background: var(--secondary-background-color);
+    outline: 1px solid var(--outline-color);
 }
 
 .routine-stat{
@@ -420,7 +443,7 @@ body {
 }
 
 .break-line {
-    outline: 1px solid #263a33;
+    outline: 1px solid var(--outline-color);
     margin-left: -2vw;
 }
 
@@ -431,8 +454,8 @@ body {
 }
 .task-stat-block {
     height: 30%;
-    outline: 1px solid #1B4D1B;
-    background-color: #70f67079;
+    outline: 1px solid var(--outline-color);
+    background-color: var(--secondary-background-color);
     border-radius: 10px;
     width: 24vw;
     text-align: center;
@@ -458,7 +481,7 @@ body {
 }
 
 .side-line {
-    outline: 3px solid #2f4f44
+    outline: 3px solid var(--outline-color)
 }
 
 .routine-step {
@@ -470,7 +493,7 @@ body {
     height: 7vh;
     padding: 0.4vh;
     text-align: justify;
-    background-color: #93fa93;
+    background-color: var(--secondary-background-color);
 }
 .routine-discript {
     font-size: 30px;
@@ -480,8 +503,8 @@ body {
     height: 6.5vh;
     border-radius: 50%;
     margin-left: -3.9vw;
-    background-color: #70f670;
-    border: 2px solid #263a33;
+    background-color: var(--secondary-highlight-color);
+    border: 2px solid var(--outline-color);
     text-align: center;
 }
 ul {
@@ -497,7 +520,7 @@ ul {
     display: flex;
     flex-direction: row;
     width: 100%;
-    outline: 2px solid #2f4f44;
+    outline: 2px solid var(--outline-color);
     max-width: 100%;
     min-width: 0; 
     overflow-x: auto;
@@ -518,15 +541,15 @@ ul {
     width: 25vw;
     height: 20vh;
     border-radius: 20px;
-    outline: 1px solid #1B4D1B;
-    background-color: #b4fcb483;
+    outline: 1px solid var(--outline-color);
+    background-color: var(--secondary-background-color);
     font-family: 'Sour Gummy', sans-serif;
     padding: 10px;
     transition: background-color 1.0s ease;
 }
 
 .routine-block:hover {
-    background-color: #70f6709c;
+    background-color: var(--primary-highlight-color);
 }
 
 .routine-block-text {
@@ -589,4 +612,13 @@ ul {
     position: relative;
     margin-top: -2.7vh;
     margin-left: 1.7vw;
+}
+
+.tester {
+    width: 10vw;
+    height: 10vh;
+    background-color: #1B4D1B;
+    position: absolute;
+    top: 0;
+    left: 0;
 }

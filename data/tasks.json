@@ -1,38 +1,16 @@
 {
     "My projects": {
-        "a": {
-            "work": {
-                "date": "2026/05/29/19/44",
-                "done": false
-            },
+        "a": {},
+        "b": {
             "cry": {
-                "date": "2026/05/01/09/59",
+                "date": "2026/07/01/09/59",
                 "done": true
             }
         },
-        "b": {
-            "work": {
-                "date": "2026/05/29/19/44",
-                "done": false
-            },
-            "cry": {
-                "date": "2026/07/01/09/59",
-                "done": false
-            }
-        },
-        "My projects": {
-            "dd": {
-                "date": "2026/5/26/22/45",
-                "done": false
-            }
-        }
+        "My projects": {}
     },
     "My projectsx": {
         "a": {
-            "work": {
-                "date": "2026/05/19/19/44",
-                "done": true
-            },
             "cry": {
                 "date": "2026/07/01/09/59",
                 "done": false
