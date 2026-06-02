@@ -5,6 +5,7 @@ from rapidfuzz import process
 import time
 from datetime import datetime
 from datetime import date as datetime_date
+from datetime import timezone
 import sys
 
 FOLDER = os.path.dirname(os.path.abspath(__file__))
@@ -234,6 +235,41 @@ def listRoutineTraits(time, routineName):
                 return testRoutineName[next(iter(testRoutineName))]
 
 @eel.expose
+def validateDateTime(fullIso):
+    target = datetime.fromisoformat(fullIso)
+    now = datetime.now(timezone.utc)
+    if (target < now):
+        return False
+    return True
+
+@eel.expose
+def addRoutine(time, name):
+    data = RoutineManager('r')
+    data = dict(data)
+    data[time].append({
+        name: {
+            "tasks": [],
+            "Complete till": '',
+            "Streak": 0,
+            "Most difficult": {
+                "name": "",
+                "score": 0
+            },
+            "Most easiest": {
+                "name": "",
+                "score": 0
+            },
+            "stops": [],
+            "consistancy": [
+                0, 0, 0, 0, 0, 0, 0
+            ]
+        }
+    })
+    RoutineManager('w', data)
+
+addRoutine('daily', 'myrotun')
+
+@eel.expose
 def CleanUp():
     data = TaskManager('r')
     now = datetime.now()
@@ -265,6 +301,5 @@ def exitCode(page_route, remaining_websockets):
     if not remaining_websockets:
         CleanUp()
 
-eel.start('index.html', port=0, close_callback=exitCode)
-CleanUp()
+eel.start('index.html', port=55555, close_callback=exitCode)
 

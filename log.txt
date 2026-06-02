@@ -1002,3 +1002,72 @@
 - {'My projects': {'a': {}, 'b': {'cry': {'date': '2026/07/01/09/59', 'done': True}}, 'My projects': {}}, 'My projectsx': {'a': {'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
 - Listing task ..
 - {'My projects': {'a': {}, 'b': {'cry': {'date': '2026/07/01/09/59', 'done': True}}, 'My projects': {}}, 'My projectsx': {'a': {'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {'cry': {'date': '2026/07/01/09/59', 'done': True}}, 'My projects': {}}, 'My projectsx': {'a': {'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {'cry': {'date': '2026/07/01/09/59', 'done': True}}, 'My projects': {}}, 'My projectsx': {'a': {'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {'cry': {'date': '2026/07/01/09/59', 'done': True}}, 'My projects': {}}, 'My projectsx': {'a': {'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {'cry': {'date': '2026/07/01/09/59', 'done': True}}, 'My projects': {}}, 'My projectsx': {'a': {'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {'cry': {'date': '2026/07/01/09/59', 'done': True}}, 'My projects': {}}, 'My projectsx': {'a': {'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {'cry': {'date': '2026/07/01/09/59', 'done': True}}, 'My projects': {}}, 'My projectsx': {'a': {'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Searching for a new task {name}..
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/05/01/09/59', 'done': True}}, 'b': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}, 'My projects': {'dd': {'date': '2026/5/26/22/45', 'done': False}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44', 'done': True}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/05/01/09/59', 'done': True}}, 'b': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}, 'My projects': {'dd': {'date': '2026/5/26/22/45', 'done': False}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44', 'done': True}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/05/01/09/59', 'done': True}}, 'b': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}, 'My projects': {'dd': {'date': '2026/5/26/22/45', 'done': False}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44', 'done': True}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Searching for a new task {name}..
+- Making new task dd, My projects, My projects 2026/6/3/16/36..
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {'cry': {'date': '2026/07/01/09/59', 'done': False}}, 'My projects': {'dd': {'date': '2026/6/3/16/36', 'done': False}}}, 'My projectsx': {'a': {'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Making new task ff, 2026-06-01, 12:54 ..
+- Making new task ee, 2026-06-10, 17:11 ..
+- Making new task didym, My project, Axter 2026-06-03..
+- Making new task didym, My project, Axter 2026/06/03/17/16..
+- Making new group {name}..
+- Making new group {name}..
+- Making new subgroup {catagory}..
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/05/01/09/59', 'done': True}}, 'b': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}, 'My projects': {'dd': {'date': '2026/5/26/22/45', 'done': False}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44', 'done': True}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/05/01/09/59', 'done': True}}, 'b': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}, 'My projects': {'dd': {'date': '2026/5/26/22/45', 'done': False}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44', 'done': True}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/05/01/09/59', 'done': True}}, 'b': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}, 'My projects': {'dd': {'date': '2026/5/26/22/45', 'done': False}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44', 'done': True}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/05/01/09/59', 'done': True}}, 'b': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}, 'My projects': {'dd': {'date': '2026/5/26/22/45', 'done': False}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44', 'done': True}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/05/01/09/59', 'done': True}}, 'b': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}, 'My projects': {'dd': {'date': '2026/5/26/22/45', 'done': False}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44', 'done': True}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/05/01/09/59', 'done': True}}, 'b': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}, 'My projects': {'dd': {'date': '2026/5/26/22/45', 'done': False}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44', 'done': True}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/05/01/09/59', 'done': True}}, 'b': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}, 'My projects': {'dd': {'date': '2026/5/26/22/45', 'done': False}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44', 'done': True}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}
+- Listing task ..
+- {'My projects': {'a': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/05/01/09/59', 'done': True}}, 'b': {'work': {'date': '2026/05/29/19/44', 'done': False}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}, 'My projects': {'dd': {'date': '2026/5/26/22/45', 'done': False}}}, 'My projectsx': {'a': {'work': {'date': '2026/05/19/19/44', 'done': True}, 'cry': {'date': '2026/07/01/09/59', 'done': False}}}, 'x': {'k': {}}}

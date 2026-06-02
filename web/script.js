@@ -48,6 +48,8 @@ let config = {
         }
     }
 };
+let esc_need = false;
+let esc_kind;
 let chart = "";
 const canvas = document.getElementById('routineChart');
 if (canvas) {
@@ -56,38 +58,11 @@ if (canvas) {
 const eel = window.eel;
 console.log(eel);
 function main() {
-    window.requestAnimationFrame(() => {
-        setTimeout(() => {
-            makeChart();
-            makeTestChart();
-        }, 50);
-    });
+    makeTestChart();
     document.getElementById("side-search")?.addEventListener("click", async () => {
-        const input = document.getElementById("context-input");
-        input.type = "text";
-        console.log("showing context...");
-        let value = "";
-        const text = "Enter the task you want to search for";
-        const el = document.querySelector("#hide-all");
-        const description = document.getElementById("context-description");
-        if (el && description) {
-            description.innerHTML = text;
-            el.style.display = "block";
-            let search_handler = "";
-            async function search(e, el, input) {
-                if (e.key == "Enter") {
-                    el.style.display = "none";
-                    let value = input.value;
-                    input.value = "";
-                    let search_val = await eel.searchTask(value)();
-                    console.log(search_val);
-                    searchBoxShow(search_val, value);
-                    input.removeEventListener("keydown", search_handler);
-                }
-            }
-            search_handler = (e) => search(e, el, input);
-            input.addEventListener("keydown", search_handler);
-        }
+        let value = await showContext("Enter the task you want to search for", 'text');
+        let search_val = await eel.searchTask(value)();
+        searchBoxShow(search_val, String(value));
     });
     document.getElementById('side-routine')?.addEventListener('click', async () => {
         let routine = document.getElementById('routine') || null;
@@ -295,6 +270,7 @@ function main() {
             let title = document.getElementById('search-title') || null;
             title.innerText = `Searching for: ${value}`;
             let results_par = document.getElementById('search-ress') || null;
+            results_par.innerHTML = "";
             Object.entries(searches).forEach(([k, v]) => {
                 console.log("$$", k, v.name, v);
                 let li = document.createElement('li');
@@ -320,80 +296,19 @@ function main() {
     }
     document.getElementById("side-new-task")?.addEventListener("click", async () => {
         console.log("showing context...");
-        let name = "";
-        let nameEntered = false;
-        let dateEntered = false;
-        let date = "";
-        let total_time = "";
         const text = "Enter the name of the new task";
-        const el = document.querySelector("#hide-all");
-        const description = document.getElementById("context-description");
-        if (el && description) {
-            description.innerHTML = text;
-            el.style.display = "block";
-            const input = document.getElementById("context-input");
-            let name_handler;
-            input.type = "text";
-            name_handler = (e) => {
-                if (e.key == "Enter") {
-                    name = input.value;
-                    input.value = "";
-                    input.type = "date";
-                    input.removeEventListener("keydown", name_handler);
-                    nameEntered = true;
-                    input.addEventListener("change", date_handler);
-                    description.innerHTML = "Enter the date of the new task";
-                }
-            };
-            let date_handler;
-            date_handler = () => {
-                const description = document.getElementById("context-description");
-                if (nameEntered && description) {
-                    date = input.value;
-                    input.value = "";
-                    input.type = "time";
-                    input.removeEventListener("change", date_handler);
-                    dateEntered = true;
-                    input.addEventListener("change", time_handler);
-                    description.innerHTML = "Enter the time of the new task";
-                }
-            };
-            let time_handler;
-            time_handler = async () => {
-                if (dateEntered) {
-                    let time = input.value;
-                    input.value = "";
-                    input.type = "time";
-                    input.removeEventListener("change", time_handler);
-                    let in_date = new Date(date);
-                    let today = new Date();
-                    const [hour, minute] = time.split(':').map(Number);
-                    if (hour && minute) {
-                        in_date.setHours(hour, minute, 0, 0);
-                        today.setHours(0, 0, 0, 0);
-                        if (in_date >= today) {
-                            el.style.display = "none";
-                            let clean_date = [
-                                in_date.getFullYear(),
-                                String(in_date.getMonth() + 1),
-                                String(in_date.getDate()),
-                                String(in_date.getHours()),
-                                String(in_date.getMinutes())
-                            ].join('/');
-                            console.log(clean_date);
-                            await eel.addTask(name, "My projects", "My projects", clean_date);
-                        }
-                        else {
-                            el.style.display = "none";
-                            showmsgbox("Date cannot be before today");
-                        }
-                    }
-                    else {
-                        el.style.display = "none";
-                    }
-                }
-            };
-            input.addEventListener("keydown", name_handler);
+        let name = await showContext("Enter the name of the new task", 'text');
+        let date = await showContext("Enter the date of the new task", 'date');
+        let time = await showContext("Enter the time of the new task", 'time');
+        const dateTime = new Date(`${date}T${time}`);
+        console.log(await eel.validateDateTime(dateTime.toISOString())());
+        if (await eel.validateDateTime(dateTime.toISOString())()) {
+            date = date.split('-');
+            time = time.split(':');
+            eel.addTask(name, "My project", "Axter", `${date[0]}/${date[1]}/${date[2]}/${time[0]}/${time[1]}`);
+        }
+        else {
+            showmsgbox("Date cannot be before today");
         }
     });
     document.getElementById("side-Today")?.addEventListener('click', async () => {
@@ -425,29 +340,8 @@ function main() {
         }
     });
     document.getElementById('side-group')?.addEventListener('click', async () => {
-        const input = document.getElementById("context-input");
-        input.type = "text";
-        console.log("showing context...");
-        let value = "";
-        const text = "Enter the new group you want to make";
-        const el = document.querySelector("#hide-all");
-        const description = document.getElementById("context-description");
-        if (el && description) {
-            description.innerHTML = text;
-            el.style.display = "block";
-            let NewGroup_handler = "";
-            async function NewGroup(e, el, input) {
-                if (e.key == "Enter") {
-                    el.style.display = "none";
-                    let value = input.value;
-                    input.value = "";
-                    await eel.addNewGroup(value);
-                    input.removeEventListener("keydown", NewGroup_handler);
-                }
-            }
-            NewGroup_handler = (e) => NewGroup(e, el, input);
-            input.addEventListener("keydown", NewGroup_handler);
-        }
+        let value = await showContext("Enter the new group you want to make", 'text');
+        await eel.addNewGroup(value);
     });
     makeSubGroupTree();
 }
@@ -577,8 +471,14 @@ async function makeSubGroupTree() {
                         console.log(`${grp}/${subgrp} ${task}`);
                         fmt_val.push([task, `${grp}/${subgrp}`]);
                     });
-                    console.log(fmt_val);
-                    list_items(fmt_val);
+                    const today = document.querySelector("#Today");
+                    const current_element = document.getElementById(`${current}`);
+                    if (today && current_element) {
+                        current_element.style.display = "none";
+                        today.style.display = "flex";
+                        current = "Today";
+                        list_items(fmt_val);
+                    }
                 };
                 let subgrp_ico = document.createElement('span');
                 subgrp_ico.classList = 'material-symbols-outlined';
@@ -604,29 +504,9 @@ function showmsgbox(text) {
         }, 3000);
     }
 }
-function makeNewSubGroup(catagory) {
-    const input = document.getElementById("context-input");
-    input.type = "text";
-    console.log("showing context...");
-    let value = "";
-    const text = "Enter the name of the new subgroup";
-    const el = document.querySelector("#hide-all");
-    const description = document.getElementById("context-description");
-    if (el && description) {
-        el.style.display = "block";
-        description.innerHTML = text;
-        input.addEventListener("keydown", async (e) => {
-            if (e.key == "Enter") {
-                el.style.display = "none";
-                let value = input.value;
-                input.value = "";
-                await eel.newSubGroup(catagory, value);
-            }
-        });
-    }
-}
-function makeChart() {
-    console.log('here');
+async function makeNewSubGroup(catagory) {
+    let value = await showContext("Enter the name of the new subgroup", 'text');
+    await eel.newSubGroup(catagory, value);
 }
 function makeTestChart() {
     console.log('here');
@@ -686,6 +566,52 @@ function makeTestChart() {
         const _ = new Chart(canvas, config);
         console.log('here');
     }
+}
+document.addEventListener('keydown', (e) => {
+    if (e.key == "Esc" && esc_need) {
+        esc_kind.style.display = 'none';
+    }
+});
+function showContext(descriptions, type = "text") {
+    return new Promise((resolve) => {
+        const hide = document.getElementById('hide-all') || null;
+        const desc = document.getElementById("context-description") || null;
+        const input = document.getElementById("context-input") || null;
+        if (hide && desc && input) {
+            esc_need = true;
+            esc_kind = hide;
+            hide.style.display = 'flex';
+            desc.innerText = descriptions;
+            input.type = type;
+            let mode;
+            let key_handle = (e) => {
+                if (e.key == "Enter") {
+                    resolve(input.value);
+                    console.log(input.value);
+                    input.removeEventListener(mode, key_handle);
+                    hide.style.display = "none";
+                }
+            };
+            let handle = (e) => {
+                resolve(input.value);
+                console.log(input.value);
+                input.removeEventListener(mode, handle);
+                hide.style.display = "none";
+            };
+            if (type == "text") {
+                mode = "keydown";
+                input.addEventListener(mode, key_handle);
+            }
+            else if (type == "time" || type == "date") {
+                mode = "change";
+                input.addEventListener(mode, handle);
+            }
+            else {
+                mode = "change";
+                input.addEventListener(mode, handle);
+            }
+        }
+    });
 }
 window.makeNewSubGroup = makeNewSubGroup;
 export {};
