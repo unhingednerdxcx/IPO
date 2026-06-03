@@ -75,10 +75,10 @@
         <div class="groups" id="groups"></div>
     </div>
     <div class="account-box">
-        <img class="pfp" src="examplePfp.png">
+        <img class="pfp" id="userpfp" src="examplePfp.png">
         <div class="info-box">
             <div style="display: flex; flex-direction: row;">
-                <div class="userName-text">UserName</div>
+                <div class="userName-text" id="username">UserName</div>
                 <span class="material-symbols-outlined" style="scale: 1.4;" id="more-acc-info">
                     arrow_right
                 </span>
@@ -232,9 +232,30 @@
             </div>
         </div>
     </div>
+    <div class="hide-all" id="sign-in" style="display: flex">
+        <div class="signin-options">
+            <div >Sign in using:-</div>
+            <div class="sign-in-option" id="gmail-enter">
+                <span class="material-symbols-outlined signinico">
+                    alternate_email
+                </span>
+                Gmail
+            </div>
+            <div class="sign-in-option" id="mail-enter">
+                <span class="material-symbols-outlined signinico">
+                    mail
+                </span>
+                Email
+            </div>
+            <div class="sign-in-option" id="guest-enter">
+                Guest(levels/XP will not save)
+            </div>
+        </div>
+    </div>
     
 
     <script type="text/javascript" src="/eel.js" defer></script>
+    <script type="module" src="signin.js"></script>
     <script type="module" src="./script.js" defer></script>
 </body>
 

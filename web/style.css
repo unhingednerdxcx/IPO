@@ -55,7 +55,9 @@
     scale: 0.6;
     border: 3px solid var(--outline-color);
     margin-left: 2vw;
-    top: 0px
+    top: 0px;
+    background-color: var(--tertiary-background-color);
+    
 }
 .info-box {
     display: flex;
@@ -723,6 +725,36 @@ ul {
     gap: 3vh;
     padding: 16px 32px;
     overflow-y: auto;
+}
+
+.signin-options {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    height: 30vh;
+    width: 30vw;
+    outline: 2px solid var(--outline-color);
+    border-radius: 10px;
+    left: 35vw;
+    top: 30vh;
+    background-color: var(--secondary-background-color);
+    text-align: center;
+    font-family: 'Sour Gummy',sans-serif;
+    font-size: 40px;
+    padding-top: 3vh;
+    padding-left: 3vw;
+    gap: 2.5vh;
+}
+
+.sign-in-option {
+    display: flex;
+    font-size: 30px;
+    text-align: left;
+    gap: 1vw
+}
+
+.signinico {
+    margin-top: 1vh;
 }
 
 

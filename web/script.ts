@@ -67,6 +67,9 @@ if (canvas) {
 }
 const eel = (window as any).eel;
 console.log(eel)
+if (!eel) {
+    window.location.reload()
+}
 function main() {
     makeTestChart();
     document.getElementById("side-search")?.addEventListener("click", async() => {
