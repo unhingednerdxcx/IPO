@@ -31,12 +31,60 @@
     position: absolute;
     background-color: var(--secondary-background-color);
     width: 27%;
-    height: 100vh;
+    height: 90vh;
     left: 0;
     top: 0;
     gap: 10px;
     overflow: auto;
 }
+
+.account-box {
+    display: flex;
+    position: absolute;
+    top: 90vh;
+    left: 0;
+    height: 10vh;
+    width: 27%;
+    border-top: 3px solid var(--outline-color);
+    background-color: var(--secondary-background-color);
+}
+
+.pfp {
+    display: flex;
+    border-radius: 50%;
+    scale: 0.6;
+    border: 3px solid var(--outline-color);
+    margin-left: 2vw;
+    top: 0px
+}
+.info-box {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Sour Gummy', sans-serif;
+    color: var(--dark-text-color);
+    justify-content: center;
+}
+
+.userName-text {
+    font-size: 20px;
+    margin-top: -0.3vh;
+}
+
+.account-context-menu {
+    display: none;
+    outline: 2px solid var(--outline-color);
+    flex-direction: column;
+    gap: 1vh;
+    position: absolute;
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 20px;
+    justify-content: center;
+    width: 20vw;
+    height: 13vh;
+    background-color: var(--tertiary-background-color);
+    border-radius: 10px;
+}
+
 .tabs {
     display: flex;
     flex-direction: column;
@@ -622,3 +670,72 @@ ul {
     top: 0;
     left: 0;
 }
+
+.dropdown {
+    display: none;
+    background-color: var(--text-color);
+    width: 75%;
+    height: 30%;
+    padding: 0 12px;
+    top: 57%;
+    left: 10%;
+    background-color: var(--secondary-highlight-color);
+    font-family: 'Sour Gummy', sans-serif;
+    border-radius: 10px;
+    z-index: 9999;
+    border-radius: 10px;
+    position: absolute;
+    padding: 0 12px;
+    align-items: center;
+}
+
+.dropdown-title {
+    font-size: 3vh;
+    margin-left: 1vw;
+}
+
+.dropdown-ico {
+    display: inherit;
+    position: relative;
+    margin-left: auto;
+    right: 2vw;
+    scale: 1.7;
+    user-select: none; 
+}
+
+.dropdown:click {
+    rotate: 90deg;
+}
+
+.dropdown-ops {
+    display: none;
+    flex-direction: column;
+    width: inherit;
+    position: absolute;
+    height: 20vh;
+    max-height: 20vh;
+    background-color: var(--secondary-highlight-color);
+    border-radius: var(--border-radi);
+    border-top: 3px solid var(--outline-color);
+    top: 4vh;
+    width:23vw;
+    left: 0vw;
+    gap: 3vh;
+    padding: 16px 32px;
+    overflow-y: auto;
+}
+
+
+/*
+.context-input {
+    all: unset;
+    display: inherit;
+    width: 80%;
+    height: 40%;
+    background-color: var(--secondary-highlight-color);
+    color: var(--text-color);
+    font-family: 'Sour Gummy', sans-serif;
+    border-radius: 10px;
+    padding: 0 12px;
+}
+*/

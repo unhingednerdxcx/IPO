@@ -50,6 +50,8 @@ let config = {
 };
 let esc_need = false;
 let esc_kind;
+let click_need = false;
+let click_kind;
 let chart = "";
 const canvas = document.getElementById('routineChart');
 if (canvas) {
@@ -311,6 +313,25 @@ function main() {
             showmsgbox("Date cannot be before today");
         }
     });
+    document.getElementById('new-routine')?.addEventListener('click', async () => {
+        let name = await showContext("Enter the name of the new routine", 'text');
+        let time = await showContext("Select how often this routine is", 'dropdown', ["Daily", "Weekly", "Monthly"], 'Select');
+        eel.addRoutine(time, name)();
+    });
+    document.getElementById('more-acc-info')?.addEventListener('click', async (e) => {
+        let context = document.getElementById("acc-context");
+        if (context) {
+            let x = e.clientX;
+            let y = e.clientY - 100;
+            context.style.left = String(`${x}px`);
+            context.style.top = String(`${y}px`);
+            context.style.display = 'flex';
+            setTimeout(() => {
+                click_need = true;
+                click_kind = context;
+            }, 20);
+        }
+    });
     document.getElementById("side-Today")?.addEventListener('click', async () => {
         const today = document.querySelector("#Today");
         const current_element = document.getElementById(`${current}`);
@@ -570,9 +591,16 @@ function makeTestChart() {
 document.addEventListener('keydown', (e) => {
     if (e.key == "Esc" && esc_need) {
         esc_kind.style.display = 'none';
+        esc_need = false;
     }
 });
-function showContext(descriptions, type = "text") {
+document.addEventListener('click', (e) => {
+    if (click_need) {
+        click_kind.style.display = 'none';
+        click_need = false;
+    }
+});
+function showContext(descriptions, type = "text", val = [], disc_2 = "") {
     return new Promise((resolve) => {
         const hide = document.getElementById('hide-all') || null;
         const desc = document.getElementById("context-description") || null;
@@ -598,6 +626,15 @@ function showContext(descriptions, type = "text") {
                 input.removeEventListener(mode, handle);
                 hide.style.display = "none";
             };
+            let drop_handle = () => {
+                let drop_icon = document.getElementById('drop-arr') || null;
+                let drop_ops = document.getElementById('drop-ops') || null;
+                console.log('rortateing');
+                drop_icon.style.rotate = drop_icon.style.rotate == "90deg" ? "0deg" : "90deg";
+                drop_ops.style.display = drop_ops.style.display == "flex" ? "none" : "flex";
+                let drop = document.getElementById('dropdown') || null;
+                drop.style.display = 'flex';
+            };
             if (type == "text") {
                 mode = "keydown";
                 input.addEventListener(mode, key_handle);
@@ -605,6 +642,31 @@ function showContext(descriptions, type = "text") {
             else if (type == "time" || type == "date") {
                 mode = "change";
                 input.addEventListener(mode, handle);
+            }
+            else if (type == "dropdown") {
+                let mode = "click";
+                let drop = document.getElementById('dropdown') || null;
+                let drop_tittle = document.getElementById('drop-title') || null;
+                let drop_icon = document.getElementById('drop-arr') || null;
+                let drop_ops = document.getElementById('drop-ops') || null;
+                if (drop && drop_tittle && drop_icon && drop_ops) {
+                    input.style.display = 'none';
+                    drop.style.display = 'flex';
+                    drop_tittle.innerText = disc_2;
+                    val.forEach((option) => {
+                        let li = document.createElement('li');
+                        li.innerText = option;
+                        li.onclick = () => {
+                            drop.style.display = 'none';
+                            input.style.display = 'inherit';
+                            hide.style.display = "none";
+                            resolve(li.innerText);
+                        };
+                        drop_ops.appendChild(li);
+                    });
+                    console.log(drop_icon);
+                    drop_icon.addEventListener(mode, drop_handle);
+                }
             }
             else {
                 mode = "change";

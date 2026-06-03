@@ -246,7 +246,7 @@ def validateDateTime(fullIso):
 def addRoutine(time, name):
     data = RoutineManager('r')
     data = dict(data)
-    data[time].append({
+    data[time.lower()].append({
         name: {
             "tasks": [],
             "Complete till": '',
