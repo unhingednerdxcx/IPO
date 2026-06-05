@@ -13,6 +13,7 @@ WFOLDER = os.path.join(FOLDER, "web")
 LOGFILE = os.path.join(FOLDER, "log.txt")
 TASKFILE = os.path.join(FOLDER, "data", "tasks.json")
 ROUTINEFILE =  os.path.join(FOLDER, "data", "routine.json")
+SETTINGFILE = os.path.join(FOLDER, "data", "settings.json")
 eel.init(WFOLDER)
 
 
@@ -43,6 +44,18 @@ def RoutineManager(mode, val="", req=""):
                 return val
         case "w":
             with open(ROUTINEFILE, 'w') as file:
+                json.dump(val, file, indent=4)
+
+def settingsManager(mode, val="", req=""):
+    match mode:
+        case "r":
+            with open(SETTINGFILE, 'r') as file:
+                val = json.load(file)
+                if req == "arr":
+                    return list(val)
+                return val
+        case "w":
+            with open(SETTINGFILE, 'w') as file:
                 json.dump(val, file, indent=4)
 
 @eel.expose
@@ -277,6 +290,17 @@ def setComplete(path):
     data[arr[0]][int(arr[1])][arr[3]]["Complete till"] = arr[2]
 
     RoutineManager('w', data)
+
+@eel.expose
+def loggedin():
+    data = settingsManager('r')
+    return data["AccMade"]
+
+@eel.expose
+def setloggedin():
+    data = settingsManager('r')
+    data["AccMade"] = True
+    settingsManager('w', data)
 
 
 @eel.expose

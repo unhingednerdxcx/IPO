@@ -1,2 +1,4 @@
 // This is an example of what the setting will look like
-{}
+{
+    "AccMade": false // this is to store if account was already made or not
+}

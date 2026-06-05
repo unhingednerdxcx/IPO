@@ -20,5 +20,5 @@ jobs:
 
       - name: Run Python script
         env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          SUPER_KEY: ${{ secrets.SUPER_KEY }}
         run: python generator.py
