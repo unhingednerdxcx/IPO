@@ -90,11 +90,14 @@ function main() {
             routine.style.display = "flex"
                 let val = await eel.listAllRoutineNames()()
                 let key = 0
+                let pos = 0
+                let once = false
                 val.forEach( async(task: any) => {
                     key += 1
                     console.log(task)
                     let routine = document.getElementById(`${task[0]}-routines`) as HTMLElement || null
                     if (routine) {
+                        routine.innerHTML = ''
                         let info = await eel.listRoutineTraits(task[0], task[1])()
                         console.log(info)
                         console.log(info.tasks)
@@ -102,9 +105,6 @@ function main() {
                         let li = document.createElement('li')
                         li.classList = "routine-block"
                         li.dataset.path = `${task[0]}/${task[1]}`
-                        li.onclick = () => {
-                            showroutinedetails(String(li.dataset.path))
-                        }
 
                         let main_info = document.createElement('div')
                         main_info.classList = "routine-block-text"
@@ -140,18 +140,30 @@ function main() {
                             case "daily": {
                                 label = labels['daily']
                                 fix_dataPoints = [info['consistancy'][0], info['consistancy'][2], info['consistancy'][4], info['consistancy'][6]]
+                                once = true
                                 break;
                             }
                             case "weekly": {
+                                if (once) {
+                                    pos = 0
+                                    once = false
+                                }
                                 label = labels['weekly']
                                 fix_dataPoints = info['consistancy']
                                 break;
                             }
                             case "monthly": {
+                                if (once) {
+                                    pos = 0
+                                    once = false
+                                }
                                 label = labels['monthly']
                                 fix_dataPoints = [info['consistancy'][0], info['consistancy'][4], info['consistancy'][8], info['consistancy'][11]]
                                 break;
                             }
+                        }
+                        li.onclick = () => {
+                            showroutinedetails(String(li.dataset.path), pos)
                         }
                         let config: import('chart.js').ChartConfiguration<'line'> = {
                             type: 'line',
@@ -213,7 +225,7 @@ function main() {
                     }
                 });
         }
-        async function showroutinedetails(path: string) {
+        async function showroutinedetails(path: string, pos: Number) {
             const current_element = document.getElementById(`${current}`) as HTMLElement | null;
             const el = document.getElementById("routine-stats") as HTMLElement || null;
             const title = document.getElementById('routine-stat-title') as HTMLElement || null;
@@ -256,11 +268,11 @@ function main() {
                 config.data.labels = label;
                 (config as any).data.datasets[0].data = data['consistancy']
                 chart.update()
-                populate_routine_tasks(data['tasks'], data["Complete till"])
+                populate_routine_tasks(data['tasks'], data["Complete till"], path_arr[0], pos, path_arr[1])
             }
         }
 
-        function populate_routine_tasks(tasks: Array<String>, complete: string) {
+        function populate_routine_tasks(tasks: Array<String>, complete: string, time: any, pos: any, title: any) {
             console.log("HereXx")
             let complete_reach = true
             let tree = document.getElementById('routine-task-tree') as HTMLElement || null
@@ -272,6 +284,8 @@ function main() {
 
                     let btn = document.createElement('div')
                     btn.classList = 'routine-task-button'
+                    btn.dataset.name = String(task)
+                    btn.dataset.complete = 'false'
 
                     let desc = document.createElement('div')
                     desc.classList = 'routine-discript'
@@ -279,9 +293,18 @@ function main() {
 
                     if (task == complete) {
                         complete_reach = false
+                        btn.dataset.complete = 'true'
                         setComplete(btn)
                     } else if (complete_reach) {
+                        btn.dataset.complete = 'true'
                         setComplete(btn)
+                    }
+                    btn.onclick = () => {
+                        if (btn.dataset.complete == 'false') {
+                            setComplete(btn)
+                            btn.dataset.complete = 'true'
+                            eel.setComplete(`${time}/${pos}/${btn.dataset.name}/${title}`)
+                        }
                     }
 
                     function setComplete(btn: HTMLElement) {

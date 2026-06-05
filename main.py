@@ -270,6 +270,16 @@ def addRoutine(time, name):
 addRoutine('daily', 'myrotun')
 
 @eel.expose
+def setComplete(path):
+    arr = path.split('/')
+    data = RoutineManager('r')
+    print(arr)
+    data[arr[0]][int(arr[1])][arr[3]]["Complete till"] = arr[2]
+
+    RoutineManager('w', data)
+
+
+@eel.expose
 def CleanUp():
     data = TaskManager('r')
     now = datetime.now()

@@ -284,6 +284,106 @@
                     0
                 ]
             }
+        },
+        {
+            "myrotun": {
+                "tasks": [],
+                "Complete till": "",
+                "Streak": 0,
+                "Most difficult": {
+                    "name": "",
+                    "score": 0
+                },
+                "Most easiest": {
+                    "name": "",
+                    "score": 0
+                },
+                "stops": [],
+                "consistancy": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "myrotun": {
+                "tasks": [],
+                "Complete till": "",
+                "Streak": 0,
+                "Most difficult": {
+                    "name": "",
+                    "score": 0
+                },
+                "Most easiest": {
+                    "name": "",
+                    "score": 0
+                },
+                "stops": [],
+                "consistancy": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "myrotun": {
+                "tasks": [],
+                "Complete till": "",
+                "Streak": 0,
+                "Most difficult": {
+                    "name": "",
+                    "score": 0
+                },
+                "Most easiest": {
+                    "name": "",
+                    "score": 0
+                },
+                "stops": [],
+                "consistancy": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "myrotun": {
+                "tasks": [],
+                "Complete till": "",
+                "Streak": 0,
+                "Most difficult": {
+                    "name": "",
+                    "score": 0
+                },
+                "Most easiest": {
+                    "name": "",
+                    "score": 0
+                },
+                "stops": [],
+                "consistancy": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
         }
     ],
     "weekly": [
@@ -419,7 +519,7 @@
                     "Wipe windows",
                     "Organize closet"
                 ],
-                "Complete till": "Wash curtains",
+                "Complete till": "Wipe windows",
                 "Streak": 2,
                 "Most difficult": {
                     "name": "Organize closet",
