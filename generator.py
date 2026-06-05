@@ -34,7 +34,7 @@ db = firestore.client()
 challanges = get_challanges()
 print(challanges)
 db.collection("Tasks").document("Tasks").update({
-    "Tasks": ["new_task", "sad", "electric"]
+    "Tasks": challanges
 }, timeout=1200)
 print("PASSCODE GOTTEN")
 
