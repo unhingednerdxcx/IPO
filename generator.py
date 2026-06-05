@@ -20,7 +20,7 @@ def get_challanges():
         tasks['CommunityAndAwareness'][random.randint(0, 9)],
     ]
 
-password = os.environ.get('SECRET_KEY')
+password = os.environ.get('SUPER_KEY')
 if not password:
     print("NO PASSWORD (p.s if you are running this and you are not admin, dont run this script, its just for admins)")
     exit(1)
