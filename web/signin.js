@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const Config = {
   apiKey: "AIzaSyDiXBfMU_Kfj2yrklW1yWrMNvEHBRcq848",
@@ -45,14 +45,31 @@ async function complete(name, pfp, uid) {
     console.log(document.getElementById('userpfp').src)
     console.log(document.getElementById('userpfp'))
     console.log(document.getElementById('username'))
-    console.log("UID:", uid);
+    let ref = doc(db, "users", uid)
     if (!(await eel.loggedin()())) {
-        console.log("hey u")
-        await setDoc(doc(db, "users", uid), {
+        await setDoc(ref, {
             "xp": 0,
             "maxXp": 100,
             "level": 0,
         })
         await eel.setloggedin()
     }
+    let content = await getDoc(ref)
+    if (content.exists()) {
+        console.log(content.data())
+        let data = content.data()
+        document.getElementById('xp').innerText = `Xp: ${data.xp}/${data.maxXp}`
+        document.getElementById('lvl').innerText = `Level: ${data.level}`
+    } else {
+        console.log("ERROR:- content not found")
+    }
+}
+
+export async function listTodaysChallange() {
+    let ref = doc(db, "Tasks", "Tasks");
+    let content = await getDoc(ref);
+    if (content.exists()) {
+        return content.data();
+    }
+    return ["ERROR COULD NOT RECIEVE DATA"];
 }

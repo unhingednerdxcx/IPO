@@ -6,7 +6,6 @@
         @import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
     </style>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-    <link rel="stylesheet" href="var.css" />
     <link rel="stylesheet" href="style.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -58,6 +57,14 @@
                     <div class="tab-description">Routine</div>
                 </div>
             </div>
+            <div class="tab" id="side-challange">
+                <div class="tab-content">
+                    <span class="material-symbols-outlined">
+                        swords
+                    </span>
+                    <div class="tab-description">Challanges</div>
+                </div>
+            </div>
         </div>
 
         <hr style="border-color: #263a33; width: 90%; margin-top: 6%;">
@@ -103,7 +110,7 @@
                 </span>
                 <div class="nothing-title">Nothing Here!</div>
             </div>
-            <div>Add a task or check out routine.</div>
+            <div id="nothing-desc">Add a task or check out routine.</div>
             <div class="nothing-side-comment">Have a break, you've worked hard enough!</div>
         </div>
 
@@ -216,13 +223,13 @@
                 <span class="material-symbols-outlined tab-icon">
                     toll
                 </span>
-                <div>Xp: 100/200</div>
+                <div id="xp">Xp: 100/200</div>
             </div>
             <div style="display: flex; gap: 0.5vh">
                 <span class="material-symbols-outlined tab-icon">
                     progress_activity
                 </span>
-                <div>Level: 10</div>
+                <div id="lvl">Level: 10</div>
             </div>
             <div style="display: flex; gap: 0.5vh">
                 <span class="material-symbols-outlined tab-icon">
@@ -255,8 +262,8 @@
     
 
     <script type="text/javascript" src="/eel.js" defer></script>
-    <script type="module" src="signin.js"></script>
-    <script type="module" src="./script.js" defer></script>
+    <script type="module" src="./dist/signin.js"></script>
+    <script type="module" src="./dist/script.js" defer></script>
 </body>
 
 </html>

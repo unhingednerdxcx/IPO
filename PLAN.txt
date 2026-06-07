@@ -14,8 +14,8 @@ day 2{ //\\
 day 3{
     - Custom color /.\
     - sign up //\\
-    - auto challange loop
-    - auto update subgrp tree
+    - auto challange loop //\\
+    - auto update subgrp tree /|\
 }
 
 day 4 {

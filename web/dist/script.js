@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", main);
+import { listTodaysChallange } from "./signin.js";
 let current = "Default";
 let config = {
     type: 'bar',
@@ -291,6 +292,33 @@ function main() {
             }
         }
     });
+    document.getElementById("side-challange")?.addEventListener('click', async () => {
+        const Today = document.getElementById("Today") || null;
+        const current_element = document.getElementById(`${current}`);
+        if (Today && current_element) {
+            console.log("EXIST");
+            current_element.style.display = "none";
+            current = "Today";
+            Today.style.display = "flex";
+            console.log("val");
+            let val = await listTodaysChallange();
+            console.log("val");
+            console.log(val);
+            if (val) {
+                console.log(typeof (val.Tasks));
+                let tasks = val.Tasks;
+                let XP = val.XP;
+                let res = tasks.map((tasks, index) => {
+                    return [tasks, XP[index]];
+                });
+                list_items(res);
+                console.log(res);
+            }
+        }
+        else {
+            console.log("NO EXIST");
+        }
+    });
     function searchBoxShow(searches, value) {
         let hideall = document.getElementById("hide-all-search") || null;
         if (hideall) {
@@ -367,8 +395,6 @@ function main() {
             current_element.style.display = "none";
             today.style.display = "flex";
             let val = await eel.listTask("", "", "today")();
-            console.log(typeof (val));
-            console.log(val);
             list_items(val);
         }
     });
@@ -702,5 +728,4 @@ function showContext(descriptions, type = "text", val = [], disc_2 = "") {
     });
 }
 window.makeNewSubGroup = makeNewSubGroup;
-export {};
 //# sourceMappingURL=script.js.map

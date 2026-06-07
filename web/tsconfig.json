@@ -2,8 +2,8 @@
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
-    // "rootDir": "./src",
-    // "outDir": "./dist",
+    "rootDir": "./",
+    "outDir": "dist",
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
@@ -15,6 +15,10 @@
     // "lib": ["esnext"],
     // "types": ["node"],
     // and npm install -D @types/node
+
+    // To allow my ts file to work with js
+    "allowJs": true,
+    "noEmit": false,
 
     // Other Outputs
     "sourceMap": true,
