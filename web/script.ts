@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", main);
 declare const Chart: typeof import('chart.js').Chart;
-import { listTodaysChallange } from "./signin.js"
+import { listTodaysChallange, increaseXP } from "./signin.js"
 
 declare global {
   interface Window {
@@ -342,7 +342,7 @@ function main() {
                 let res = tasks.map( (tasks: any, index: Number) => {
                     return [ tasks, XP[index]]
                 } ) 
-                list_items(res)
+                list_items(res, true)
                 console.log(res)
             }
         } else {
@@ -457,7 +457,7 @@ function main() {
     makeSubGroupTree()
 }
 
-async function list_items(tasks: Array<String>) {
+async function list_items(tasks: Array<String>, challange=false) {
     let lists = document.getElementById('tasks') as HTMLElement|| null
     let today = document.getElementById('Today') as HTMLElement || null
     let nothing = document.getElementById('nothingHere') as HTMLElement || null
@@ -478,8 +478,11 @@ async function list_items(tasks: Array<String>) {
             let task_btn = document.createElement('button')
             task_btn.classList = 'toggle-task'
             task_btn.id = `task-btn${taskKey}`
-            task_btn.onclick = () => {
+            task_btn.onclick = async() => {
                 toggle(task_btn.id)
+                if (challange) {
+                    await increaseXP(task_par.dataset.path)
+                }
             }
 
             async function setcheck(key: any) {
@@ -533,7 +536,9 @@ async function list_items(tasks: Array<String>) {
             task_par.appendChild(task_btn)
             task_par.appendChild(task_desc)
             lists?.appendChild(task_par)
-            setcheck(taskKey)
+            if (!challange) {
+                setcheck(taskKey)
+            }
         });
         console.log(taskKey)
         if (taskKey == 0) {

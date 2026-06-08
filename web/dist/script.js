@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", main);
-import { listTodaysChallange } from "./signin.js";
+import { listTodaysChallange, increaseXP } from "./signin.js";
 let current = "Default";
 let config = {
     type: 'bar',
@@ -311,7 +311,7 @@ function main() {
                 let res = tasks.map((tasks, index) => {
                     return [tasks, XP[index]];
                 });
-                list_items(res);
+                list_items(res, true);
                 console.log(res);
             }
         }
@@ -418,7 +418,7 @@ function main() {
     });
     makeSubGroupTree();
 }
-async function list_items(tasks) {
+async function list_items(tasks, challange = false) {
     let lists = document.getElementById('tasks') || null;
     let today = document.getElementById('Today') || null;
     let nothing = document.getElementById('nothingHere') || null;
@@ -438,8 +438,11 @@ async function list_items(tasks) {
             let task_btn = document.createElement('button');
             task_btn.classList = 'toggle-task';
             task_btn.id = `task-btn${taskKey}`;
-            task_btn.onclick = () => {
+            task_btn.onclick = async () => {
                 toggle(task_btn.id);
+                if (challange) {
+                    await increaseXP(task_par.dataset.path);
+                }
             };
             async function setcheck(key) {
                 key = String(key);
@@ -489,7 +492,9 @@ async function list_items(tasks) {
             task_par.appendChild(task_btn);
             task_par.appendChild(task_desc);
             lists?.appendChild(task_par);
-            setcheck(taskKey);
+            if (!challange) {
+                setcheck(taskKey);
+            }
         });
         console.log(taskKey);
         if (taskKey == 0) {

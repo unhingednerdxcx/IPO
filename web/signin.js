@@ -69,7 +69,33 @@ export async function listTodaysChallange() {
     let ref = doc(db, "Tasks", "Tasks");
     let content = await getDoc(ref);
     if (content.exists()) {
-        return content.data();
+        let data = content.data();
+        return data
     }
     return ["ERROR COULD NOT RECIEVE DATA"];
+}
+
+export async function increaseXP(gotXp) {
+    gotXp = Number(gotXp)
+    const uid = getAuth().currentUser?.uid;
+    console.log(uid)
+    let ref = doc(db, "users", uid);
+    let content = await getDoc(ref);
+    if (content.exists()) {
+        let data = content.data();
+        let level = data.level;
+        let max = data.maxXp;
+        let xp = data.xp + gotXp;
+        while (xp >= max) {
+            xp -= max;
+            level += 1;
+            max *= 2;
+        }
+
+        await setDoc(ref, {
+            xp,
+            maxXp: max,
+            level
+        });
+    }
 }
