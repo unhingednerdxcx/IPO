@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", main);
 declare const Chart: typeof import('chart.js').Chart;
-import { listTodaysChallange, increaseXP } from "./signin.js"
+import { listTodaysChallange, increaseXP, decreaseXP } from "./signin.js"
 
 declare global {
   interface Window {
@@ -479,10 +479,7 @@ async function list_items(tasks: Array<String>, challange=false) {
             task_btn.classList = 'toggle-task'
             task_btn.id = `task-btn${taskKey}`
             task_btn.onclick = async() => {
-                toggle(task_btn.id)
-                if (challange) {
-                    await increaseXP(task_par.dataset.path)
-                }
+                toggle(task_btn.id, challange)
             }
 
             async function setcheck(key: any) {
@@ -505,7 +502,7 @@ async function list_items(tasks: Array<String>, challange=false) {
                 }
             }
 
-            function toggle(id: String){
+            async function toggle(id: String, challange: boolean){
                 console.log(id.split('task-btn'))
                 let key = id.split('task-btn')[1]
                 let icon = document.getElementById(`task_ico${key}`) as HTMLElement || null
@@ -513,9 +510,17 @@ async function list_items(tasks: Array<String>, challange=false) {
                 if (icon && task_par) {
                     if (icon.innerText == "check_small") {
                         icon.innerText = ""
+                        if (challange) {
+                            await decreaseXP(task_par.dataset.path)
+                            return
+                        }
                         eel.toggletask(`${task_par.dataset.path}/${task_desc.innerText}`, false)
                     } else {
                         icon.innerText = "check_small"
+                        if (challange) {
+                            await increaseXP(task_par.dataset.path)
+                            return
+                        }
                         eel.toggletask(`${task_par.dataset.path}/${task_desc.innerText}`, true)
                     }
                 }

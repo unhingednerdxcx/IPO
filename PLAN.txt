@@ -1,24 +1,17 @@
-day 1{ //\\
-    - new group padding fix //\\
-    - tasks clean up //\\
-    - No task UI //||
-}
-
-day 2{ //\\
-    - esc for all context //\\
-    - add new routine //\\
-    - UI syncing //\\
-    - routien -> subgrp -> upcome //\\
-}
-
-day 3{
-    - Custom color /.\
-    - sign up //\\
-    - auto challange loop //\\
+day 1 {
+    - Check challange
     - auto update subgrp tree /|\
+    - Custom color /.\
+    - No routine UI //||
 }
 
-day 4 {
-    -polish + test
-    - verify
+day 2 {
+    - small ui fix
+    - update account info
+}
+day 3 {
+    - conv js -> ts
+}
+day 4-6 {
+    - conv ts -> py
 }

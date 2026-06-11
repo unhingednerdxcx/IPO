@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const Config = {
@@ -13,9 +13,21 @@ const Config = {
 
 const app = initializeApp(Config);
 const auth = getAuth(app)
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        let pfpUrl = user.photoURL
+        let name = user.displayName || (user.providerData && user.providerData[0]?.displayName) || "User"
+        let uid = user.uid
+        complete(name, pfpUrl, uid)
+    } else {
+        document.getElementById('sign-in').style.display = "flex"
+    }
+})
 const googleProv = new GoogleAuthProvider();
 const user = "";
 const db = getFirestore()
+
 
 document.getElementById('gmail-enter').addEventListener('click', async() => {
     login_gmail()
@@ -99,3 +111,29 @@ export async function increaseXP(gotXp) {
         });
     }
 }
+
+export async function decreaseXP(gotXp) {
+    gotXp = Number(gotXp)
+    const uid = getAuth().currentUser?.uid;
+    console.log(uid)
+    let ref = doc(db, "users", uid);
+    let content = await getDoc(ref);
+    if (content.exists()) {
+        let data = content.data();
+        let level = data.level;
+        let max = data.maxXp;
+        let xp = data.xp - gotXp;
+        if (xp < 0) {
+            max /= 2;
+            xp = max -Math.abs(xp); // +- = -, -- = + !!
+            level -= 1;
+        }
+
+        await setDoc(ref, {
+            xp,
+            maxXp: max,
+            level
+        });
+    }
+}
+

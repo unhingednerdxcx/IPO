@@ -17,3 +17,4 @@ data/tasks.json
 !package-lock.json
 .agents
 firestore.rules
+PLAN.txt

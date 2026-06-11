@@ -645,6 +645,7 @@ ul {
 }
 
 .newgroup-description {
+    display: flex;
     position: relative;
     top: -10%;
     font-family: 'Sour Gummy', sans-serif;
@@ -757,17 +758,24 @@ ul {
     margin-top: 1vh;
 }
 
-
-/*
-.context-input {
-    all: unset;
-    display: inherit;
-    width: 80%;
-    height: 40%;
-    background-color: var(--secondary-highlight-color);
-    color: var(--text-color);
-    font-family: 'Sour Gummy', sans-serif;
-    border-radius: 10px;
-    padding: 0 12px;
+.loadingChallanges {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 32vw;
+    margin-top: 45vh;
+    line-height: 1;
+    transform-origin: center center;
+    scale: 6;
+    animation: spin 2s linear infinite;
 }
-*/
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

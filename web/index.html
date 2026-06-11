@@ -41,14 +41,6 @@
                     <div class="tab-description">Upcoming</div>
                 </div>
             </div>
-            <div class="tab" id="side-new-task">
-                <div class="tab-content">
-                    <span class="material-symbols-outlined">
-                        add
-                    </span>
-                    <div class="tab-description">New task</div>
-                </div>
-            </div>
             <div class="tab" id="side-routine">
                 <div class="tab-content">
                     <span class="material-symbols-outlined">
@@ -65,6 +57,14 @@
                     <div class="tab-description">Challanges</div>
                 </div>
             </div>
+            <div class="tab" id="side-new-task">
+                <div class="tab-content">
+                    <span class="material-symbols-outlined">
+                        add
+                    </span>
+                    <div class="tab-description">New task</div>
+                </div>
+            </div>
         </div>
 
         <hr style="border-color: #263a33; width: 90%; margin-top: 6%;">
@@ -72,10 +72,10 @@
         <div class="tab" id="side-group">
             <div class="tab-conside-grouptent">
                 <div class="newgroup-description">
-                    <span class="material-symbols-outlined newgroup-icon">
+                    <span class="material-symbols-outlined newgroup-icon" style="margin-top: 0.1vh">
                         add
                     </span>
-                    New group
+                    <div class="tab-description" style="margin-top: 0.8vh">New group</div>
                 </div>
             </div>
         </div>
@@ -116,6 +116,9 @@
 
         <div class="Today" id="Today">
             <ul class="tasks" id="tasks">
+                <span class="material-symbols-outlined loadingChallanges">
+                    progress_activity
+                </span>
             </ul>
         </div>
 
@@ -223,13 +226,13 @@
                 <span class="material-symbols-outlined tab-icon">
                     toll
                 </span>
-                <div id="xp">Xp: 100/200</div>
+                <div id="xp">Xp: 0/100</div>
             </div>
             <div style="display: flex; gap: 0.5vh">
                 <span class="material-symbols-outlined tab-icon">
                     progress_activity
                 </span>
-                <div id="lvl">Level: 10</div>
+                <div id="lvl">Level: 0</div>
             </div>
             <div style="display: flex; gap: 0.5vh">
                 <span class="material-symbols-outlined tab-icon">
@@ -239,7 +242,7 @@
             </div>
         </div>
     </div>
-    <div class="hide-all" id="sign-in" style="display: flex">
+    <div class="hide-all" id="sign-in" style="display: none">
         <div class="signin-options">
             <div >Sign in using:-</div>
             <div class="sign-in-option" id="gmail-enter">
