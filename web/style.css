@@ -1,13 +1,13 @@
 :root {
-    --primary-background-color: #e8ffe8;
-    --secondary-background-color: #CCFFCC;
-    --tertiary-background-color: #befebe;
-    --primary-highlight-color: #b4fcb4;
-    --secondary-highlight-color: #93fa93;
+    --primary-background-color: #ffffff;
+    --secondary-background-color: #ffffff;
+    --tertiary-background-color: #ffffff;
+    --primary-highlight-color: #ffffff;
+    --secondary-highlight-color: #ffffff;
 
-    --dark-text-color: #263a2d;
-    --text-color: #1B4D1B;
-    --outline-color: #2f4f44;
+    --dark-text-color: #ffffff;
+    --text-color: #ffffff;
+    --outline-color: #ffffff;
 
     --text-l1: 12vw;
     --text-l2: 6vw;
@@ -769,6 +769,28 @@ ul {
     transform-origin: center center;
     scale: 6;
     animation: spin 2s linear infinite;
+}
+
+.loadingRoutinePar {
+    display: flex;
+    gap: 4vw
+}
+
+.loadingRoutine {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 45vh;
+    color: var(--outline-color);
+    line-height: 1;
+    transform-origin: center center;
+    scale: 4.5;
+    animation: spin 2s linear infinite;
+}
+
+.RoutineDesc {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 30px;
 }
 
 @keyframes spin {

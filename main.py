@@ -302,6 +302,12 @@ def setloggedin():
     data["AccMade"] = True
     settingsManager('w', data)
 
+@eel.expose
+def getColors():
+    data = settingsManager('r')
+    colorTheme = data['colors'][data['color']]
+    return colorTheme
+
 
 @eel.expose
 def CleanUp():

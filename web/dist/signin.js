@@ -59,6 +59,7 @@ async function complete(name, pfp, uid) {
             "xp": 0,
             "maxXp": 100,
             "level": 0,
+            "TasksDone": [false, false, false, false, false, false, false],
         });
         await eel.setloggedin();
     }

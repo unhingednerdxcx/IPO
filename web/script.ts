@@ -89,141 +89,142 @@ function main() {
             all_el.style.display = "flex"
             current = "all-routine"
             routine.style.display = "flex"
-                let val = await eel.listAllRoutineNames()()
-                let key = 0
-                let pos = 0
-                let once = false
-                val.forEach( async(task: any) => {
-                    key += 1
-                    console.log(task)
-                    let routine = document.getElementById(`${task[0]}-routines`) as HTMLElement || null
-                    if (routine) {
-                        routine.innerHTML = ''
-                        let info = await eel.listRoutineTraits(task[0], task[1])()
-                        console.log(info)
-                        console.log(info.tasks)
+            let val = await eel.listAllRoutineNames()()
+            let key = 0
+            let pos = 0
+            let once = false
+            val.forEach( async(task: any) => {
+                key += 1
+                console.log(task)
+                let routine = document.getElementById(`${task[0]}-routines`) as HTMLElement || null
+                if (routine) {
+                    // HERE
+                    routine.innerHTML = ''
+                    let info = await eel.listRoutineTraits(task[0], task[1])()
+                    console.log(info)
+                    console.log(info.tasks)
 
-                        let li = document.createElement('li')
-                        li.classList = "routine-block"
-                        li.dataset.path = `${task[0]}/${task[1]}`
+                    let li = document.createElement('li')
+                    li.classList = "routine-block"
+                    li.dataset.path = `${task[0]}/${task[1]}`
 
-                        let main_info = document.createElement('div')
-                        main_info.classList = "routine-block-text"
+                    let main_info = document.createElement('div')
+                    main_info.classList = "routine-block-text"
 
-                        let main_info_title = document.createElement('div')
-                        main_info_title.classList = "routine-block-title"
-                        main_info_title.innerText = task[1]
+                    let main_info_title = document.createElement('div')
+                    main_info_title.classList = "routine-block-title"
+                    main_info_title.innerText = task[1]
 
-                        let main_info_descript = document.createElement('div')
-                        main_info_descript.classList = "routine-block-summary"
+                    let main_info_descript = document.createElement('div')
+                    main_info_descript.classList = "routine-block-summary"
 
-                        let main_info_descript_hardest = document.createElement('div')
-                        main_info_descript_hardest.innerText = `Hardest task: ${info['Most difficult'].name}`
-                        let main_info_descript_easiest = document.createElement('div')
-                        main_info_descript_easiest.innerText = `Hardest task: ${info['Most easiest'].name}`
-                        let streak = document.createTextNode(`Day: ${info.Streak} Killing it!`)
+                    let main_info_descript_hardest = document.createElement('div')
+                    main_info_descript_hardest.innerText = `Hardest task: ${info['Most difficult'].name}`
+                    let main_info_descript_easiest = document.createElement('div')
+                    main_info_descript_easiest.innerText = `Hardest task: ${info['Most easiest'].name}`
+                    let streak = document.createTextNode(`Day: ${info.Streak} Killing it!`)
 
 
-                        let chart_par = document.createElement('div')
+                    let chart_par = document.createElement('div')
 
-                        let graph = document.createElement('canvas')
-                        graph.id = `graph${key}`
-                        chart_par.classList = 'routine-block-graph'
+                    let graph = document.createElement('canvas')
+                    graph.id = `graph${key}`
+                    chart_par.classList = 'routine-block-graph'
 
-                        let labels: any = {
-                            "daily": ['Sun', 'Tue', 'Thu', 'Sat'],
-                            "weekly": ['W1', 'W2', 'W3', 'W4'],
-                            "monthly": ['Jan', 'May', 'Sept', 'Dec']
+                    let labels: any = {
+                        "daily": ['Sun', 'Tue', 'Thu', 'Sat'],
+                        "weekly": ['W1', 'W2', 'W3', 'W4'],
+                        "monthly": ['Jan', 'May', 'Sept', 'Dec']
+                    }
+                    let fix_dataPoints: any = []
+                    let label: String[] = []
+                    switch (task[0]) {
+                        case "daily": {
+                            label = labels['daily']
+                            fix_dataPoints = [info['consistancy'][0], info['consistancy'][2], info['consistancy'][4], info['consistancy'][6]]
+                            once = true
+                            break;
                         }
-                        let fix_dataPoints: any = []
-                        let label: String[] = []
-                        switch (task[0]) {
-                            case "daily": {
-                                label = labels['daily']
-                                fix_dataPoints = [info['consistancy'][0], info['consistancy'][2], info['consistancy'][4], info['consistancy'][6]]
-                                once = true
-                                break;
+                        case "weekly": {
+                            if (once) {
+                                pos = 0
+                                once = false
                             }
-                            case "weekly": {
-                                if (once) {
-                                    pos = 0
-                                    once = false
-                                }
-                                label = labels['weekly']
-                                fix_dataPoints = info['consistancy']
-                                break;
-                            }
-                            case "monthly": {
-                                if (once) {
-                                    pos = 0
-                                    once = false
-                                }
-                                label = labels['monthly']
-                                fix_dataPoints = [info['consistancy'][0], info['consistancy'][4], info['consistancy'][8], info['consistancy'][11]]
-                                break;
-                            }
+                            label = labels['weekly']
+                            fix_dataPoints = info['consistancy']
+                            break;
                         }
-                        li.onclick = () => {
-                            showroutinedetails(String(li.dataset.path), pos)
+                        case "monthly": {
+                            if (once) {
+                                pos = 0
+                                once = false
+                            }
+                            label = labels['monthly']
+                            fix_dataPoints = [info['consistancy'][0], info['consistancy'][4], info['consistancy'][8], info['consistancy'][11]]
+                            break;
                         }
-                        let config: import('chart.js').ChartConfiguration<'line'> = {
-                            type: 'line',
-                            data: {
-                                labels: label,
-                                datasets: [{
-                                    label: 'Progress (%)',
-                                    data: fix_dataPoints,
-                                    borderWidth: 2,
-                                    backgroundColor: 'rgba(0, 0, 0, 0.56)'
-                                }]
-                            },
-                            options: {
-                                indexAxis: 'x',
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                scales: {
-                                    x: {
-                                        grid: {
-                                            color: 'rgba(0, 0, 0, 0)'
-                                        }
-                                    },
-                                    y: {
-                                        max: 100,
-                                        grid: {
-                                            color: 'rgb(137, 234, 171)'
-                                        }
+                    }
+                    li.onclick = () => {
+                        showroutinedetails(String(li.dataset.path), pos)
+                    }
+                    let config: import('chart.js').ChartConfiguration<'line'> = {
+                        type: 'line',
+                        data: {
+                            labels: label,
+                            datasets: [{
+                                label: 'Progress (%)',
+                                data: fix_dataPoints,
+                                borderWidth: 2,
+                                backgroundColor: 'rgba(0, 0, 0, 0.56)'
+                            }]
+                        },
+                        options: {
+                            indexAxis: 'x',
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    grid: {
+                                        color: 'rgba(0, 0, 0, 0)'
                                     }
                                 },
-                                plugins: {
-                                    tooltip: {
-                                        enabled: false,
-                                    },
-                                    legend: {
-                                        display: false,
+                                y: {
+                                    max: 100,
+                                    grid: {
+                                        color: 'rgb(137, 234, 171)'
                                     }
                                 }
+                            },
+                            plugins: {
+                                tooltip: {
+                                    enabled: false,
+                                },
+                                legend: {
+                                    display: false,
+                                }
                             }
-                        };
-
-                        let chart: any = ""
-                        if (canvas) {
-                            chart = new Chart(graph, config);
                         }
+                    };
 
-                        main_info_descript.appendChild(main_info_descript_hardest)
-                        main_info_descript.appendChild(main_info_descript_easiest)
-                        main_info_descript.appendChild(streak)
-
-                        main_info.appendChild(main_info_title)
-                        main_info.appendChild(main_info_descript)
-
-                        chart_par.appendChild(graph)
-
-                        li.appendChild(main_info)
-                        li.appendChild(chart_par)
-
-                        routine.appendChild(li)
+                    let chart: any = ""
+                    if (canvas) {
+                        chart = new Chart(graph, config);
                     }
+
+                    main_info_descript.appendChild(main_info_descript_hardest)
+                    main_info_descript.appendChild(main_info_descript_easiest)
+                    main_info_descript.appendChild(streak)
+
+                    main_info.appendChild(main_info_title)
+                    main_info.appendChild(main_info_descript)
+
+                    chart_par.appendChild(graph)
+
+                    li.appendChild(main_info)
+                    li.appendChild(chart_par)
+
+                    routine.appendChild(li)
+                }
                 });
         }
         async function showroutinedetails(path: string, pos: Number) {
@@ -453,8 +454,21 @@ function main() {
     document.getElementById('side-group')?.addEventListener('click', async() => {
         let value = await showContext("Enter the new group you want to make", 'text')
         await eel.addNewGroup(value)
+        makeSubGroupTree()
     })
     makeSubGroupTree()
+    setColors()
+}
+
+async function setColors() {
+    function setTheme(name: string, color: string) {
+        document.documentElement.style.setProperty(name, color)
+    }
+    let colorTheme = await eel.getColors()()
+    Object.entries(colorTheme).forEach((arr: any) => {
+        setTheme(arr[0], arr[1])
+        console.log(arr[0], arr[1])
+    });
 }
 
 async function list_items(tasks: Array<String>, challange=false) {
@@ -560,6 +574,7 @@ async function makeSubGroupTree() {
     let grps = await eel.listGroupDict()() as Grps
     let grps_htm = document.getElementById('groups') as HTMLElement || null;
     if (grps_htm){
+        grps_htm.innerHTML = ""
         Object.entries(grps).forEach(([grp, subgrps]) => {
             let group_par = document.createElement('div')
             group_par.classList = 'group'
@@ -572,6 +587,7 @@ async function makeSubGroupTree() {
             subgroup_btn_par.classList = 'subgroup-wrap'
             subgroup_btn_par.onclick = () => {
                 makeNewSubGroup(grp)
+                makeSubGroupTree()
             }
 
             let content = document.createElement('div')
@@ -653,6 +669,7 @@ function showmsgbox(text: string) {
 async function makeNewSubGroup(catagory: string) {
     let value = await showContext("Enter the name of the new subgroup", 'text')
     await eel.newSubGroup(catagory, value)
+    makeSubGroupTree()
 }
 
 function makeTestChart(){

@@ -1,13 +1,14 @@
 day 1 {
     - Check challange
-    - auto update subgrp tree /|\
-    - Custom color /.\
-    - No routine UI //||
+    - auto update subgrp tree //\\
+    - Custom color //|\
+    - No routine UI //\\
 }
 
 day 2 {
     - small ui fix
     - update account info
+    - delete task/subgroup/group option
 }
 day 3 {
     - conv js -> ts

@@ -89,6 +89,7 @@ function main() {
                 console.log(task);
                 let routine = document.getElementById(`${task[0]}-routines`) || null;
                 if (routine) {
+                    // HERE
                     routine.innerHTML = '';
                     let info = await eel.listRoutineTraits(task[0], task[1])();
                     console.log(info);
@@ -415,8 +416,20 @@ function main() {
     document.getElementById('side-group')?.addEventListener('click', async () => {
         let value = await showContext("Enter the new group you want to make", 'text');
         await eel.addNewGroup(value);
+        makeSubGroupTree();
     });
     makeSubGroupTree();
+    setColors();
+}
+async function setColors() {
+    function setTheme(name, color) {
+        document.documentElement.style.setProperty(name, color);
+    }
+    let colorTheme = await eel.getColors()();
+    Object.entries(colorTheme).forEach((arr) => {
+        setTheme(arr[0], arr[1]);
+        console.log(arr[0], arr[1]);
+    });
 }
 async function list_items(tasks, challange = false) {
     let lists = document.getElementById('tasks') || null;
@@ -514,6 +527,7 @@ async function makeSubGroupTree() {
     let grps = await eel.listGroupDict()();
     let grps_htm = document.getElementById('groups') || null;
     if (grps_htm) {
+        grps_htm.innerHTML = "";
         Object.entries(grps).forEach(([grp, subgrps]) => {
             let group_par = document.createElement('div');
             group_par.classList = 'group';
@@ -524,6 +538,7 @@ async function makeSubGroupTree() {
             subgroup_btn_par.classList = 'subgroup-wrap';
             subgroup_btn_par.onclick = () => {
                 makeNewSubGroup(grp);
+                makeSubGroupTree();
             };
             let content = document.createElement('div');
             content.classList = 'tab-content';
@@ -590,6 +605,7 @@ function showmsgbox(text) {
 async function makeNewSubGroup(catagory) {
     let value = await showContext("Enter the name of the new subgroup", 'text');
     await eel.newSubGroup(catagory, value);
+    makeSubGroupTree();
 }
 function makeTestChart() {
     console.log('here');
