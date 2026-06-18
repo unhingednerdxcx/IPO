@@ -1,0 +1,13 @@
+/* example task
+{
+  "catagory": {
+    "subcatagory": {
+      "name": {
+        "date": "date: Y/M/D/H/M"
+        "priority": 0-9
+      }
+    }
+  }
+}
+*/
+

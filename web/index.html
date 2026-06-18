@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+    <div class="side-bar">
+        <div class="tabs">
+            <div class="tab" id="side-search">
+                <div class="tab-content">
+                    <span class="material-symbols-outlined tab-icon">
+                        search
+                    </span>
+                    <div class="tab-description">Search</div>
+                </div>
+            </div>
+            <div class="tab" id="side-Today">
+                <div class="tab-content">
+                    <span class="material-symbols-outlined">
+                        today
+                    </span>
+                    <div class="tab-description">Today</div>
+                </div>
+            </div>
+            <div class="tab" id="side-upcoming">
+                <div class="tab-content">
+                    <span class="material-symbols-outlined">
+                        calendar_today
+                    </span>
+                    <div class="tab-description">Upcoming</div>
+                </div>
+            </div>
+            <div class="tab" id="side-routine">
+                <div class="tab-content">
+                    <span class="material-symbols-outlined">
+                        routine
+                    </span>
+                    <div class="tab-description">Routine</div>
+                </div>
+            </div>
+            <div class="tab" id="side-challange">
+                <div class="tab-content">
+                    <span class="material-symbols-outlined">
+                        swords
+                    </span>
+                    <div class="tab-description">Challanges</div>
+                </div>
+            </div>
+            <div class="tab" id="side-new-task">
+                <div class="tab-content">
+                    <span class="material-symbols-outlined">
+                        add
+                    </span>
+                    <div class="tab-description">New task</div>
+                </div>
+            </div>
+        </div>
+
+        <hr style="border-color: #263a33; width: 90%; margin-top: 6%;">
+
+        <div class="tab" id="side-group">
+            <div class="tab-conside-grouptent">
+                <div class="newgroup-description">
+                    <span class="material-symbols-outlined newgroup-icon" style="margin-top: 0.1vh">
+                        add
+                    </span>
+                    <div class="tab-description" style="margin-top: 0.8vh">New group</div>
+                </div>
+            </div>
+        </div>
+        <div class="groups" id="groups"></div>
+    </div>
+
+    <div class="account-box">
+        <img class="pfp" id="userpfp" src="examplePfp.png">
+        <div class="info-box">
+            <div style="display: flex; flex-direction: row;">
+                <div class="userName-text" id="username">UserName</div>
+                <span class="material-symbols-outlined" style="scale: 1.4;" id="more-acc-info">
+                    arrow_right
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="default" id="Default">
+            <div class="default-content">
+                <span class="material-symbols-outlined default-icon">
+                    assignment
+                </span>
+                <div class="default-text">Let's get to work! </div>
+            </div>
+        </div>
+
+        <div class="nothingHere" id="nothingHere">
+            <div class="nothing-main">
+                <span class="material-symbols-outlined nothing-icon">
+                    event_available
+                </span>
+                <div class="nothing-title">Nothing Here!</div>
+            </div>
+            <div id="nothing-desc">Add a task or check out routine.</div>
+            <div class="nothing-side-comment">Have a break, you've worked hard enough!</div>
+        </div>
+
+        <div class="Today" id="Today">
+            <ul class="tasks" id="tasks">
+                <span class="material-symbols-outlined loadingChallanges">
+                    progress_activity
+                </span>
+            </ul>
+        </div>
+
+        <div class="routine" id="routine">
+            <div class="all-routine" id="all-routine">
+                <div class="add-routine" id="new-routine">
+                    <div style="margin-left: 1vw; padding: 0.35rem">
+                        <span class="material-symbols-outlined add-routine-icon">
+                            add
+                        </span>
+                        <div class="add-routine-text" id="new-routine">Add new routine</div>
+                    </div>
+                </div>
+
+                <div class="routine-timely-group">
+                    <div class="routine-time-text">Daily Routines</div>
+                    <ul class="routines" id="daily-routines">
+                        <div class="loadingRoutinePar">
+                            <span class="material-symbols-outlined loadingRoutine">
+                                progress_activity
+                            </span>
+                            <div class="RoutineDesc">No routines here...</div>
+                        </div>
+                    </ul>
+
+                    <div class="routine-time-text">Weekly Routines</div>
+                    <ul class="routines" id="weekly-routines">
+                        <div class="loadingRoutinePar">
+                            <span class="material-symbols-outlined loadingRoutine">
+                                progress_activity
+                            </span>
+                            <div class="RoutineDesc">No routines here...</div>
+                        </div>
+                    </ul>
+
+                    <div class="routine-time-text">Monthly Routines</div>
+                    <ul class="routines" id="monthly-routines">
+                        <div class="loadingRoutinePar">
+                            <span class="material-symbols-outlined loadingRoutine">
+                                progress_activity
+                            </span>
+                            <div class="RoutineDesc">No routines here...</div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="routine-stats" id="routine-stats">
+                <div class="routine-stats-title" id="routine-stat-title">
+                    Gym
+                </div>
+
+                <ul class="routine-steps">
+                    <div class="side-line"></div>
+                    <div style="display: flex; flex-direction: column; margin-top: 5vh; gap: 5vh"
+                        id="routine-task-tree">
+                        <li class="routine-step">
+                            <div class="routine-task-button">
+                                <span class="material-symbols-outlined routine-complete-icon">
+                                    check
+                                </span>
+                            </div>
+                            <div class="routine-discript">Running</div>
+                        </li>
+                    </div>
+                </ul>
+
+                <div style="height: 10vh"></div>
+
+                <div class="routine-stat">
+                    <div class="chart-container" style="position: relative; height:40vh; width:40vw">
+                        <canvas id="routineChart"></canvas>
+                    </div>
+
+                    <br>
+
+                    <div class="other-info">
+                        <div class="task-stat-block">
+                            <div class="stat-title">Most difficult task:-</div>
+                            <div class="stat-disc" id="most-difficult-task">Push ups</div>
+                        </div>
+                        <div class="task-stat-block">
+                            <div class="stat-title">Most easiest task:-</div>
+                            <div class="stat-disc" id="most-easiest-task">Running</div>
+                        </div>
+                        <div class="task-stat-block">
+                            <div class="stat-title">Your current streak:-</div>
+                            <div class="stat-disc" id="streak">Day 89 Killing it!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="height: 10vh"></div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="msg-box" id="msg-box">
+        <span id="msg-text" class="msg-text">kj</span>
+    </div>
+    
+    <div class="hide-all" id="hide-all">
+        <div class="context-menu">
+            <span id="context-description" class="context-description"></span>
+            <input type="text" class="context-input" id="context-input">
+
+            <div class="dropdown" id="dropdown">
+                <div class="dropdown-title" id="drop-title">!Select date!</div>
+                <span class="material-symbols-outlined dropdown-ico" id="drop-arr">
+                    arrow_right
+                </span>
+                <ul class="dropdown-ops" id="drop-ops">
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="hide-all" id="hide-all-search">
+        <div class="search-box">
+            <div class="search-title" id="search-title">Title:</div>
+            <ul class="search-ress" id="search-ress"></ul>
+        </div>
+    </div>
+
+    <div class="account-context-menu" id="acc-context">
+        <div style="margin-left: 2vw; display: flex; flex-direction: column; gap: 1vh">
+            <div style="display: flex; gap: 0.5vh">
+                <span class="material-symbols-outlined tab-icon">
+                    toll
+                </span>
+                <div id="xp">Xp: 0/100</div>
+            </div>
+            <div style="display: flex; gap: 0.5vh">
+                <span class="material-symbols-outlined tab-icon">
+                    progress_activity
+                </span>
+                <div id="lvl">Level: 0</div>
+            </div>
+            <div style="display: flex; gap: 0.5vh">
+                <span class="material-symbols-outlined tab-icon">
+                    share
+                </span>
+                <div>Share your progress</div>
+            </div>
+            <div style="display: flex; gap: 0.5vh" id="colorize">
+                <span class="material-symbols-outlined tab-icon">
+                    colorize
+                </span>
+                <div>Change color</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hide-all" id="sign-in" style="display: none">
+        <div class="signin-options">
+            <div >Sign in using:-</div>
+            <div class="sign-in-option" id="gmail-enter">
+                <span class="material-symbols-outlined signinico">
+                    alternate_email
+                </span>
+                Gmail
+            </div>
+            <div class="sign-in-option" id="mail-enter">
+                <span class="material-symbols-outlined signinico">
+                    mail
+                </span>
+                Email
+            </div>
+            <div class="sign-in-option" id="guest-enter">
+                Guest(levels/XP will not save)
+            </div>
+        </div>
+    </div>
+
+    <div id="more-task-info" class="more-task-ctx">
+        <div class="more-cts-info">
+            <span class="material-symbols-outlined more-cts-ico">
+                delete
+            </span>
+            Delete task
+        </div>
+        <div class="more-cts-info">
+            <span class="material-symbols-outlined more-cts-ico">
+                edit
+            </span>
+            Rename task
+        </div>
+        <div class="more-cts-info">
+            <span class="material-symbols-outlined more-cts-ico">
+                timer
+            </span>
+            Change deadline
+        </div>
+    </div>
+    
+
+    <script type="text/javascript" src="/eel.js" defer></script>
+    <script type="module" src="./dist/signin.js"></script>
+    <script type="module" src="./dist/script.js" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+// updated data structure
+
+{
+    "daily": [{
+        // summary
+        "name": {
+            "tasks": [],
+            "Complete till": "task",
+            "streaks": 1,
+
+            "Most difficult": {
+                "name": "task",
+                "score": 1
+            },
+            "Most easiest": {
+                "name": "task",
+                "score": 1
+            },
+            
+            "stops": [],
+            "week info": [
+                10, 10, 10, 10, 10, 10, 10
+            ]
+        },
+
+        "Work out plan": {
+            "tasks": [
+                "Running",
+                "Lifting",
+                "Push ups",
+                "Dead lift"
+            ],
+            "Complete till": "Push ups",
+            "Streak": 3,
+            "Most difficult": {
+                "name": "Push ups",
+                "dif-score": 3 // Meaning, for 3 days, user stoped at Push ups
+            },
+            "Most easiest": {
+                "name": "Running",
+                "dif-score": 1 // Meaning, for 1 day, user stoped at running
+            },
+            "stops": [ // This is to note which task the user has stoped on (to update the most difficult/easiest task this will be handy)
+                "Lifting",
+                "Lifting",
+                "Running"
+            ],
+            "week info": [ // this stores the percentage of task completed over 1 week
+                100,
+                80,
+                50,
+                60,
+                70,
+                70,
+                80
+            ]
+        }
+    }],
+    "weekly": [{//same as daily
+    }],
+    "monthly": [{//same as daily
+    }]
+}
+

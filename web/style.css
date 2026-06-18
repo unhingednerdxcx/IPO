@@ -1,0 +1,823 @@
+:root {
+    --primary-background-color: #ffffff;
+    --secondary-background-color: #ffffff;
+    --tertiary-background-color: #ffffff;
+    --primary-highlight-color: #ffffff;
+    --secondary-highlight-color: #ffffff;
+
+    --dark-text-color: #ffffff;
+    --text-color: #ffffff;
+    --outline-color: #ffffff;
+
+    --text-l1: 12vw;
+    --text-l2: 6vw;
+    --text-l3: 3vw;
+    --text-l4: 1vw;
+    --text-l5: 0.5vw;
+    --border-radi: 10px;
+    --border-extra-radi: 20px;
+    --outline-weight: 1px;
+    --outline-heavy-weight: 2px;
+}
+
+.title {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 6rem;
+    font-weight: 600;
+}
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: var(--secondary-background-color);
+    width: 27%;
+    height: 90vh;
+    left: 0;
+    top: 0;
+    gap: 10px;
+    overflow: auto;
+}
+
+.account-box {
+    display: flex;
+    position: absolute;
+    top: 90vh;
+    left: 0;
+    height: 10vh;
+    width: 27%;
+    border-top: 3px solid var(--outline-color);
+    background-color: var(--secondary-background-color);
+}
+
+.pfp {
+    display: flex;
+    border-radius: 50%;
+    scale: 0.6;
+    border: 3px solid var(--outline-color);
+    margin-left: 2vw;
+    top: 0px;
+    background-color: var(--tertiary-background-color);
+    
+}
+.info-box {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Sour Gummy', sans-serif;
+    color: var(--dark-text-color);
+    justify-content: center;
+}
+
+.userName-text {
+    font-size: 20px;
+    margin-top: -0.3vh;
+}
+
+.account-context-menu {
+    padding: 1rem;
+    display: none;
+    outline: 2px solid var(--outline-color);
+    flex-direction: column;
+    gap: 1vh;
+    position: absolute;
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 20px;
+    justify-content: center;
+    width: 20vw;
+    height: 13vh;
+    background-color: var(--tertiary-background-color);
+    border-radius: 10px;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10%;
+    gap: 15px;
+    height: fit-content;
+    box-sizing: border-box;
+}
+.tab {
+    display: flex;
+    height: 50px;
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 20px;
+    outline: 1px solid var(--outline-color);
+    box-sizing: border-box; 
+    transition: background-color 0.5s ease;
+}
+.tab:hover {
+    background-color: var(--primary-highlight-color);
+}
+.tab.active {
+    background-color: var(--primary-highlight-color);
+}
+.tab-content {
+    display: flex;
+    justify-content: center;
+    margin-left: 10%;
+    margin-top: 3%;
+}
+.tab-icon {
+    color: var(--text-color);
+}
+.tab-description {
+    font-family: 'Sour Gummy', sans-serif;
+    margin-left: 10px;
+    font-size: 125%;
+}
+.newtab-description {
+    font-family: 'Sour Gummy', sans-serif;
+    margin-left: 30px;
+    margin-top: 1vh;
+    font-size: 125%;
+}
+.groups {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 6%;
+}
+.group-title {
+    font-family: 'Sour Gummy', sans-serif;
+    margin-left: 10%;
+    font-size: 145%;
+}
+.group-tabs {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-left: 16%;
+    margin-top: 4%;
+    gap: 10px;
+    max-height: 120px;
+    overflow-y: auto;
+}
+.group-tabs div {
+    transition: background-color 0.5s ease;
+}
+.group-tabs div:hover {
+    border-radius: 10px;
+    background-color: var(--primary-highlight-color);
+}
+.main {
+    position: absolute;
+    top: 0;
+    left: 27%;
+    background-color: var(--primary-background-color);
+    width: 73vw;
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+
+}
+.hide-all {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(113, 113, 113, 0.48);
+}
+.context-menu {
+    display: inherit;
+    flex-direction: column;
+    position: absolute;
+    width: fit-content;
+    min-width: 30vw;
+    height: 14vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+    background-color: var(--secondary-background-color);
+    padding: 24px 24px;
+    outline: 2px solid var(--outline-color);
+    align-items: center;
+}
+
+.context-input {
+    all: unset;
+    display: inherit;
+    width: 80%;
+    height: 40%;
+    background-color: var(--secondary-highlight-color);
+    color: var(--text-color);
+    font-family: 'Sour Gummy', sans-serif;
+    border-radius: 10px;
+    padding: 0 12px;
+}
+
+.default {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    margin-left: 10vw;
+}
+
+.default-icon {
+    font-size: 10vw;
+}
+.default-content {
+    display: inherit;
+    color: var(--dark-text-color);
+}
+.default-text {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 5vw;
+    margin-top: 2vh;
+    font-weight: 700;
+}
+
+.nothingHere {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    scale: 1;
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 5vh;
+    color: var(--dark-text-color);
+}
+.nothing-title {
+    position: absolute;
+    margin-top: -7.5vh;
+}
+.nothing-icon {
+    font-size: 6vh;
+    margin-left: -4vw;
+}
+.nothing-main {
+    margin-left: -12vw;
+}
+.nothing-side-comment {
+    scale: 0.5;
+    color: var(--dark-text-color);
+}
+.Today {
+    display: flex;
+}
+
+.routine {
+    display: none;
+    max-height: 100vh;
+    padding: 48px 48px;
+}
+
+.all-routine {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    gap: 10px;
+}
+.add-routine {
+    font-family: 'Sour Gummy', sans-serif;
+    left: 3vw;
+    font-size: 30;
+    border-radius: 20px;
+    padding: 8px 8px;
+    background: var(--tertiary-background-color);
+    outline: 2px solid var(--outline-color);
+    transition: background 0.2s ease;
+    height: 5vh;
+    width: 12vw;
+}
+
+.add-routine:hover {
+    background: var(--secondary-highlight-color);
+}
+
+.routine-stats {
+    display: none; /* USE BLOCK NOT FLEX */
+}
+
+.routine-stats-title {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 40px;
+}
+
+.tasks {
+    display: inherit;
+    flex-direction: column;
+    color: var(--text-color);
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 100%;
+    font-weight: 500;
+    gap: 20px;
+}
+.task {
+    display: inherit;
+    padding: 12px;
+    width: 63vw;
+    border-radius: 10px;
+    background: var(--secondary-background-color);
+    align-items: center;
+}
+.toggle-task {
+    all: unset;
+    display: inherit;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-highlight-color);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    transition: background-color 0.5s ease;
+}
+.toggle-task:hover {
+    background-color: var(--secondary-highlight-color);
+}
+.task-description {
+    font-size: 30px;
+    padding: 0px 15px;
+}
+.check-task {
+    font-size: 250%;
+    margin: 0;
+    color: var(--text-color);
+}
+
+.context-description {
+    font-family: 'Sour Gummy', sans-serif;
+    font-weight: 500;
+    font-size: 150%;
+    padding: 24px 0px;
+    margin-left: -5%;
+}
+
+.msg-box {
+    position: absolute;
+    display: block;
+    z-index: 10000;
+    width: 18vw;
+    height: 15vh;
+    background-color: var(--secondary-highlight-color);
+    border-radius: 20px;
+    padding: 24px 24px;
+    right: -21.5%;
+    top: 30px;
+    transition: right 0.5s ease;
+}
+.msg-box.show {
+    right: 10
+}
+.msg-text {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 25;
+    font-weight: 500;
+}
+body {
+    overflow-x: hidden;
+}
+
+.subgroup-wrap{
+    position: relative;
+    left: -100;
+    border-radius: 10px;
+    transition: background-color 0.5s ease;
+    font-size: 22;
+}
+
+.subgroup-wrap:hover{
+    background-color: var(--primary-highlight-color);
+}
+
+.sub-icon {
+    position: relative;
+    top: 5px;
+    margin-left: -15vw
+}
+
+.search-box { 
+    position: absolute;
+    height: 45vh;
+    width: 45vw;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--secondary-background-color);
+    border-radius: 30px;
+}
+
+.search-title {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 40;
+    font-weight: 500;
+    margin-left: 3vw;
+    margin-top: 3vh;
+}
+
+.search-ress {
+    display: flex;
+    flex-direction: column;
+    outline: 1px solid var(--outline-color);
+    height: 53%;
+    width: 80%;
+    margin-left: 3.5vw;
+    border-radius: 10px;
+    padding: 30px 23px;
+    overflow: auto;
+    gap: 20px;
+}
+
+.search-res {
+    outline: 1px solid var(--outline-color);
+    width: 100%;
+    height: 5vh;
+    border-radius: 10px;
+    padding: 10px 0px;
+}
+
+
+.test-panel {
+    display: none;
+    position: absolute;
+    width: 30vw;
+    height: 10vh;
+    left: 20vh;
+    outline: 1px solid #000000;
+}
+
+.subtab-description {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 100%;
+}
+
+.search-content {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 20;
+    font-weight: 500;
+    margin-left: 1.3vw;
+}
+
+.search-map {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 10;
+    font-weight: 500;
+    margin-left: 2vw;
+    margin-bottom: 10vh;
+}
+
+
+.add-routine-icon {
+    position: relative;
+}
+
+.routine-list {
+    display: inherit;
+    flex-direction: column;
+    margin-top: 15vh;
+    padding: 12px 12px;
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 20;
+    gap: 2vh;
+}
+.user-routine {
+    padding: 8px 8px;
+    width: 65vw;
+    border-radius: 10px;
+    background: var(--secondary-background-color);
+    outline: 1px solid var(--outline-color);
+}
+
+.routine-stat{
+    display: flex; /* ONLY FLEX */
+    gap: 2vw;
+}
+
+.break-line {
+    outline: 1px solid var(--outline-color);
+    margin-left: -2vw;
+}
+
+.other-info {
+    display: inherit;
+    flex-direction: column;
+    gap: 5%;
+}
+.task-stat-block {
+    height: 30%;
+    outline: 1px solid var(--outline-color);
+    background-color: var(--secondary-background-color);
+    border-radius: 10px;
+    width: 24vw;
+    text-align: center;
+    padding: 1vh;
+    font-family: 'Sour Gummy', sans-serif;
+}
+
+.stat-title{
+    margin-top: 2vh;
+    font-size: 30px;
+}
+
+.stat-disc {
+    margin-top: 0.5vh;
+    font-size: 25px;
+}
+
+.routine-steps {
+    display: flex;
+    flex-direction: row;
+    gap: 2vw;
+    font-family: 'Sour Gummy', sans-serif;
+}
+
+.side-line {
+    outline: 3px solid var(--outline-color)
+}
+
+.routine-step {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    width: 60vw;
+    border-radius: 10px;
+    height: 7vh;
+    padding: 0.4vh;
+    text-align: justify;
+    background-color: var(--secondary-background-color);
+}
+.routine-discript {
+    font-size: 30px;
+}
+.routine-task-button {
+    width: 6.5vh;
+    height: 6.5vh;
+    border-radius: 50%;
+    margin-left: -3.9vw;
+    background-color: var(--secondary-highlight-color);
+    border: 2px solid var(--outline-color);
+    text-align: center;
+}
+ul {
+  list-style-type: none;
+}
+
+.routine-time-text {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 40px;
+}
+
+.routines {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    outline: 2px solid var(--outline-color);
+    max-width: 100%;
+    min-width: 0; 
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 30vh;
+    align-items: center;
+    white-space: nowrap;
+    gap: 20px;
+    border-radius: 10px;
+}
+
+
+
+.routine-block {
+    display: flex;
+    flex-flow: column wrap;
+    flex-shrink: 0; 
+    width: 25vw;
+    height: 20vh;
+    border-radius: 20px;
+    outline: 1px solid var(--outline-color);
+    background-color: var(--secondary-background-color);
+    font-family: 'Sour Gummy', sans-serif;
+    padding: 10px;
+    transition: background-color 1.0s ease;
+}
+
+.routine-block:hover {
+    background-color: var(--primary-highlight-color);
+}
+
+.routine-block-text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+}
+.routine-block-summary {
+    display: inherit;
+    gap: 3px;
+    flex-direction: column;
+    max-width: 14vw;
+    overflow-y: auto;
+}
+
+.routine-block-title {
+    font-size: 40px;
+    max-width: 14vw;
+    overflow-y: auto;
+}
+
+.routine-block-graph {
+    position: relative;
+    margin-top: 3vh;
+    height:15vh;
+    width:8vw;
+}
+
+.routine-complete-icon {
+    font-size: 5vh;
+    margin-top: 12%;
+}
+
+.chart-container {
+    display: flex; height:15vh; width:8vw; align-content: center;
+}
+
+.new-sub-grp {
+    margin-left: 0.5vw;
+    margin-top: 0.85vh;
+    font-family: 'Sour Gummy';
+    font-size: 2vh;
+}
+
+.newgroup-description {
+    display: flex;
+    position: relative;
+    top: -10%;
+    font-family: 'Sour Gummy', sans-serif;
+    height: 5vh;
+    text-align: center;
+    padding: 1vh 2vw;
+}
+
+.newgroup-icon {
+    position: relative;
+    top: 16%
+}
+
+.add-routine-text {
+    position: relative;
+    margin-top: -2.7vh;
+    margin-left: 1.7vw;
+}
+
+.tester {
+    width: 10vw;
+    height: 10vh;
+    background-color: #1B4D1B;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.dropdown {
+    display: none;
+    background-color: var(--text-color);
+    width: 75%;
+    height: 30%;
+    padding: 0 12px;
+    top: 57%;
+    left: 10%;
+    background-color: var(--secondary-highlight-color);
+    font-family: 'Sour Gummy', sans-serif;
+    border-radius: 10px;
+    z-index: 9999;
+    border-radius: 10px;
+    position: absolute;
+    padding: 0 12px;
+    align-items: center;
+}
+
+.dropdown-title {
+    font-size: 3vh;
+    margin-left: 1vw;
+}
+
+.dropdown-ico {
+    display: inherit;
+    position: relative;
+    margin-left: auto;
+    right: 2vw;
+    scale: 1.7;
+    user-select: none; 
+}
+
+.dropdown:click {
+    rotate: 90deg;
+}
+
+.dropdown-ops {
+    display: none;
+    flex-direction: column;
+    width: inherit;
+    position: absolute;
+    height: 20vh;
+    max-height: 20vh;
+    background-color: var(--secondary-highlight-color);
+    border-radius: var(--border-radi);
+    border-top: 3px solid var(--outline-color);
+    top: 4vh;
+    width:23vw;
+    left: 0vw;
+    gap: 3vh;
+    padding: 16px 32px;
+    overflow-y: auto;
+}
+
+.signin-options {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    height: 30vh;
+    width: 30vw;
+    outline: 2px solid var(--outline-color);
+    border-radius: 10px;
+    left: 35vw;
+    top: 30vh;
+    background-color: var(--secondary-background-color);
+    text-align: center;
+    font-family: 'Sour Gummy',sans-serif;
+    font-size: 40px;
+    padding-top: 3vh;
+    padding-left: 3vw;
+    gap: 2.5vh;
+}
+
+.sign-in-option {
+    display: flex;
+    font-size: 30px;
+    text-align: left;
+    gap: 1vw
+}
+
+.signinico {
+    margin-top: 1vh;
+}
+
+.loadingChallanges {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 32vw;
+    margin-top: 45vh;
+    line-height: 1;
+    transform-origin: center center;
+    scale: 6;
+    animation: spin 2s linear infinite;
+}
+
+.loadingRoutinePar {
+    display: flex;
+    gap: 4vw
+}
+
+.loadingRoutine {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 45vh;
+    color: var(--outline-color);
+    line-height: 1;
+    transform-origin: center center;
+    scale: 4.5;
+    animation: spin 2s linear infinite;
+}
+
+.RoutineDesc {
+    font-family: 'Sour Gummy', sans-serif;
+    font-size: 30px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+.moreTask {
+    margin-left: auto;
+    margin-right: 3vw;
+}
+
+.more-task-ctx {
+    position: absolute;
+    display: none;
+    width: 8vw;
+    height: 12vh;
+    flex-direction: column;
+    background-color: var(--tertiary-background-color);
+    outline: 1px solid var(--outline-color);
+    padding: 1.5rem;
+    border-radius: 10px;
+    gap: 1rem;
+    font-family: 'Sour Gummy', sans-serif;
+}
