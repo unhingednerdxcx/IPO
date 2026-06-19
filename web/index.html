@@ -12,9 +12,6 @@
 </head>
 
 <body>
-    <div class="msg-box" id="msg-box">
-        <span id="msg-text" class="msg-text">kj</span>
-    </div>
     <div class="side-bar">
         <div class="tabs">
             <div class="tab" id="side-search">
@@ -81,6 +78,7 @@
         </div>
         <div class="groups" id="groups"></div>
     </div>
+
     <div class="account-box">
         <img class="pfp" id="userpfp" src="examplePfp.png">
         <div class="info-box">
@@ -125,7 +123,7 @@
         <div class="routine" id="routine">
             <div class="all-routine" id="all-routine">
                 <div class="add-routine" id="new-routine">
-                    <div style="margin-left: 1vw;">
+                    <div style="margin-left: 1vw; padding: 0.35rem">
                         <span class="material-symbols-outlined add-routine-icon">
                             add
                         </span>
@@ -217,6 +215,11 @@
 
     </div>
 
+
+    <div class="msg-box" id="msg-box">
+        <span id="msg-text" class="msg-text">kj</span>
+    </div>
+    
     <div class="hide-all" id="hide-all">
         <div class="context-menu">
             <span id="context-description" class="context-description"></span>
@@ -232,12 +235,14 @@
             </div>
         </div>
     </div>
+
     <div class="hide-all" id="hide-all-search">
         <div class="search-box">
             <div class="search-title" id="search-title">Title:</div>
             <ul class="search-ress" id="search-ress"></ul>
         </div>
     </div>
+
     <div class="account-context-menu" id="acc-context">
         <div style="margin-left: 2vw; display: flex; flex-direction: column; gap: 1vh">
             <div style="display: flex; gap: 0.5vh">
@@ -258,8 +263,15 @@
                 </span>
                 <div>Share your progress</div>
             </div>
+            <div style="display: flex; gap: 0.5vh" id="colorize">
+                <span class="material-symbols-outlined tab-icon">
+                    colorize
+                </span>
+                <div>Change color</div>
+            </div>
         </div>
     </div>
+
     <div class="hide-all" id="sign-in" style="display: none">
         <div class="signin-options">
             <div >Sign in using:-</div>
@@ -278,6 +290,27 @@
             <div class="sign-in-option" id="guest-enter">
                 Guest(levels/XP will not save)
             </div>
+        </div>
+    </div>
+
+    <div id="more-task-info" class="more-task-ctx">
+        <div class="more-cts-info">
+            <span class="material-symbols-outlined more-cts-ico">
+                delete
+            </span>
+            Delete task
+        </div>
+        <div class="more-cts-info">
+            <span class="material-symbols-outlined more-cts-ico">
+                edit
+            </span>
+            Rename task
+        </div>
+        <div class="more-cts-info">
+            <span class="material-symbols-outlined more-cts-ico">
+                timer
+            </span>
+            Change deadline
         </div>
     </div>
     

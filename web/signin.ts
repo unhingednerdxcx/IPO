@@ -1,6 +1,13 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { getFirestore, doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
+
+const eel = (window as any).eel;
+console.log(eel)
+if (!eel) {
+    window.location.reload()
+}
+
 
 const Config = {
   apiKey: "AIzaSyDiXBfMU_Kfj2yrklW1yWrMNvEHBRcq848",
@@ -13,25 +20,29 @@ const Config = {
 
 const app = initializeApp(Config);
 const auth = getAuth(app)
+let uid: string;
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
         let pfpUrl = user.photoURL
         let name = user.displayName || (user.providerData && user.providerData[0]?.displayName) || "User"
-        let uid = user.uid
+        uid = user.uid
         complete(name, pfpUrl, uid)
-    } else {
-        document.getElementById('sign-in').style.display = "flex"
+    } else { 
+        let signin = document.getElementById('sign-in') as HTMLElement || null
+        if (signin) {
+            signin.style.display = "flex"
+        }
     }
 })
 const googleProv = new GoogleAuthProvider();
-const user = "";
+const uidx = "";
 const db = getFirestore()
 
-
-document.getElementById('gmail-enter').addEventListener('click', async() => {
+document.getElementById('gmail-enter')?.addEventListener('click', async() => {
     login_gmail()
 })
+
 async function login_gmail() {
     try {
         let res = await signInWithPopup(auth, googleProv)
@@ -40,7 +51,8 @@ async function login_gmail() {
         console.log(Object.keys(user));
         let pfpUrl = user.photoURL
         let name = user.displayName || (user.providerData && user.providerData[0]?.displayName) || "User"
-        let uid = user.uid
+        uid = user.uid
+        console.log(uid, uidx)
         complete(name, pfpUrl, uid)
         return true
     } catch (e) {
@@ -49,14 +61,16 @@ async function login_gmail() {
     }
 }
 
-async function complete(name, pfp, uid) {
+async function complete(name: any, pfp: any, uid: any) {
     console.log(pfp);
-    document.getElementById('sign-in').style.display = 'none'
-    document.getElementById('username').innerText = name
-    document.getElementById('userpfp').src = pfp
-    console.log(document.getElementById('userpfp').src)
-    console.log(document.getElementById('userpfp'))
-    console.log(document.getElementById('username'))
+    let signin = document.getElementById('sign-in') as HTMLElement || null
+    let name_el = document.getElementById('username') as HTMLElement || null
+    let pfp_el = document.getElementById('userpfp') as HTMLImageElement || null
+    if (signin && name_el && pfp_el) {
+        signin.style.display = 'none'
+        name_el.innerText = name
+        pfp_el.src = pfp
+    }
     let ref = doc(db, "users", uid)
     if (!(await eel.loggedin()())) {
         await setDoc(ref, {
@@ -71,10 +85,29 @@ async function complete(name, pfp, uid) {
     if (content.exists()) {
         console.log(content.data())
         let data = content.data()
-        document.getElementById('xp').innerText = `Xp: ${data.xp}/${data.maxXp}`
-        document.getElementById('lvl').innerText = `Level: ${data.level}`
+        let xp = document.getElementById('xp') as HTMLElement || null
+        let lvl = document.getElementById('lvl')  as HTMLElement || null
+        if (xp && lvl) {
+            xp.innerText = `Xp: ${data.xp}/${data.maxXp}`
+            lvl.innerText = `Level: ${data.level}`
+        }
     } else {
         console.log("ERROR:- content not found")
+    }
+}
+
+export async function updateInfo() {
+    let ref = doc(db, "users", uid)
+    let content = await getDoc(ref)
+    if (content.exists()) {
+        console.log(content.data())
+        let data = content.data()
+        let xp = document.getElementById('xp') as HTMLElement || null
+        let lvl = document.getElementById('lvl')  as HTMLElement || null
+        if (xp && lvl) {
+            xp.innerText = `Xp: ${data.xp}/${data.maxXp}`
+            lvl.innerText = `Level: ${data.level}`
+        }
     }
 }
 
@@ -88,10 +121,21 @@ export async function listTodaysChallange() {
     return ["ERROR COULD NOT RECIEVE DATA"];
 }
 
-export async function increaseXP(gotXp) {
-    gotXp = Number(gotXp)
+export async function listCompletedTasks() {
+    let ref = doc(db, "users", uid)
+    let content = await getDoc(ref)
+    if (content.exists()) {
+        let data = content.data()
+        return data.TasksDone
+    }
+}
+
+export async function increaseXP(gotXp: number) {
     const uid = getAuth().currentUser?.uid;
     console.log(uid)
+    if (!uid) {
+        return
+    }
     let ref = doc(db, "users", uid);
     let content = await getDoc(ref);
     if (content.exists()) {
@@ -105,7 +149,7 @@ export async function increaseXP(gotXp) {
             max *= 2;
         }
 
-        await setDoc(ref, {
+        await updateDoc(ref, {
             xp,
             maxXp: max,
             level
@@ -113,10 +157,12 @@ export async function increaseXP(gotXp) {
     }
 }
 
-export async function decreaseXP(gotXp) {
-    gotXp = Number(gotXp)
+export async function decreaseXP(gotXp: number) {
     const uid = getAuth().currentUser?.uid;
     console.log(uid)
+    if (!uid) {
+        return
+    }
     let ref = doc(db, "users", uid);
     let content = await getDoc(ref);
     if (content.exists()) {
@@ -130,7 +176,7 @@ export async function decreaseXP(gotXp) {
             level -= 1;
         }
 
-        await setDoc(ref, {
+        await updateDoc(ref, {
             xp,
             maxXp: max,
             level
@@ -138,3 +184,16 @@ export async function decreaseXP(gotXp) {
     }
 }
 
+export async function setTask(key: number, val: boolean) {
+    let ref = doc(db, "users", uid)
+    let content = await getDoc(ref)
+    if (content.exists()) {
+        console.log(content.data())
+        let data = content.data()
+        let TasksDone = data.TasksDone
+        TasksDone[key] = val
+        await updateDoc(ref, {
+            TasksDone: TasksDone
+        })
+    }
+}

@@ -1,6 +1,12 @@
 document.addEventListener("DOMContentLoaded", main);
-import { listTodaysChallange, increaseXP, decreaseXP } from "./signin.js";
+import { listTodaysChallange, increaseXP, decreaseXP, updateInfo, listCompletedTasks, setTask } from "./signin.js";
 let current = "Default";
+let current_tab = ".";
+let esc_need = false;
+let esc_kind;
+let click_need = false;
+let click_kind;
+let chart = "";
 let config = {
     type: 'bar',
     data: {
@@ -49,11 +55,6 @@ let config = {
         }
     }
 };
-let esc_need = false;
-let esc_kind;
-let click_need = false;
-let click_kind;
-let chart = "";
 const canvas = document.getElementById('routineChart');
 if (canvas) {
     chart = new Chart(canvas, config);
@@ -63,8 +64,7 @@ console.log(eel);
 if (!eel) {
     window.location.reload();
 }
-function main() {
-    makeTestChart();
+async function main() {
     document.getElementById("side-search")?.addEventListener("click", async () => {
         let value = await showContext("Enter the task you want to search for", 'text');
         let search_val = await eel.searchTask(value)();
@@ -74,9 +74,21 @@ function main() {
         let routine = document.getElementById('routine') || null;
         let current_el = document.getElementById(`${current}`) || null;
         let all_el = document.getElementById('all-routine') || null;
-        console.log(all_el);
-        if (routine && current_el && all_el) {
+        let tab_el = document.getElementById(current_tab) || null;
+        let this_el = document.getElementById('side-routine') || null;
+        if (routine && current_el && all_el && this_el) {
             current_el.style.display = "none";
+            if (tab_el) {
+                tab_el.classList.remove('active');
+            }
+            current_tab = "side-routine";
+            this_el.classList.add('active');
+            if (current == "Default") {
+                let el = document.getElementById('Today') || null;
+                if (el) {
+                    el.style.display = "none";
+                }
+            }
             all_el.style.display = "flex";
             current = "all-routine";
             routine.style.display = "flex";
@@ -149,6 +161,7 @@ function main() {
                     li.onclick = () => {
                         showroutinedetails(String(li.dataset.path), pos);
                     };
+                    const primary_highlight_color = getComputedStyle(document.documentElement).getPropertyValue('--primary-highlight-color').trim();
                     let config = {
                         type: 'line',
                         data: {
@@ -173,7 +186,7 @@ function main() {
                                 y: {
                                     max: 100,
                                     grid: {
-                                        color: 'rgb(137, 234, 171)'
+                                        color: primary_highlight_color
                                     }
                                 }
                             },
@@ -296,7 +309,14 @@ function main() {
     document.getElementById("side-challange")?.addEventListener('click', async () => {
         const Today = document.getElementById("Today") || null;
         const current_element = document.getElementById(`${current}`);
-        if (Today && current_element) {
+        let tab_el = document.getElementById(current_tab) || null;
+        let this_el = document.getElementById('side-challange') || null;
+        if (Today && current_element && this_el) {
+            if (tab_el) {
+                tab_el.classList.remove('active');
+            }
+            current_tab = "side-challange";
+            this_el.classList.add('active');
             console.log("EXIST");
             current_element.style.display = "none";
             current = "Today";
@@ -309,8 +329,10 @@ function main() {
                 console.log(typeof (val.Tasks));
                 let tasks = val.Tasks;
                 let XP = val.XP;
+                let check = await listCompletedTasks();
+                console.log(check);
                 let res = tasks.map((tasks, index) => {
-                    return [tasks, XP[index]];
+                    return [tasks, XP[index], check[index]];
                 });
                 list_items(res, true);
                 console.log(res);
@@ -369,6 +391,7 @@ function main() {
         }
     });
     document.getElementById('new-routine')?.addEventListener('click', async () => {
+        eel.log("NEW_SUDDEND_ROUTINE")();
         let name = await showContext("Enter the name of the new routine", 'text');
         let time = await showContext("Select how often this routine is", 'dropdown', ["Daily", "Weekly", "Monthly"], 'Select');
         eel.addRoutine(time, name)();
@@ -376,8 +399,9 @@ function main() {
     document.getElementById('more-acc-info')?.addEventListener('click', async (e) => {
         let context = document.getElementById("acc-context");
         if (context) {
+            updateInfo();
             let x = e.clientX;
-            let y = e.clientY - 100;
+            let y = e.clientY - 150;
             context.style.left = String(`${x}px`);
             context.style.top = String(`${y}px`);
             context.style.display = 'flex';
@@ -387,11 +411,25 @@ function main() {
             }, 20);
         }
     });
+    document.getElementById('colorize')?.addEventListener('click', async () => {
+        let color = await showContext("Select color", "dropdown", ["Red", "Orange", "Yellow", "Green", "Blue", "Purple"], "colors...");
+        color = color.toLowerCase();
+        await eel.changeColor(color)();
+        setColors();
+        console.log("COLOR:- ", color);
+    });
     document.getElementById("side-Today")?.addEventListener('click', async () => {
         const today = document.querySelector("#Today");
         const current_element = document.getElementById(`${current}`);
+        let tab_el = document.getElementById(current_tab) || null;
+        let this_el = document.getElementById('side-Today') || null;
         console.log(current_element);
-        if (today && current_element) {
+        if (today && current_element && this_el) {
+            if (tab_el) {
+                tab_el.classList.remove('active');
+            }
+            current_tab = "side-Today";
+            this_el.classList.add('active');
             current = "Today";
             current_element.style.display = "none";
             today.style.display = "flex";
@@ -402,8 +440,15 @@ function main() {
     document.getElementById("side-upcoming")?.addEventListener('click', async () => {
         const today = document.querySelector("#Today");
         const current_element = document.getElementById(`${current}`);
+        let tab_el = document.getElementById(current_tab) || null;
+        let this_el = document.getElementById('side-upcoming') || null;
         console.log(current_element);
-        if (today && current_element) {
+        if (today && current_element && this_el) {
+            if (tab_el) {
+                tab_el.classList.remove('active');
+            }
+            current_tab = "side-upcoming";
+            this_el.classList.add('active');
             current = "Today";
             current_element.style.display = "none";
             today.style.display = "flex";
@@ -419,11 +464,23 @@ function main() {
         makeSubGroupTree();
     });
     makeSubGroupTree();
-    setColors();
+    await setColors();
+    const primary_highlight_color = getComputedStyle(document.documentElement).getPropertyValue('--primary-highlight-color').trim();
+    if (config.options) {
+        if (config.options.scales) {
+            if (config.options.scales.y) {
+                if (config.options.scales.y.grid) {
+                    if (config.options.scales.y.grid.color) {
+                        config.options.scales.y.grid.color = primary_highlight_color;
+                    }
+                }
+            }
+        }
+    }
 }
 async function setColors() {
     function setTheme(name, color) {
-        document.documentElement.style.setProperty(name, color);
+        document.documentElement.style.setProperty(`--${name}`, color);
     }
     let colorTheme = await eel.getColors()();
     Object.entries(colorTheme).forEach((arr) => {
@@ -485,6 +542,8 @@ async function list_items(tasks, challange = false) {
                         icon.innerText = "";
                         if (challange) {
                             await decreaseXP(task_par.dataset.path);
+                            console.log(Number(key) - 1);
+                            setTask(Number(key) - 1, false);
                             return;
                         }
                         eel.toggletask(`${task_par.dataset.path}/${task_desc.innerText}`, false);
@@ -492,6 +551,8 @@ async function list_items(tasks, challange = false) {
                     else {
                         icon.innerText = "check_small";
                         if (challange) {
+                            console.log(Number(key) - 1);
+                            setTask(Number(key) - 1, true);
                             await increaseXP(task_par.dataset.path);
                             return;
                         }
@@ -509,9 +570,42 @@ async function list_items(tasks, challange = false) {
             task_btn.appendChild(ico);
             task_par.appendChild(task_btn);
             task_par.appendChild(task_desc);
-            lists?.appendChild(task_par);
             if (!challange) {
+                let more = document.createElement('span');
+                more.classList = "material-symbols-outlined moreTask";
+                more.innerText = "more_horiz";
+                task_par.appendChild(more);
                 setcheck(taskKey);
+                more.onclick = async (e) => {
+                    let ctx = document.getElementById("more-task-info");
+                    if (ctx) {
+                        ctx.style.top = `${String(e.clientY)}px`;
+                        ctx.style.left = `${String(e.clientX)}px`;
+                        ctx.style.display = "flex";
+                        console.log(e.clientX);
+                        console.log(e.clientY);
+                        setTimeout(() => {
+                            click_need = true;
+                            click_kind = ctx;
+                        }, 20);
+                    }
+                    else {
+                        console.log("NO CONTEXT");
+                    }
+                };
+            }
+            lists?.appendChild(task_par);
+            if (challange) {
+                if (tasks[taskKey - 1][2]) {
+                    console.log(tasks[taskKey - 1][2]);
+                    let ico = document.getElementById(`task_ico${taskKey}`) || null;
+                    if (ico) {
+                        ico.innerText = "check_small";
+                    }
+                    else {
+                        console.log("ico doset exist");
+                    }
+                }
             }
         });
         console.log(taskKey);
@@ -606,65 +700,6 @@ async function makeNewSubGroup(catagory) {
     let value = await showContext("Enter the name of the new subgroup", 'text');
     await eel.newSubGroup(catagory, value);
     makeSubGroupTree();
-}
-function makeTestChart() {
-    console.log('here');
-    const canvas = document.getElementById('routine-block-graph');
-    if (canvas) {
-        console.log('here');
-        const config = {
-            type: "line",
-            data: {
-                labels: [
-                    'Sun',
-                    'Mon',
-                    'Tue'
-                ],
-                datasets: [{
-                        label: 'Progress (%)',
-                        data: [10, 20, 30],
-                        borderWidth: 2,
-                        backgroundColor: 'rgba(0, 0, 0, 0.56)'
-                    }]
-            },
-            options: {
-                indexAxis: 'x',
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        grid: {
-                            color: 'rgba(0, 0, 0, 0)'
-                        }
-                    },
-                    y: {
-                        max: 100,
-                        grid: {
-                            color: 'rgb(137, 234, 171)'
-                        }
-                    }
-                },
-                plugins: {
-                    tooltip: {
-                        backgroundColor: '#33333380',
-                        titleColor: '#ffffff',
-                        bodyColor: '#ffffff',
-                        footerColor: '#70f67079',
-                        borderColor: '#33333387',
-                        borderWidth: 1,
-                        displayColors: true,
-                        boxPadding: 3
-                    },
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        };
-        console.log('here');
-        const _ = new Chart(canvas, config);
-        console.log('here');
-    }
 }
 document.addEventListener('keydown', (e) => {
     if (e.key == "Esc" && esc_need) {

@@ -16,7 +16,7 @@ ROUTINEFILE =  os.path.join(FOLDER, "data", "routine.json")
 SETTINGFILE = os.path.join(FOLDER, "data", "settings.json")
 eel.init(WFOLDER)
 
-
+@eel.expose
 def log(msg):
     with open(LOGFILE, 'a') as f:
         f.write(f"- {msg}\n")
@@ -257,6 +257,7 @@ def validateDateTime(fullIso):
 
 @eel.expose
 def addRoutine(time, name):
+    log("SUDDEND_ROUTINE")
     data = RoutineManager('r')
     data = dict(data)
     data[time.lower()].append({
@@ -279,8 +280,6 @@ def addRoutine(time, name):
         }
     })
     RoutineManager('w', data)
-
-addRoutine('daily', 'myrotun')
 
 @eel.expose
 def setComplete(path):
@@ -308,6 +307,11 @@ def getColors():
     colorTheme = data['colors'][data['color']]
     return colorTheme
 
+@eel.expose
+def changeColor(color):
+    data = settingsManager('r')
+    data['color'] = color
+    settingsManager('w', data)
 
 @eel.expose
 def CleanUp():

@@ -73,6 +73,7 @@
 }
 
 .account-context-menu {
+    padding: 1rem;
     display: none;
     outline: 2px solid var(--outline-color);
     flex-direction: column;
@@ -467,7 +468,6 @@ body {
 
 .add-routine-icon {
     position: relative;
-    top: 0.2vh;
 }
 
 .routine-list {
@@ -759,7 +759,7 @@ ul {
 }
 
 .loadingChallanges {
-    position: absolute;
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -800,4 +800,24 @@ ul {
     100% {
         transform: rotate(360deg);
     }
+}
+
+
+.moreTask {
+    margin-left: auto;
+    margin-right: 3vw;
+}
+
+.more-task-ctx {
+    position: absolute;
+    display: none;
+    width: 8vw;
+    height: 12vh;
+    flex-direction: column;
+    background-color: var(--tertiary-background-color);
+    outline: 1px solid var(--outline-color);
+    padding: 1.5rem;
+    border-radius: 10px;
+    gap: 1rem;
+    font-family: 'Sour Gummy', sans-serif;
 }
