@@ -1,7 +1,7 @@
-export function updateInfo(): Promise<void>;
-export function listTodaysChallange(): Promise<any>;
-export function listCompletedTasks(): Promise<any>;
-export function increaseXP(gotXp: any): Promise<void>;
-export function decreaseXP(gotXp: any): Promise<void>;
-export function setTask(key: any, val: any): Promise<void>;
+export declare function updateInfo(): Promise<void>;
+export declare function listTodaysChallange(): Promise<string[] | import("@firebase/firestore").DocumentData>;
+export declare function listCompletedTasks(): Promise<any>;
+export declare function increaseXP(gotXp: number): Promise<void>;
+export declare function decreaseXP(gotXp: number): Promise<void>;
+export declare function setTask(key: number, val: boolean): Promise<void>;
 //# sourceMappingURL=signin.d.ts.map

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", main);
 declare const Chart: typeof import('chart.js').Chart;
-import { listTodaysChallange, increaseXP, decreaseXP, updateInfo, listCompletedTasks, setTask } from "./signin.ts"
+import { listTodaysChallange, increaseXP, decreaseXP, updateInfo, listCompletedTasks, setTask } from "./signinx.js"
 
 declare global {
   interface Window {
@@ -352,39 +352,15 @@ async function main() {
     })
 
     document.getElementById("side-challange")?.addEventListener('click', async() => {
-        const Today = document.getElementById("Today") as HTMLElement || null
-        const current_element = document.getElementById(`${current}`) as HTMLElement | null;
-        let tab_el = document.getElementById(current_tab) as HTMLElement || null
-        let this_el = document.getElementById('side-challange') as HTMLElement || null
-        if (Today && current_element && this_el) {
-            if (tab_el) {
-                tab_el.classList.remove('active')
-            }
-            current_tab = "side-challange"
-            this_el.classList.add('active')
-            console.log("EXIST")
-            current_element.style.display = "none"
-            current = "Today"
-            Today.style.display = "flex"
-            console.log("val")
-            let val = await listTodaysChallange() as challangeData
-            console.log("val")
-            console.log(val)
+        let val = await listTodaysChallange() as challangeData
+        side_mainFunc("Today", 'side-challange', async() => {
             if (val) {
-                console.log(typeof(val.Tasks))
-                let tasks = val.Tasks
-                let XP = val.XP
                 let check: Boolean[] = await listCompletedTasks()
-                console.log(check)
-                let res = tasks.map( (tasks: any, index: number) => {
-                    return [ tasks, XP[index], check[index]]
-                } ) 
-                list_items(res, true)
+                let res = await eel.make3d(val, check)()
                 console.log(res)
+                list_items(res, true)
             }
-        } else {
-            console.log("NO EXIST")
-        }
+        })
     })
 
     function searchBoxShow(searches: Object, value: string ) {
@@ -471,44 +447,16 @@ async function main() {
     })
 
     document.getElementById("side-Today")?.addEventListener('click', async() => {
-        const today = document.querySelector("#Today") as HTMLElement | null;
-        const current_element = document.getElementById(`${current}`) as HTMLElement | null;
-        let tab_el = document.getElementById(current_tab) as HTMLElement || null
-        let this_el = document.getElementById('side-Today') as HTMLElement || null
-        console.log(current_element)
-        if (today && current_element && this_el) {
-            if (tab_el) {
-                tab_el.classList.remove('active')
-            }
-            current_tab = "side-Today"
-            this_el.classList.add('active')
-            current = "Today"
-            current_element.style.display = "none"
-            today.style.display = "flex"
+        side_mainFunc("Today", 'side-Today',  async() => {
             let val = await eel.listTask("", "", "today")()
             list_items(val)
-        }
+        })
     });
     document.getElementById("side-upcoming")?.addEventListener('click', async() => {
-        const today = document.querySelector("#Today") as HTMLElement | null;
-        const current_element = document.getElementById(`${current}`) as HTMLElement | null;
-        let tab_el = document.getElementById(current_tab) as HTMLElement || null
-        let this_el = document.getElementById('side-upcoming') as HTMLElement || null
-        console.log(current_element)
-        if (today && current_element && this_el) {
-        if (tab_el) {
-            tab_el.classList.remove('active')
-        }
-        current_tab = "side-upcoming"
-        this_el.classList.add('active')
-        current = "Today"
-            current_element.style.display = "none"
-            today.style.display = "flex"
-            let value = await eel.listTask("", "", "upcomming")()
-            console.log(value)
-            console.log(typeof(value))
-            list_items(value)
-        }
+        side_mainFunc("Today", 'side-upcoming', async() => {
+            let val = await eel.listTask("", "", "upcomming")()
+            list_items(val)
+        })
     });
 
     document.getElementById('side-group')?.addEventListener('click', async() => {
@@ -530,6 +478,24 @@ async function main() {
                 }
             }
         }
+    }
+}
+
+function side_mainFunc(par_el: string, this_tab_name: string, func: Function) {
+    const par = document.getElementById(par_el) as HTMLElement || null;
+    const current_element = document.getElementById(current) as HTMLElement | null;
+    const tab_el = document.getElementById(current_tab) as HTMLElement || null
+    const this_tab_el = document.getElementById(this_tab_name) as HTMLElement || null
+    if (par && current_element && this_tab_el) {
+        if (tab_el) {
+            tab_el.classList.remove('active')
+        }
+        current_tab = this_tab_name
+        this_tab_el.classList.add('active')
+        current = par_el
+        current_element.style.display = "none"
+        par.style.display = "flex"
+        func()
     }
 }
 

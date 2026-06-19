@@ -1,11 +1,6 @@
-import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
-const eel = window.eel;
-console.log(eel);
-if (!eel) {
-    window.location.reload();
-}
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 const Config = {
     apiKey: "AIzaSyDiXBfMU_Kfj2yrklW1yWrMNvEHBRcq848",
     authDomain: "sequender-73c25.firebaseapp.com",
@@ -25,16 +20,13 @@ onAuthStateChanged(auth, (user) => {
         complete(name, pfpUrl, uid);
     }
     else {
-        let signin = document.getElementById('sign-in') || null;
-        if (signin) {
-            signin.style.display = "flex";
-        }
+        document.getElementById('sign-in').style.display = "flex";
     }
 });
 const googleProv = new GoogleAuthProvider();
 const uidx = "";
 const db = getFirestore();
-document.getElementById('gmail-enter')?.addEventListener('click', async () => {
+document.getElementById('gmail-enter').addEventListener('click', async () => {
     login_gmail();
 });
 async function login_gmail() {
@@ -57,14 +49,12 @@ async function login_gmail() {
 }
 async function complete(name, pfp, uid) {
     console.log(pfp);
-    let signin = document.getElementById('sign-in') || null;
-    let name_el = document.getElementById('username') || null;
-    let pfp_el = document.getElementById('userpfp') || null;
-    if (signin && name_el && pfp_el) {
-        signin.style.display = 'none';
-        name_el.innerText = name;
-        pfp_el.src = pfp;
-    }
+    document.getElementById('sign-in').style.display = 'none';
+    document.getElementById('username').innerText = name;
+    document.getElementById('userpfp').src = pfp;
+    console.log(document.getElementById('userpfp').src);
+    console.log(document.getElementById('userpfp'));
+    console.log(document.getElementById('username'));
     let ref = doc(db, "users", uid);
     if (!(await eel.loggedin()())) {
         await setDoc(ref, {
@@ -79,12 +69,8 @@ async function complete(name, pfp, uid) {
     if (content.exists()) {
         console.log(content.data());
         let data = content.data();
-        let xp = document.getElementById('xp') || null;
-        let lvl = document.getElementById('lvl') || null;
-        if (xp && lvl) {
-            xp.innerText = `Xp: ${data.xp}/${data.maxXp}`;
-            lvl.innerText = `Level: ${data.level}`;
-        }
+        document.getElementById('xp').innerText = `Xp: ${data.xp}/${data.maxXp}`;
+        document.getElementById('lvl').innerText = `Level: ${data.level}`;
     }
     else {
         console.log("ERROR:- content not found");
@@ -96,12 +82,8 @@ export async function updateInfo() {
     if (content.exists()) {
         console.log(content.data());
         let data = content.data();
-        let xp = document.getElementById('xp') || null;
-        let lvl = document.getElementById('lvl') || null;
-        if (xp && lvl) {
-            xp.innerText = `Xp: ${data.xp}/${data.maxXp}`;
-            lvl.innerText = `Level: ${data.level}`;
-        }
+        document.getElementById('xp').innerText = `Xp: ${data.xp}/${data.maxXp}`;
+        document.getElementById('lvl').innerText = `Level: ${data.level}`;
     }
 }
 export async function listTodaysChallange() {
@@ -122,11 +104,9 @@ export async function listCompletedTasks() {
     }
 }
 export async function increaseXP(gotXp) {
+    gotXp = Number(gotXp);
     const uid = getAuth().currentUser?.uid;
     console.log(uid);
-    if (!uid) {
-        return;
-    }
     let ref = doc(db, "users", uid);
     let content = await getDoc(ref);
     if (content.exists()) {
@@ -147,11 +127,9 @@ export async function increaseXP(gotXp) {
     }
 }
 export async function decreaseXP(gotXp) {
+    gotXp = Number(gotXp);
     const uid = getAuth().currentUser?.uid;
     console.log(uid);
-    if (!uid) {
-        return;
-    }
     let ref = doc(db, "users", uid);
     let content = await getDoc(ref);
     if (content.exists()) {
@@ -184,4 +162,4 @@ export async function setTask(key, val) {
         });
     }
 }
-//# sourceMappingURL=signin.js.map
+//# sourceMappingURL=signinx.js.map

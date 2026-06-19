@@ -345,5 +345,14 @@ def exitCode(page_route, remaining_websockets):
     if not remaining_websockets:
         CleanUp()
 
+@eel.expose
+def make3d(info, completed):
+    val = [
+        [info["Tasks"][index], info["XP"][index], value] for index, value in enumerate(completed)
+    ]
+    print(val)
+    return val
+
+
 eel.start('index.html', port=55555, close_callback=exitCode)
 

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", main);
-import { listTodaysChallange, increaseXP, decreaseXP, updateInfo, listCompletedTasks, setTask } from "./signin.js";
+import { listTodaysChallange, increaseXP, decreaseXP, updateInfo, listCompletedTasks, setTask } from "./signinx.js";
 let current = "Default";
 let current_tab = ".";
 let esc_need = false;
@@ -307,40 +307,15 @@ async function main() {
         }
     });
     document.getElementById("side-challange")?.addEventListener('click', async () => {
-        const Today = document.getElementById("Today") || null;
-        const current_element = document.getElementById(`${current}`);
-        let tab_el = document.getElementById(current_tab) || null;
-        let this_el = document.getElementById('side-challange') || null;
-        if (Today && current_element && this_el) {
-            if (tab_el) {
-                tab_el.classList.remove('active');
-            }
-            current_tab = "side-challange";
-            this_el.classList.add('active');
-            console.log("EXIST");
-            current_element.style.display = "none";
-            current = "Today";
-            Today.style.display = "flex";
-            console.log("val");
-            let val = await listTodaysChallange();
-            console.log("val");
-            console.log(val);
+        let val = await listTodaysChallange();
+        side_mainFunc("Today", 'side-challange', async () => {
             if (val) {
-                console.log(typeof (val.Tasks));
-                let tasks = val.Tasks;
-                let XP = val.XP;
                 let check = await listCompletedTasks();
-                console.log(check);
-                let res = tasks.map((tasks, index) => {
-                    return [tasks, XP[index], check[index]];
-                });
-                list_items(res, true);
+                let res = await eel.make3d(val, check)();
                 console.log(res);
+                list_items(res, true);
             }
-        }
-        else {
-            console.log("NO EXIST");
-        }
+        });
     });
     function searchBoxShow(searches, value) {
         let hideall = document.getElementById("hide-all-search") || null;
@@ -419,44 +394,16 @@ async function main() {
         console.log("COLOR:- ", color);
     });
     document.getElementById("side-Today")?.addEventListener('click', async () => {
-        const today = document.querySelector("#Today");
-        const current_element = document.getElementById(`${current}`);
-        let tab_el = document.getElementById(current_tab) || null;
-        let this_el = document.getElementById('side-Today') || null;
-        console.log(current_element);
-        if (today && current_element && this_el) {
-            if (tab_el) {
-                tab_el.classList.remove('active');
-            }
-            current_tab = "side-Today";
-            this_el.classList.add('active');
-            current = "Today";
-            current_element.style.display = "none";
-            today.style.display = "flex";
+        side_mainFunc("Today", 'side-Today', async () => {
             let val = await eel.listTask("", "", "today")();
             list_items(val);
-        }
+        });
     });
     document.getElementById("side-upcoming")?.addEventListener('click', async () => {
-        const today = document.querySelector("#Today");
-        const current_element = document.getElementById(`${current}`);
-        let tab_el = document.getElementById(current_tab) || null;
-        let this_el = document.getElementById('side-upcoming') || null;
-        console.log(current_element);
-        if (today && current_element && this_el) {
-            if (tab_el) {
-                tab_el.classList.remove('active');
-            }
-            current_tab = "side-upcoming";
-            this_el.classList.add('active');
-            current = "Today";
-            current_element.style.display = "none";
-            today.style.display = "flex";
-            let value = await eel.listTask("", "", "upcomming")();
-            console.log(value);
-            console.log(typeof (value));
-            list_items(value);
-        }
+        side_mainFunc("Today", 'side-upcoming', async () => {
+            let val = await eel.listTask("", "", "upcomming")();
+            list_items(val);
+        });
     });
     document.getElementById('side-group')?.addEventListener('click', async () => {
         let value = await showContext("Enter the new group you want to make", 'text');
@@ -476,6 +423,23 @@ async function main() {
                 }
             }
         }
+    }
+}
+function side_mainFunc(par_el, this_tab_name, func) {
+    const par = document.getElementById(par_el) || null;
+    const current_element = document.getElementById(current);
+    const tab_el = document.getElementById(current_tab) || null;
+    const this_tab_el = document.getElementById(this_tab_name) || null;
+    if (par && current_element && this_tab_el) {
+        if (tab_el) {
+            tab_el.classList.remove('active');
+        }
+        current_tab = this_tab_name;
+        this_tab_el.classList.add('active');
+        current = par_el;
+        current_element.style.display = "none";
+        par.style.display = "flex";
+        func();
     }
 }
 async function setColors() {
@@ -541,7 +505,9 @@ async function list_items(tasks, challange = false) {
                     if (icon.innerText == "check_small") {
                         icon.innerText = "";
                         if (challange) {
-                            await decreaseXP(task_par.dataset.path);
+                            if (task_par.dataset.path) {
+                                await decreaseXP(Number(task_par.dataset.path));
+                            }
                             console.log(Number(key) - 1);
                             setTask(Number(key) - 1, false);
                             return;
@@ -551,9 +517,11 @@ async function list_items(tasks, challange = false) {
                     else {
                         icon.innerText = "check_small";
                         if (challange) {
+                            if (task_par.dataset.path) {
+                                await increaseXP(Number(task_par.dataset.path));
+                            }
                             console.log(Number(key) - 1);
                             setTask(Number(key) - 1, true);
-                            await increaseXP(task_par.dataset.path);
                             return;
                         }
                         eel.toggletask(`${task_par.dataset.path}/${task_desc.innerText}`, true);
