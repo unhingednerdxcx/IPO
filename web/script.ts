@@ -2,6 +2,10 @@ document.addEventListener("DOMContentLoaded", main);
 declare const Chart: typeof import('chart.js').Chart;
 import { listTodaysChallange, increaseXP, decreaseXP, updateInfo, listCompletedTasks, setTask } from "./signinx.js"
 
+const eel = (window as any).eel;
+if (!eel) {
+    window.location.reload()
+}
 declare global {
   interface Window {
     makeNewSubGroup: (catagory: string) => void;
@@ -25,64 +29,13 @@ let click_kind: HTMLElement;
 
 
 let chart: any = ""
-let config: import('chart.js').ChartConfiguration<'bar'> = {
-    type: 'bar',
-    data: {
-        labels: [],
-        datasets: [{
-            label: 'Progress (%)',
-            data: [],
-            borderRadius: 10,
-            borderWidth: 2,
-            borderSkipped: false,
-            backgroundColor: 'rgba(0, 0, 0, 0.56)'
-        }]
-    },
-    options: {
-        indexAxis: 'x',
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            x: {
-                grid: {
-                    color: 'rgba(0, 0, 0, 0)'
-                }
-            },
-            y: {
-                max: 100,
-                grid: {
-                    color: 'rgb(137, 234, 171)'
-                }
-            }
-        },
-        plugins: {
-            tooltip: {
-                backgroundColor: '#33333380',
-                titleColor: '#ffffff',
-                bodyColor: '#ffffff',
-                footerColor: '#70f67079',
-                borderColor: '#33333387',
-                borderWidth: 1,
-                displayColors: true,
-                boxPadding: 3
-            },
-            legend: {
-                display: true,
-                position: 'top',
-            }
-        }
-    }
-};
+let config: import('chart.js').ChartConfiguration<'bar'> = await eel.routineDetailConfig()()
 const canvas = document.getElementById('routineChart') as HTMLCanvasElement | null;
 if (canvas) {
     chart = new Chart(canvas, config);
 }
 
 
-const eel = (window as any).eel;
-if (!eel) {
-    window.location.reload()
-}
 
 
 async function main() {
@@ -190,6 +143,7 @@ async function main() {
                         showroutinedetails(String(li.dataset.path), pos)
                     }
                     const primary_highlight_color = getComputedStyle(document.documentElement).getPropertyValue('--primary-highlight-color').trim()
+                    
                     let config: import('chart.js').ChartConfiguration<'line'> = {
                         type: 'line',
                         data: {

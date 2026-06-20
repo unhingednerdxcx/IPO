@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", main);
 import { listTodaysChallange, increaseXP, decreaseXP, updateInfo, listCompletedTasks, setTask } from "./signinx.js";
+const eel = window.eel;
+if (!eel) {
+    window.location.reload();
+}
 let current = "Default";
 let current_tab = ".";
 let esc_need = false;
@@ -7,61 +11,10 @@ let esc_kind;
 let click_need = false;
 let click_kind;
 let chart = "";
-let config = {
-    type: 'bar',
-    data: {
-        labels: [],
-        datasets: [{
-                label: 'Progress (%)',
-                data: [],
-                borderRadius: 10,
-                borderWidth: 2,
-                borderSkipped: false,
-                backgroundColor: 'rgba(0, 0, 0, 0.56)'
-            }]
-    },
-    options: {
-        indexAxis: 'x',
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            x: {
-                grid: {
-                    color: 'rgba(0, 0, 0, 0)'
-                }
-            },
-            y: {
-                max: 100,
-                grid: {
-                    color: 'rgb(137, 234, 171)'
-                }
-            }
-        },
-        plugins: {
-            tooltip: {
-                backgroundColor: '#33333380',
-                titleColor: '#ffffff',
-                bodyColor: '#ffffff',
-                footerColor: '#70f67079',
-                borderColor: '#33333387',
-                borderWidth: 1,
-                displayColors: true,
-                boxPadding: 3
-            },
-            legend: {
-                display: true,
-                position: 'top',
-            }
-        }
-    }
-};
+let config = await eel.routineDetailConfig()();
 const canvas = document.getElementById('routineChart');
 if (canvas) {
     chart = new Chart(canvas, config);
-}
-const eel = window.eel;
-if (!eel) {
-    window.location.reload();
 }
 async function main() {
     document.getElementById("side-search")?.addEventListener("click", async () => {

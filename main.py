@@ -316,6 +316,98 @@ def changeColor(color):
     settingsManager('w', data)
 
 @eel.expose
+def routineDetailConfig():
+    return {
+        "type": 'bar',
+        "data": {
+            "labels": [],
+            "datasets": [{
+                "label": 'Progress (%)',
+                "data": [],
+                "borderRadius": 10,
+                "borderWidth": 2,
+                "borderSkipped": False,
+                "backgroundColor": 'rgba(0, 0, 0, 0.56)'
+            }]
+        },
+        "options": {
+            "indexAxis": 'x',
+            "responsive": True,
+            "maintainAspectRatio": False,
+            "scales": {
+                "x": {
+                    "grid": {
+                        "color": 'rgba(0, 0, 0, 0)'
+                    }
+                },
+                "y": {
+                    "max": 100,
+                    "grid": {
+                        "color": 'rgb(137, 234, 171)'
+                    }
+                }
+            },
+            "plugins": {
+                "tooltip": {
+                    "backgroundColor": '#33333380',
+                    "titleColor": '#ffffff',
+                    "bodyColor": '#ffffff',
+                    "footerColor": '#70f67079',
+                    "borderColor": '#33333387',
+                    "borderWidth": 1,
+                    "displayColors": True,
+                    "boxPadding": 3
+                },
+                "legend": {
+                    "display": True,
+                    "position": 'top',
+                }
+            }
+        }
+    }
+
+@eel.expose
+def routineSummaryConfig(label, fix_dataPoints, primary_highlight_color):
+    return {
+        "type": 'line',
+        "data": {
+            "labels": label,
+            "datasets": [{
+                "label": 'Progress (%)',
+                "data": fix_dataPoints,
+                "borderWidth": 2,
+                "backgroundColor": 'rgba(0, 0, 0, 0.56)'
+            }]
+        },
+        "options": {
+            "indexAxis": 'x',
+            "responsive": True,
+            "maintainAspectRatio": False,
+            "scales": {
+                "x": {
+                    "grid": {
+                        "color": 'rgba(0, 0, 0, 0)'
+                    }
+                },
+                "y": {
+                    "max": 100,
+                    "grid": {
+                        "color": primary_highlight_color
+                    }
+                }
+            },
+            "plugins": {
+                "tooltip": {
+                    "enabled": False,
+                },
+                "legend": {
+                    "display": False,
+                }
+            }
+        }
+    };
+
+@eel.expose
 def CleanUp():
     data = TaskManager('r')
     now = datetime.now()
