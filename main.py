@@ -7,6 +7,8 @@ from datetime import datetime
 from datetime import date as datetime_date
 from datetime import timezone
 import sys
+import statistics
+from collections import Counter
 
 FOLDER = os.path.dirname(os.path.abspath(__file__))
 WFOLDER = os.path.join(FOLDER, "web")
@@ -353,6 +355,61 @@ def make3d(info, completed):
     print(val)
     return val
 
+def checkForStart():
+    data = settingsManager('r')
+    if data['LastChecked'] != datetime.now().date().isoformat():
+        data["LastChecked"] = datetime.now().date().isoformat()
+        settingsManager('w', data)
+        times = [["daily", 7], ["weekly", 4], ["monthly", 30]]
+        routineData = RoutineManager('r')
+        for time in times:
+            index = -1
+            for routine in routineData[time[0]]:
+                index += 1
+                value = routine[list(routine.keys())[0]]
+                completeTill = value["Complete till"]
 
+                if completeTill != "":
+                    if len(value["stops"]) < 5:
+                        print(list(routine.keys())[0], "\n\n\n")
+                        print("x:", routineData[time[0]][index][list(routine.keys())[0]]["Most difficult"]["name"])
+                        routineData[time[0]][index][list(routine.keys())[0]]["Complete till"] = ""
+                        routineData[time[0]][index][list(routine.keys())[0]]["stops"].append(completeTill)
+                        modes = statistics.multimode(value["stops"])
+                        routineData[time[0]][index][list(routine.keys())[0]]["Most difficult"]["name"] = modes[0]
+                        tasksDone = 0
+                        for task in value["tasks"]:
+                            if task != completeTill:
+                                print(task, completeTill)
+                                tasksDone += 1
+                            else:
+                                break
+                        print(tasksDone + 1)
+                        tasksDone += 1
+                        percentage = (tasksDone/len(value["tasks"])) * 100
+                        print(percentage)
+                        day = 0
+                        match (time[0]):
+                            case "daily":
+                                day = datetime.now().isoweekday() # Sun = 1... Sat = 7
+                            case "weekly":
+                                day = (datetime.now().day - 1) // 7 + 1
+                            case "monthly":
+                                day = datetime.now().month
+                        print("y", day)
+                        routineData[time[0]][index][list(routine.keys())[0]]["consistancy"][day] = percentage
+
+                        counts = Counter(value["tasks"] + value["stops"])
+                        min_freq = min(counts.values())
+                        least_common = []
+                        for task, count in counts.items():
+                            if count == min_freq:
+                                least_common.append(task)
+
+                        print("xy", least_common)
+                        routineData[time[0]][index][list(routine.keys())[0]]["Most easiest"]["name"] = least_common[0]
+                        RoutineManager('w', routineData)
+
+checkForStart()
 eel.start('index.html', port=55555, close_callback=exitCode)
 

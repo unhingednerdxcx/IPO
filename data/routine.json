@@ -2,26 +2,28 @@
     "daily": [
         {
             "Work out plan": {
+                "index": 0,
                 "tasks": [
                     "Running",
                     "Lifting",
                     "Push ups",
                     "Dead lift"
                 ],
-                "Complete till": "Push ups",
+                "Complete till": "",
                 "Streak": 3,
                 "Most difficult": {
-                    "name": "Push ups",
+                    "name": "Lifting",
                     "score": 3
                 },
                 "Most easiest": {
-                    "name": "Running",
+                    "name": "Dead lift",
                     "score": 1
                 },
                 "stops": [
                     "Lifting",
                     "Lifting",
-                    "Running"
+                    "Running",
+                    "Push ups"
                 ],
                 "consistancy": [
                     100,
@@ -30,19 +32,20 @@
                     60,
                     70,
                     70,
-                    80
+                    75.0
                 ]
             }
         },
         {
             "Morning Routine": {
+                "index": 0,
                 "tasks": [
                     "Make bed",
                     "Meditate",
                     "Journal",
                     "Hydrate"
                 ],
-                "Complete till": "Journal",
+                "Complete till": "",
                 "Streak": 5,
                 "Most difficult": {
                     "name": "Meditate",
@@ -55,6 +58,7 @@
                 "stops": [
                     "Meditate",
                     "Meditate",
+                    "Journal",
                     "Journal"
                 ],
                 "consistancy": [
@@ -64,19 +68,20 @@
                     100,
                     100,
                     100,
-                    100
+                    75.0
                 ]
             }
         },
         {
             "Skin Care": {
+                "index": 0,
                 "tasks": [
                     "Cleanser",
                     "Toner",
                     "Serum",
                     "Moisturizer"
                 ],
-                "Complete till": "Moisturizer",
+                "Complete till": "",
                 "Streak": 12,
                 "Most difficult": {
                     "name": "Serum",
@@ -88,7 +93,8 @@
                 },
                 "stops": [
                     "Serum",
-                    "Toner"
+                    "Toner",
+                    "Moisturizer"
                 ],
                 "consistancy": [
                     100,
@@ -97,19 +103,20 @@
                     100,
                     100,
                     100,
-                    100
+                    100.0
                 ]
             }
         },
         {
             "Night Wind-down": {
+                "index": 0,
                 "tasks": [
                     "No screens",
                     "Read book",
                     "Stretch",
                     "Plan tomorrow"
                 ],
-                "Complete till": "Read book",
+                "Complete till": "",
                 "Streak": 2,
                 "Most difficult": {
                     "name": "No screens",
@@ -122,6 +129,7 @@
                 "stops": [
                     "No screens",
                     "No screens",
+                    "Read book",
                     "Read book"
                 ],
                 "consistancy": [
@@ -131,282 +139,7 @@
                     50,
                     25,
                     50,
-                    50
-                ]
-            }
-        },
-        {
-            "myrotun": {
-                "tasks": [],
-                "Complete till": "",
-                "Streak": 0,
-                "Most difficult": {
-                    "name": "",
-                    "score": 0
-                },
-                "Most easiest": {
-                    "name": "",
-                    "score": 0
-                },
-                "stops": [],
-                "consistancy": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
-            }
-        },
-        {
-            "myrotun": {
-                "tasks": [],
-                "Complete till": "",
-                "Streak": 0,
-                "Most difficult": {
-                    "name": "",
-                    "score": 0
-                },
-                "Most easiest": {
-                    "name": "",
-                    "score": 0
-                },
-                "stops": [],
-                "consistancy": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
-            }
-        },
-        {
-            "myrotun": {
-                "tasks": [],
-                "Complete till": "",
-                "Streak": 0,
-                "Most difficult": {
-                    "name": "",
-                    "score": 0
-                },
-                "Most easiest": {
-                    "name": "",
-                    "score": 0
-                },
-                "stops": [],
-                "consistancy": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
-            }
-        },
-        {
-            "myrotun": {
-                "tasks": [],
-                "Complete till": "",
-                "Streak": 0,
-                "Most difficult": {
-                    "name": "",
-                    "score": 0
-                },
-                "Most easiest": {
-                    "name": "",
-                    "score": 0
-                },
-                "stops": [],
-                "consistancy": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
-            }
-        },
-        {
-            "myrotun": {
-                "tasks": [],
-                "Complete till": "",
-                "Streak": 0,
-                "Most difficult": {
-                    "name": "",
-                    "score": 0
-                },
-                "Most easiest": {
-                    "name": "",
-                    "score": 0
-                },
-                "stops": [],
-                "consistancy": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
-            }
-        },
-        {
-            "myrotun": {
-                "tasks": [],
-                "Complete till": "",
-                "Streak": 0,
-                "Most difficult": {
-                    "name": "",
-                    "score": 0
-                },
-                "Most easiest": {
-                    "name": "",
-                    "score": 0
-                },
-                "stops": [],
-                "consistancy": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
-            }
-        },
-        {
-            "myrotun": {
-                "tasks": [],
-                "Complete till": "",
-                "Streak": 0,
-                "Most difficult": {
-                    "name": "",
-                    "score": 0
-                },
-                "Most easiest": {
-                    "name": "",
-                    "score": 0
-                },
-                "stops": [],
-                "consistancy": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
-            }
-        },
-        {
-            "myrotun": {
-                "tasks": [],
-                "Complete till": "",
-                "Streak": 0,
-                "Most difficult": {
-                    "name": "",
-                    "score": 0
-                },
-                "Most easiest": {
-                    "name": "",
-                    "score": 0
-                },
-                "stops": [],
-                "consistancy": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
-            }
-        },
-        {
-            "myrotun": {
-                "tasks": [],
-                "Complete till": "",
-                "Streak": 0,
-                "Most difficult": {
-                    "name": "",
-                    "score": 0
-                },
-                "Most easiest": {
-                    "name": "",
-                    "score": 0
-                },
-                "stops": [],
-                "consistancy": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
-            }
-        },
-        {
-            "myrotun": {
-                "tasks": [],
-                "Complete till": "",
-                "Streak": 0,
-                "Most difficult": {
-                    "name": "",
-                    "score": 0
-                },
-                "Most easiest": {
-                    "name": "",
-                    "score": 0
-                },
-                "stops": [],
-                "consistancy": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
-                ]
-            }
-        },
-        {
-            "myrotun": {
-                "tasks": [],
-                "Complete till": "",
-                "Streak": 0,
-                "Most difficult": {
-                    "name": "",
-                    "score": 0
-                },
-                "Most easiest": {
-                    "name": "",
-                    "score": 0
-                },
-                "stops": [],
-                "consistancy": [
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
+                    50.0
                 ]
             }
         }
@@ -414,16 +147,17 @@
     "weekly": [
         {
             "House Cleaning": {
+                "index": 0,
                 "tasks": [
                     "Vacuuming",
                     "Mopping",
                     "Dusting",
                     "Bathroom scrub"
                 ],
-                "Complete till": "Dusting",
+                "Complete till": "",
                 "Streak": 4,
                 "Most difficult": {
-                    "name": "Bathroom scrub",
+                    "name": "Dusting",
                     "score": 5
                 },
                 "Most easiest": {
@@ -433,25 +167,27 @@
                 "stops": [
                     "Dusting",
                     "Mopping",
+                    "Dusting",
                     "Dusting"
                 ],
                 "consistancy": [
                     75,
                     50,
                     75,
-                    100
+                    75.0
                 ]
             }
         },
         {
             "Meal Prep": {
+                "index": 0,
                 "tasks": [
                     "Inventory check",
                     "Grocery shopping",
                     "Chopping veggies",
                     "Cooking batches"
                 ],
-                "Complete till": "Cooking batches",
+                "Complete till": "",
                 "Streak": 8,
                 "Most difficult": {
                     "name": "Grocery shopping",
@@ -463,59 +199,63 @@
                 },
                 "stops": [
                     "Grocery shopping",
-                    "Chopping veggies"
+                    "Chopping veggies",
+                    "Cooking batches"
                 ],
                 "consistancy": [
                     100,
                     100,
                     100,
-                    100
+                    100.0
                 ]
             }
         },
         {
             "Financial Review": {
+                "index": 0,
                 "tasks": [
                     "Track expenses",
                     "Update budget",
                     "Pay bills",
                     "Transfer to savings"
                 ],
-                "Complete till": "Update budget",
+                "Complete till": "",
                 "Streak": 1,
                 "Most difficult": {
                     "name": "Update budget",
                     "score": 4
                 },
                 "Most easiest": {
-                    "name": "Track expenses",
+                    "name": "Transfer to savings",
                     "score": 1
                 },
                 "stops": [
                     "Update budget",
                     "Track expenses",
-                    "Pay bills"
+                    "Pay bills",
+                    "Update budget"
                 ],
                 "consistancy": [
                     25,
                     50,
                     50,
-                    25
+                    50.0
                 ]
             }
         },
         {
             "Self-Care Weekend": {
+                "index": 0,
                 "tasks": [
                     "Long bath",
                     "Hair mask",
                     "Manicure",
                     "Call a friend"
                 ],
-                "Complete till": "Hair mask",
+                "Complete till": "",
                 "Streak": 3,
                 "Most difficult": {
-                    "name": "Manicure",
+                    "name": "Hair mask",
                     "score": 2
                 },
                 "Most easiest": {
@@ -524,13 +264,14 @@
                 },
                 "stops": [
                     "Hair mask",
-                    "Manicure"
+                    "Manicure",
+                    "Hair mask"
                 ],
                 "consistancy": [
                     50,
                     100,
                     100,
-                    100
+                    50.0
                 ]
             }
         }
@@ -538,16 +279,17 @@
     "monthly": [
         {
             "Deep Home Maintenance": {
+                "index": 0,
                 "tasks": [
                     "Clean AC filters",
                     "Wash curtains",
                     "Wipe windows",
                     "Organize closet"
                 ],
-                "Complete till": "Wipe windows",
+                "Complete till": "",
                 "Streak": 2,
                 "Most difficult": {
-                    "name": "Organize closet",
+                    "name": "Wipe windows",
                     "score": 4
                 },
                 "Most easiest": {
@@ -557,6 +299,7 @@
                 "stops": [
                     "Wipe windows",
                     "Wash curtains",
+                    "Wipe windows",
                     "Wipe windows"
                 ],
                 "consistancy": [
@@ -566,7 +309,7 @@
                     50,
                     50,
                     75,
-                    50,
+                    75.0,
                     100,
                     50,
                     50,
@@ -577,25 +320,27 @@
         },
         {
             "Business Goal Tracking": {
+                "index": 0,
                 "tasks": [
                     "Review Analytics",
                     "Client feedback audit",
                     "Update portfolio",
                     "Set next KPIs"
                 ],
-                "Complete till": "Review Analytics",
+                "Complete till": "",
                 "Streak": 6,
                 "Most difficult": {
-                    "name": "Update portfolio",
+                    "name": "Review Analytics",
                     "score": 3
                 },
                 "Most easiest": {
-                    "name": "Review Analytics",
+                    "name": "Update portfolio",
                     "score": 1
                 },
                 "stops": [
                     "Review Analytics",
-                    "Client feedback audit"
+                    "Client feedback audit",
+                    "Review Analytics"
                 ],
                 "consistancy": [
                     25,
@@ -604,7 +349,7 @@
                     100,
                     100,
                     100,
-                    100,
+                    25.0,
                     75,
                     100,
                     100,
@@ -615,13 +360,14 @@
         },
         {
             "Car Care": {
+                "index": 0,
                 "tasks": [
                     "Car wash",
                     "Interior vacuum",
                     "Fluid level check",
                     "Tire pressure check"
                 ],
-                "Complete till": "Tire pressure check",
+                "Complete till": "",
                 "Streak": 10,
                 "Most difficult": {
                     "name": "Interior vacuum",
@@ -632,7 +378,8 @@
                     "score": 0
                 },
                 "stops": [
-                    "Interior vacuum"
+                    "Interior vacuum",
+                    "Tire pressure check"
                 ],
                 "consistancy": [
                     100,
@@ -641,7 +388,7 @@
                     50,
                     100,
                     100,
-                    100,
+                    100.0,
                     100,
                     100,
                     100,
@@ -652,16 +399,17 @@
         },
         {
             "Personal Development": {
+                "index": 0,
                 "tasks": [
                     "Finish 1 book",
                     "Watch a documentary",
                     "Attend a webinar",
                     "Update resume"
                 ],
-                "Complete till": "Watch a documentary",
+                "Complete till": "",
                 "Streak": 1,
                 "Most difficult": {
-                    "name": "Update resume",
+                    "name": "Watch a documentary",
                     "score": 5
                 },
                 "Most easiest": {
@@ -671,7 +419,8 @@
                 "stops": [
                     "Watch a documentary",
                     "Attend a webinar",
-                    "Update resume"
+                    "Update resume",
+                    "Watch a documentary"
                 ],
                 "consistancy": [
                     50,
@@ -680,7 +429,7 @@
                     50,
                     0,
                     50,
-                    50,
+                    50.0,
                     25,
                     50,
                     0,

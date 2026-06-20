@@ -80,7 +80,6 @@ if (canvas) {
 
 
 const eel = (window as any).eel;
-console.log(eel)
 if (!eel) {
     window.location.reload()
 }
@@ -115,20 +114,17 @@ async function main() {
             all_el.style.display = "flex"
             current = "all-routine"
             routine.style.display = "flex"
+
             let val = await eel.listAllRoutineNames()()
             let key = 0
             let pos = 0
             let once = false
             val.forEach( async(task: any) => {
                 key += 1
-                console.log(task)
                 let routine = document.getElementById(`${task[0]}-routines`) as HTMLElement || null
                 if (routine) {
-                    // HERE
                     routine.innerHTML = ''
                     let info = await eel.listRoutineTraits(task[0], task[1])()
-                    console.log(info)
-                    console.log(info.tasks)
 
                     let li = document.createElement('li')
                     li.classList = "routine-block"
@@ -293,7 +289,6 @@ async function main() {
                         break;
                     }
                 }
-                console.log(label)
                 config.data.labels = label;
                 (config as any).data.datasets[0].data = data['consistancy']
                 chart.update()
@@ -302,7 +297,6 @@ async function main() {
         }
 
         function populate_routine_tasks(tasks: Array<String>, complete: string, time: any, pos: any, title: any) {
-            console.log("HereXx")
             let complete_reach = true
             let tree = document.getElementById('routine-task-tree') as HTMLElement || null
             if (tree){
@@ -357,7 +351,6 @@ async function main() {
             if (val) {
                 let check: Boolean[] = await listCompletedTasks()
                 let res = await eel.make3d(val, check)()
-                console.log(res)
                 list_items(res, true)
             }
         })
@@ -373,7 +366,6 @@ async function main() {
             let results_par = document.getElementById('search-ress') as HTMLElement || null
             results_par.innerHTML = ""
             Object.entries(searches).forEach(([k, v]) => {
-                console.log("$$", k,v.name, v)
                 let li = document.createElement('li')
                 li.classList = 'search-res'
 
@@ -400,19 +392,15 @@ async function main() {
     }
 
     document.getElementById("side-new-task")?.addEventListener("click", async() => {
-        console.log("showing context...");
         const text = "Enter the name of the new task";
         let name = await showContext("Enter the name of the new task", 'text')
         let date: any = await showContext("Enter the date of the new task", 'date')
         let time: any = await showContext("Enter the time of the new task", 'time')
         const dateTime = new Date(`${date}T${time}`)
-        console.log(await eel.validateDateTime(dateTime.toISOString())())
         if (await eel.validateDateTime(dateTime.toISOString())()) {
             date = date.split('-')
             time = time.split(':')
             eel.addTask(name, "My project", "Axter", `${date[0]}/${date[1]}/${date[2]}/${time[0]}/${time[1]}`)
-        } else {
-            showmsgbox("Date cannot be before today")
         }
     });
 
@@ -443,7 +431,6 @@ async function main() {
         color = color.toLowerCase()
         await eel.changeColor(color)()
         setColors()
-        console.log("COLOR:- ", color)
     })
 
     document.getElementById("side-Today")?.addEventListener('click', async() => {
@@ -506,7 +493,6 @@ async function setColors() {
     let colorTheme = await eel.getColors()()
     Object.entries(colorTheme).forEach((arr: any) => {
         setTheme(arr[0], arr[1])
-        console.log(arr[0], arr[1])
     });
 }
 
@@ -522,7 +508,6 @@ async function list_items(tasks: Array<any>, challange=false) {
         lists.appendChild(margin)
         tasks.forEach(task => {
             taskKey += 1
-            console.log("task: ", task)
             let task_par = document.createElement('li')
             task_par.classList = 'task'
             task_par.dataset.path = task[1]
@@ -537,26 +522,21 @@ async function list_items(tasks: Array<any>, challange=false) {
 
             async function setcheck(key: any) {
                 key = String(key)
-                console.log(key)
                 let icon = document.getElementById(`task_ico${key}`) as HTMLElement || null
                 let task_par = document.getElementById(`task_par${key}`) as HTMLElement || null
                 let task_desc = document.getElementById(`task_desc${key}`) as HTMLElement || null
                 if (icon && task_par && task_desc) {
                     let path = task_par.dataset.path
                     let donestatus = await eel.donestatus(`${path}/${task_desc.innerText}`)()
-                    console.log("STATUS", donestatus)
                     if (!donestatus) {
                         icon.innerText = ""
                     } else {
                         icon.innerText = "check_small"
                     }
-                } else {
-                    console.log("DDD", icon, task_par, task_desc)
                 }
             }
 
             async function toggle(id: String, challange: boolean){
-                console.log(id.split('task-btn'))
                 let key = id.split('task-btn')[1]
                 let icon = document.getElementById(`task_ico${key}`) as HTMLElement || null
                 let task_par = document.getElementById(`task_par${key}`) as HTMLElement || null
@@ -567,7 +547,6 @@ async function list_items(tasks: Array<any>, challange=false) {
                             if (task_par.dataset.path) {
                                 await decreaseXP(Number(task_par.dataset.path))
                             }
-                            console.log(Number(key) -1)
                             setTask(Number(key) -1, false)
                             return
                         }
@@ -578,7 +557,6 @@ async function list_items(tasks: Array<any>, challange=false) {
                             if (task_par.dataset.path) {
                                 await increaseXP(Number(task_par.dataset.path))
                             }
-                            console.log(Number(key) -1 )
                             setTask(Number(key) -1, true)
                             return
                         }
@@ -611,36 +589,27 @@ async function list_items(tasks: Array<any>, challange=false) {
                         ctx.style.top = `${String(e.clientY)}px`
                         ctx.style.left = `${String(e.clientX)}px`
                         ctx.style.display = "flex"
-                        console.log(e.clientX)
-                        console.log(e.clientY)
                         setTimeout(() => {
                         click_need= true
                         click_kind = ctx}, 20)
-                    } else {
-                        console.log("NO CONTEXT")
                     }
                 }
             }
             lists?.appendChild(task_par)
             if (challange) {
                 if (tasks[taskKey-1]![2]) {
-                    console.log(tasks[taskKey-1]![2])
                     let ico = document.getElementById(`task_ico${taskKey}`) as HTMLElement || null
                     if (ico) {
                         ico.innerText = "check_small"
-                    } else {
-                        console.log("ico doset exist")
                     }
                 }
             }
         });
-        console.log(taskKey)
         if (taskKey == 0) {
             today.style.display = 'none'
             nothing.style.display = 'flex'
             current = "nothingHere"
         }
-        console.log("done with:-", lists)
     }
 }
 
@@ -696,9 +665,7 @@ async function makeSubGroupTree() {
                 subgrp_desc.onclick = async() => {
                     let val = await eel.listCatItems(subgrp_desc.dataset.grp, subgrp_desc.dataset.subgrp)()
                     let fmt_val: any[] = []
-                    console.log(val)
                     val.forEach((task: any) => {
-                        console.log(`${grp}/${subgrp} ${task}`)
                         fmt_val.push([task, `${grp}/${subgrp}`])
                     })
 
@@ -726,18 +693,6 @@ async function makeSubGroupTree() {
             group_par.appendChild(subgrp_par)
             grps_htm.appendChild(group_par)
         });
-    }
-}
-
-function showmsgbox(text: string) {
-    let box = document.querySelector("#msg-box") as HTMLElement | null;
-    let msg = document.getElementById("msg-text") as HTMLElement | null;
-    if (box && msg) {
-        msg.innerText = text;
-        box.classList.add("show")
-        setTimeout(() => {
-            box.classList.remove("show")
-        }, 3000)
     }
 }
 
@@ -777,14 +732,12 @@ function showContext(descriptions: string, type="text", val: any[] =[], disc_2="
             let key_handle = (e: any)=> {
                 if (e.key == "Enter") {
                     resolve(input.value)
-                    console.log(input.value)
                     input.removeEventListener(mode, key_handle)
                     hide.style.display = "none"
                 }
             }
             let handle = (e: any)=> {
                 resolve(input.value)
-                console.log(input.value)
                 input.removeEventListener(mode, handle)
                 hide.style.display = "none"
             }
@@ -792,7 +745,6 @@ function showContext(descriptions: string, type="text", val: any[] =[], disc_2="
             let drop_handle = () => {
                 let drop_icon = document.getElementById('drop-arr') as HTMLElement || null
                 let drop_ops = document.getElementById('drop-ops') as HTMLElement || null
-                console.log('rortateing')
                 drop_icon.style.rotate = drop_icon.style.rotate =="90deg" ? "0deg" : "90deg"
                 drop_ops.style.display = drop_ops.style.display=="flex" ? "none" : "flex" 
 
@@ -827,7 +779,6 @@ function showContext(descriptions: string, type="text", val: any[] =[], disc_2="
                         }
                         drop_ops.appendChild(li)
                     })
-                    console.log(drop_icon)
                     drop_icon.addEventListener(mode, drop_handle);
                 }
             } else {

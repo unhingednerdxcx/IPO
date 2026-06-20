@@ -14,5 +14,9 @@ day 3 {
     - conv js -> ts
 }
 day 4-6 {
-    - conv ts -> py
+    - conv ts -> py {
+        make all py functions
+        test all
+        ts < py
+    }
 }

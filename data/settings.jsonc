@@ -63,5 +63,6 @@
             "outline-color": "#3F2F4F"
         }
     },
-    "color": "green" // selected color
+    "color": "green", // selected color
+    "LastChecked": "Date" // This will store the last time information like hardest task, easiest task, etc. has been calculated
 }
