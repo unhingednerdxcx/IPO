@@ -144,44 +144,7 @@ async function main() {
                     }
                     const primary_highlight_color = getComputedStyle(document.documentElement).getPropertyValue('--primary-highlight-color').trim()
                     
-                    let config: import('chart.js').ChartConfiguration<'line'> = {
-                        type: 'line',
-                        data: {
-                            labels: label,
-                            datasets: [{
-                                label: 'Progress (%)',
-                                data: fix_dataPoints,
-                                borderWidth: 2,
-                                backgroundColor: 'rgba(0, 0, 0, 0.56)'
-                            }]
-                        },
-                        options: {
-                            indexAxis: 'x',
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                x: {
-                                    grid: {
-                                        color: 'rgba(0, 0, 0, 0)'
-                                    }
-                                },
-                                y: {
-                                    max: 100,
-                                    grid: {
-                                        color: primary_highlight_color
-                                    }
-                                }
-                            },
-                            plugins: {
-                                tooltip: {
-                                    enabled: false,
-                                },
-                                legend: {
-                                    display: false,
-                                }
-                            }
-                        }
-                    };
+                    let config: import('chart.js').ChartConfiguration<'line'> = await eel.routineSummaryConfig(label, fix_dataPoints, primary_highlight_color)()
 
                     let chart: any = ""
                     if (canvas) {
