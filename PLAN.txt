@@ -22,4 +22,4 @@ day 4-6 {
 }
 
 - config //\\
-- id/class/...
+- id/class/... //\\

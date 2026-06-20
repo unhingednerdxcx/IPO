@@ -80,31 +80,33 @@ async function main() {
                     routine.innerHTML = ''
                     let info = await eel.listRoutineTraits(task[0], task[1])()
 
-                    let li = document.createElement('li')
-                    li.classList = "routine-block"
+                    function quickHtml(type: string, classes="", innerText="") {
+                        let el = document.createElement(type)
+                        el.classList = classes
+                        if (innerText != "") {
+                            el.innerText = innerText
+                        }
+                        return el
+                    }
+
+                    let li = quickHtml("li", "routine-block")
                     li.dataset.path = `${task[0]}/${task[1]}`
 
-                    let main_info = document.createElement('div')
-                    main_info.classList = "routine-block-text"
+                    let main_info = quickHtml('div', "routine-block-text")
 
-                    let main_info_title = document.createElement('div')
-                    main_info_title.classList = "routine-block-title"
-                    main_info_title.innerText = task[1]
+                    let main_info_title = quickHtml('div', "routine-block-title", task[1])
 
-                    let main_info_descript = document.createElement('div')
-                    main_info_descript.classList = "routine-block-summary"
+                    let main_info_descript = quickHtml('div', "routine-block-summary")
 
-                    let main_info_descript_hardest = document.createElement('div')
-                    main_info_descript_hardest.innerText = `Hardest task: ${info['Most difficult'].name}`
+                    let main_info_descript_hardest = quickHtml('div', `Hardest task: ${info['Most difficult'].name}`)
 
-                    let main_info_descript_easiest = document.createElement('div')
-                    main_info_descript_easiest.innerText = `Hardest task: ${info['Most easiest'].name}`
+                    let main_info_descript_easiest = quickHtml('div', `Easiest task: ${info['Most easiest'].name}`)
                     
                     let streak = document.createTextNode(`Day: ${info.Streak} Killing it!`)
                     let chart_par = document.createElement('div')
-                    let graph = document.createElement('canvas')
+
+                    let graph = quickHtml('canvas', 'routine-block-graph') as HTMLCanvasElement
                     graph.id = `graph${key}`
-                    chart_par.classList = 'routine-block-graph'
 
                     let labels: any = {
                         "daily": ['Sun', 'Tue', 'Thu', 'Sat'],
@@ -167,6 +169,7 @@ async function main() {
                 }
             });
         }
+
         async function showroutinedetails(path: string, pos: Number) {
             const current_element = document.getElementById(`${current}`) as HTMLElement | null;
             const el = document.getElementById("routine-stats") as HTMLElement || null;
@@ -212,6 +215,7 @@ async function main() {
                 populate_routine_tasks(data['tasks'], data["Complete till"], path_arr[0], pos, path_arr[1])
             }
         }
+
 
         function populate_routine_tasks(tasks: Array<String>, complete: string, time: any, pos: any, title: any) {
             let complete_reach = true

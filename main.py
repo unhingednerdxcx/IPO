@@ -405,7 +405,7 @@ def routineSummaryConfig(label, fix_dataPoints, primary_highlight_color):
                 }
             }
         }
-    };
+    }   
 
 @eel.expose
 def CleanUp():
