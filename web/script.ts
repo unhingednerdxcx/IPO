@@ -119,6 +119,7 @@ async function main() {
             let key = 0
             let pos = 0
             let once = false
+
             val.forEach( async(task: any) => {
                 key += 1
                 let routine = document.getElementById(`${task[0]}-routines`) as HTMLElement || null
@@ -142,13 +143,12 @@ async function main() {
 
                     let main_info_descript_hardest = document.createElement('div')
                     main_info_descript_hardest.innerText = `Hardest task: ${info['Most difficult'].name}`
+
                     let main_info_descript_easiest = document.createElement('div')
                     main_info_descript_easiest.innerText = `Hardest task: ${info['Most easiest'].name}`
+                    
                     let streak = document.createTextNode(`Day: ${info.Streak} Killing it!`)
-
-
                     let chart_par = document.createElement('div')
-
                     let graph = document.createElement('canvas')
                     graph.id = `graph${key}`
                     chart_par.classList = 'routine-block-graph'
@@ -248,7 +248,7 @@ async function main() {
 
                     routine.appendChild(li)
                 }
-                });
+            });
         }
         async function showroutinedetails(path: string, pos: Number) {
             const current_element = document.getElementById(`${current}`) as HTMLElement | null;

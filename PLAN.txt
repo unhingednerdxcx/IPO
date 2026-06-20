@@ -15,8 +15,11 @@ day 3 {
 }
 day 4-6 {
     - conv ts -> py {
-        make all py functions
+        make all py functions //\\
         test all
         ts < py
     }
 }
+
+- config
+- id/class/...
