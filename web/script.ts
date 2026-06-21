@@ -40,6 +40,7 @@ if (canvas) {
 
 
 async function main() {
+    await eel.checkForStart()()
     document.getElementById("side-search")?.addEventListener("click", async() => {
         let value = await showContext("Enter the task you want to search for", 'text')
         let search_val = await eel.searchTask(value)()

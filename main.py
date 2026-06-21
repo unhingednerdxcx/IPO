@@ -447,6 +447,7 @@ def make3d(info, completed):
     print(val)
     return val
 
+@eel.expose
 def checkForStart():
     data = settingsManager('r')
     if data['LastChecked'] != datetime.now().date().isoformat():
@@ -500,7 +501,7 @@ def checkForStart():
 
                         print("xy", least_common)
                         routineData[time[0]][index][list(routine.keys())[0]]["Most easiest"]["name"] = least_common[0]
-                        routineData[time[0]][index][list(routine.keys())[0]]["Streak"] += 1
+                        routineData[time[0]][index][list(routine.keys())[0]]["Streak"] += 1 # HERE
                         RoutineManager('w', routineData)
                 else:
                     day = 0
@@ -513,7 +514,8 @@ def checkForStart():
                             day = datetime.now().month
                     print("y", day)
                     routineData[time[0]][index][list(routine.keys())[0]]["consistancy"][day] = 0.0
-                    routineData[time[0]][index][list(routine.keys())[0]]["Streak"] = 0
+                    routineData[time[0]][index][list(routine.keys())[0]]["Streak"] = 0 # HERE
+        eel.clearChallangeData()
 
 @eel.expose
 def listTasks(name):
@@ -541,6 +543,44 @@ def appendRoutineTask(task, name, newTask):
                 data[time][index][name]['tasks'].insert(indx + 1, newTask)
     RoutineManager('w', data)
 
-checkForStart()
+
+# Using class to make the code look more readable, purely for design
+class TaskManaging:
+    @staticmethod
+    def delete():
+        print("deleting task..")
+
+    @staticmethod
+    def rename():
+        print("renaming task..")
+
+    @staticmethod
+    def deadlineChange():
+        print("Changing deadline task..")
+    
+    @staticmethod
+    def info():
+        print("Displaying details")
+    
+    @staticmethod
+    def delGroup():
+        print("deleteing group")
+        
+    @staticmethod
+    def delSubGroup():
+        print("deleteing subgroup")
+    
+    @staticmethod
+    def delRoutine():
+        print("deleting routine")
+
+    @staticmethod
+    def delRoutineTask():
+        print("deleting task in routine")
+    
+    @staticmethod
+    def changeRoutineTaskPosition():
+        print("changing position")
+
 eel.start('index.html', port=55555, close_callback=exitCode)
 

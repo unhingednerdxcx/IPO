@@ -175,3 +175,21 @@ export async function setTask(key, val) {
     }
 }
 
+eel.expose(clearChallangeData)
+
+async function clearChallangeData() {
+    let ref = doc(db, "users", uid)
+    TasksDone = [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+    ]
+    await updateDoc(ref, {
+        TasksDone: TasksDone
+    })
+}
+

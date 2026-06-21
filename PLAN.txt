@@ -6,8 +6,8 @@ day 1 {
 }
 
 day 2 {
-    - small ui fix
-    - update account info
+    - small ui fix //\\
+    - update account info //\\
     - delete task/subgroup/group option
 }
 day 3 {
@@ -24,6 +24,11 @@ day 4-6 {
 - config //\\
 - id/class/... //\\
 
-"" fix
-add routine steps
-true/false clean
+"" fix //\\
+add routine steps /\\
+true/false clean //|\\
+delete task/subgroup/group option 
+clean up
+comment
+video
+readMe
