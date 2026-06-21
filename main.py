@@ -500,7 +500,46 @@ def checkForStart():
 
                         print("xy", least_common)
                         routineData[time[0]][index][list(routine.keys())[0]]["Most easiest"]["name"] = least_common[0]
+                        routineData[time[0]][index][list(routine.keys())[0]]["Streak"] += 1
                         RoutineManager('w', routineData)
+                else:
+                    day = 0
+                    match (time[0]):
+                        case "daily":
+                            day = datetime.now().isoweekday() # Sun = 1... Sat = 7
+                        case "weekly":
+                            day = (datetime.now().day - 1) // 7 + 1
+                        case "monthly":
+                            day = datetime.now().month
+                    print("y", day)
+                    routineData[time[0]][index][list(routine.keys())[0]]["consistancy"][day] = 0.0
+                    routineData[time[0]][index][list(routine.keys())[0]]["Streak"] = 0
+
+@eel.expose
+def listTasks(name):
+    data = RoutineManager('r')
+    times = ["daily", "weekly", "monthly"]
+    for time in times:
+        print(len(list(data[time])))
+        for index in range(len(list(data[time]))):
+            print(index)
+            if list(data[time][index].keys())[0] == name:
+                return data[time][index][name]['tasks']
+
+@eel.expose
+def appendRoutineTask(task, name, newTask):
+    data = RoutineManager('r')
+    times = ['daily', 'weekly', 'monthly']
+    for time in times:
+        for index in range(len(list(data[time]))):
+
+            print("HWEWE")
+            
+            if list(data[time][index].keys())[0] == name:
+                indx = data[time][index][name]['tasks'].index(task)
+                print(indx)
+                data[time][index][name]['tasks'].insert(indx + 1, newTask)
+    RoutineManager('w', data)
 
 checkForStart()
 eel.start('index.html', port=55555, close_callback=exitCode)

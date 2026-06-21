@@ -21,6 +21,7 @@ type challangeData = {
 let current = "Default";
 let current_tab = "."
 
+let current_routine = ""
 
 let esc_need = false
 let esc_kind: HTMLElement;
@@ -98,12 +99,12 @@ async function main() {
 
                     let main_info_descript = quickHtml('div', "routine-block-summary")
 
-                    let main_info_descript_hardest = quickHtml('div', `Hardest task: ${info['Most difficult'].name}`)
+                    let main_info_descript_hardest = quickHtml('div', "", `Hardest task: ${info['Most difficult'].name}`)
 
-                    let main_info_descript_easiest = quickHtml('div', `Easiest task: ${info['Most easiest'].name}`)
+                    let main_info_descript_easiest = quickHtml('div', "", `Easiest task: ${info['Most easiest'].name}`)
                     
                     let streak = document.createTextNode(`Day: ${info.Streak} Killing it!`)
-                    let chart_par = document.createElement('div')
+                    let chart_par = quickHtml('div', 'summary-chart-container')
 
                     let graph = quickHtml('canvas', 'routine-block-graph') as HTMLCanvasElement
                     graph.id = `graph${key}`
@@ -186,6 +187,7 @@ async function main() {
                 current = "routine-stats"
                 el.style.display = 'block'
                 title.innerText = String(path_arr[1])
+                current_routine = String(path_arr[1])
                 diff.innerText = data['Most difficult'].name
                 easy.innerText = data['Most easiest'].name
                 streak.innerText = data.Streak
@@ -235,14 +237,22 @@ async function main() {
                     desc.classList = 'routine-discript'
                     desc.innerText = String(task)
 
-                    if (task == complete) {
+                    console.log(complete)
+
+                    if (complete != "") {
+                        if (task == complete) {
+                            complete_reach = false
+                            btn.dataset.complete = 'true'
+                            setComplete(btn)
+                        } else if (complete_reach) {
+                            btn.dataset.complete = 'false'
+                            setComplete(btn)
+                        }
+                    } else {
+                        btn.dataset.complete = 'false'
                         complete_reach = false
-                        btn.dataset.complete = 'true'
-                        setComplete(btn)
-                    } else if (complete_reach) {
-                        btn.dataset.complete = 'true'
-                        setComplete(btn)
                     }
+
                     btn.onclick = () => {
                         if (btn.dataset.complete == 'false') {
                             setComplete(btn)
@@ -264,6 +274,14 @@ async function main() {
                 })
             }
         }
+    })
+
+    document.getElementById('add-new-step')?.addEventListener('click', async() => {
+        let name = await showContext('Enter name of the new task')
+        let tasks = await eel.listTasks(current_routine)()
+        let pos = await showContext('After which task would you like to place this task', 'dropdown', tasks)
+        await eel.appendRoutineTask(pos, current_routine, name)()
+        console.log(pos, tasks)
     })
 
     document.getElementById("side-challange")?.addEventListener('click', async() => {
@@ -682,13 +700,14 @@ function showContext(descriptions: string, type="text", val: any[] =[], disc_2="
             } else if (type == "dropdown") {
                 let mode = "click"
                 let drop = document.getElementById('dropdown') as HTMLElement || null
-                let drop_tittle = document.getElementById('drop-title') as HTMLElement || null
+                let drop_title = document.getElementById('drop-title') as HTMLElement || null
                 let drop_icon = document.getElementById('drop-arr') as HTMLElement || null
                 let drop_ops = document.getElementById('drop-ops') as HTMLElement || null
-                if (drop && drop_tittle && drop_icon && drop_ops) {
+                if (drop && drop_title && drop_icon && drop_ops) {
+                    drop_ops.innerHTML = ""
                     input.style.display = 'none'
                     drop.style.display = 'flex'
-                    drop_tittle.innerText = disc_2
+                    drop_title.innerText = disc_2
                     val.forEach((option) =>  {
                         let li = document.createElement('li')
                         li.innerText = option
