@@ -616,8 +616,22 @@ def renameGroup(name, newName):
     TaskManager('w', data)
     
 @eel.expose
-def delSubGroup():
+def delSubGroup(name):
     print("deleteing subgroup")
+    data = TaskManager('r')
+    name = name.split("/")
+    del data[name[0]][name[1]]
+    TaskManager('w', data)
+
+@eel.expose
+def renameSubGroup(name, newName):
+    print("reanming subgroup")
+    data = TaskManager('r')
+    name = name.split('/')
+    print(name)
+    data[name[0]][newName] = data[name[0]].pop(name[1])
+    print(data)
+    TaskManager('w', data)
 
 @eel.expose
 def delRoutine():
@@ -630,6 +644,10 @@ def delRoutineTask():
 @eel.expose
 def changeRoutineTaskPosition():
     print("changing position")
+
+@eel.expose
+def routineTaskRename():
+    print("renaming routine task")
 
 
 eel.start('index.html', port=55555, close_callback=exitCode)

@@ -420,14 +420,23 @@ function more_func(arr, e, more) {
         }, 20);
     }
 }
-function group_del() {
+async function group_del() {
     let path = document.getElementById("more-task-info")?.dataset.path;
-    eel.delGroup(path)();
+    await eel.delGroup(path)();
 }
 async function group_rename() {
     let path = document.getElementById("more-task-info")?.dataset.path;
     let newName = await showContext("Enter new name");
     eel.renameGroup(path, newName)();
+}
+async function sub_group_del() {
+    let path = document.getElementById("more-task-info")?.dataset.path;
+    await eel.delSubGroup(path)();
+}
+async function sub_group_rename() {
+    let path = document.getElementById("more-task-info")?.dataset.path;
+    let newName = await showContext("Enter new name");
+    eel.renameSubGroup(path, newName)();
 }
 async function list_items(tasks, challange = false) {
     let lists = document.getElementById('tasks') || null;
@@ -603,8 +612,19 @@ async function makeSubGroupTree() {
                 subgrp_ico.classList = 'material-symbols-outlined';
                 subgrp_ico.innerText = 'tag';
                 let subgrp_name = document.createTextNode(subgrp);
+                let more = document.createElement('span');
+                more.classList = "material-symbols-outlined sub-group-more";
+                more.innerText = "more_vert";
+                more.dataset.path = `${grp}/${subgrp}`;
+                more.onclick = (e) => {
+                    more_func([
+                        ['Delete subgroup', sub_group_del, 'delete'],
+                        ['Rename subgroup', sub_group_rename, 'edit'],
+                    ], e, more);
+                };
                 subgrp_desc.appendChild(subgrp_ico);
                 subgrp_desc.appendChild(subgrp_name);
+                subgrp_desc.appendChild(more);
                 subgrp_par.appendChild(subgrp_desc);
             });
             group_par.appendChild(subgrp_par);
