@@ -38,9 +38,39 @@ if (canvas) {
 
 
 
-
+console.log(eel)
 async function main() {
     await eel.checkForStart()()
+
+    document.getElementById("ctx-delete")?.addEventListener('click', async() => {
+        await eel.delete(document.getElementById("more-task-info")?.dataset.path)()
+    })
+
+    document.getElementById("ctx-rename")?.addEventListener('click', async() => {
+        let newName = await showContext('Enter new name')
+        await eel.rename(document.getElementById("more-task-info")?.dataset.path, newName)()
+    })
+
+    document.getElementById("ctx-dead")?.addEventListener('click', async() => {
+        let time = await showContext("Enter new time", 'time')
+        let date = await showContext("Enter new date", 'date')
+        await eel.dead(document.getElementById("more-task-info")?.dataset.path, time, date)()
+    })
+
+    document.getElementById("ctx-info")?.addEventListener('click', async() => {
+        let msg = await eel.info(document.getElementById("more-task-info")?.dataset.path)()
+        let box = document.getElementById('msg-box') as HTMLElement || null
+        if (box) {
+            box.innerText = msg
+            console.log(msg)
+            box.classList.add('active')
+            setTimeout(() => {
+                box.classList.remove('active')
+            }, 4000)
+        }
+    })
+    
+
     document.getElementById("side-search")?.addEventListener("click", async() => {
         let value = await showContext("Enter the task you want to search for", 'text')
         let search_val = await eel.searchTask(value)()
@@ -521,6 +551,7 @@ async function list_items(tasks: Array<any>, challange=false) {
                 let more = document.createElement('span')
                 more.classList = "material-symbols-outlined moreTask"
                 more.innerText = "more_horiz"
+                more.dataset.path = `${task[1]}/${task[0]}`
                 task_par.appendChild(more)
                 setcheck(taskKey)
                 more.onclick = async(e) => {
@@ -529,9 +560,11 @@ async function list_items(tasks: Array<any>, challange=false) {
                         ctx.style.top = `${String(e.clientY)}px`
                         ctx.style.left = `${String(e.clientX)}px`
                         ctx.style.display = "flex"
+                        Object.assign(ctx.dataset, more.dataset)
                         setTimeout(() => {
-                        click_need= true
-                        click_kind = ctx}, 20)
+                            click_need= true
+                            click_kind = ctx
+                        }, 20)
                     }
                 }
             }

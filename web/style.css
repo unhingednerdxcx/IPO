@@ -351,22 +351,7 @@
     margin-left: -5%;
 }
 
-.msg-box {
-    position: absolute;
-    display: block;
-    z-index: 10000;
-    width: 18vw;
-    height: 15vh;
-    background-color: var(--secondary-highlight-color);
-    border-radius: 20px;
-    padding: 24px 24px;
-    right: -21.5%;
-    top: 30px;
-    transition: right 0.5s ease;
-}
-.msg-box.show {
-    right: 10
-}
+
 .msg-text {
     font-family: 'Sour Gummy', sans-serif;
     font-size: 25;
@@ -812,7 +797,7 @@ ul {
     position: absolute;
     display: none;
     width: 8vw;
-    height: 12vh;
+    height: 16vh;
     flex-direction: column;
     background-color: var(--tertiary-background-color);
     outline: 1px solid var(--outline-color);
@@ -846,3 +831,30 @@ ul {
 .add-new-routine-step:hover {
     background-color: var(--tertiary-background-color);
 }
+
+.msg-box {
+    position: absolute;
+    display: grid;
+    width: fit-content;
+    height: 5vh;
+    outline: 1px solid var(--outline-color);
+    transform: translate(100vw, 6vh);
+    margin-top: 0vh;
+    border-radius: 10px;
+    background-color: var(--tertiary-background-color);
+    font-family: 'Sour Gummy', sans-serif;
+    align-content: center;
+    justify-content: center;
+    padding: 1rem;
+    transition: transform 1.5s ease;
+}
+
+.msg-box.active {
+    transform: translate(82vw, 2vh);
+}
+
+.more-cts-ico {
+    transform: translateY(0.8vh);
+}
+
+

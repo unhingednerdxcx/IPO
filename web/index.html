@@ -291,26 +291,36 @@
     </div>
 
     <div id="more-task-info" class="more-task-ctx">
-        <div class="more-cts-info">
+        <div class="more-cts-info" id="ctx-delete">
             <span class="material-symbols-outlined more-cts-ico">
                 delete
             </span>
             Delete task
         </div>
-        <div class="more-cts-info">
+        <div class="more-cts-info" id="ctx-rename">
             <span class="material-symbols-outlined more-cts-ico">
                 edit
             </span>
             Rename task
         </div>
-        <div class="more-cts-info">
+        <div class="more-cts-info" id="ctx-dead">
             <span class="material-symbols-outlined more-cts-ico">
                 timer
             </span>
             Change deadline
         </div>
+
+        <div class="more-cts-info" id="ctx-info">
+            <span class="material-symbols-outlined more-cts-ico">
+                info
+            </span>
+            Info
+        </div>
     </div>
     
+    <div class="msg-box" id="msg-box">
+        "Deadline: {date}, and do it by {time}"
+    </div>
 
     <script type="text/javascript" src="/eel.js" defer></script>
     <script type="module" src="signinx.js"></script>

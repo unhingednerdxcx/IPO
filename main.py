@@ -512,7 +512,7 @@ def checkForStart():
                             day = (datetime.now().day - 1) // 7 + 1
                         case "monthly":
                             day = datetime.now().month
-                    print("y", day)
+                    print("y: ", day)
                     routineData[time[0]][index][list(routine.keys())[0]]["consistancy"][day] = 0.0
                     routineData[time[0]][index][list(routine.keys())[0]]["Streak"] = 0 # HERE
         eel.clearChallangeData()
@@ -544,43 +544,81 @@ def appendRoutineTask(task, name, newTask):
     RoutineManager('w', data)
 
 
-# Using class to make the code look more readable, purely for design
-class TaskManaging:
-    @staticmethod
-    def delete():
-        print("deleting task..")
+###  === Context Functions === ###
 
-    @staticmethod
-    def rename():
-        print("renaming task..")
+@eel.expose
+def delete(name):
+    print("deleting task..", name)
+    name = name.split('/')
+    data = TaskManager('r')
+    del data[name[0]][name[1]][name[2]]
+    TaskManager('w', data)
 
-    @staticmethod
-    def deadlineChange():
-        print("Changing deadline task..")
+@eel.expose
+def rename(name, newName):
+    print("renaming task..")
+    name = name.split('/')
+    data = TaskManager('r')
+    data[name[0]][name[1]][newName] = data[name[0]][name[1]].pop(name[2])
+    TaskManager('w', data)
     
-    @staticmethod
-    def info():
-        print("Displaying details")
-    
-    @staticmethod
-    def delGroup():
-        print("deleteing group")
-        
-    @staticmethod
-    def delSubGroup():
-        print("deleteing subgroup")
-    
-    @staticmethod
-    def delRoutine():
-        print("deleting routine")
 
-    @staticmethod
-    def delRoutineTask():
-        print("deleting task in routine")
+@eel.expose
+def dead(name, time, date):
+    print("Changing deadline task..")
+    name = name.split('/')
+    data = TaskManager('r')
+    formated = f"{date}/{time}"
+    print(formated)
+    formated = formated.replace(":", "/").replace("-", "/")
+    print(formated)
+    data[name[0]][name[1]][name[2]]["date"] = formated
+    print(data)
+    TaskManager('w', data)
+
+@eel.expose
+def info(name):
+    print("Displaying details")
+    name = name.split('/')
+    data = TaskManager('r')
+    selected_data = data[name[0]][name[1]][name[2]]
+    date = ""
+    time = ""
+    slash_count = 0
+    for char in selected_data["date"]:
+        if char == "/":
+            slash_count += 1
+        if slash_count >= 3:
+            char = char.replace("/", ":")
+            time += char
+            continue
+        date += char
+    time = time[1:]
+    print(date, time)
     
-    @staticmethod
-    def changeRoutineTaskPosition():
-        print("changing position")
+    return f"Deadline: {date}, and do it by {time}"
+    
+
+@eel.expose
+def delGroup():
+    print("deleteing group")
+    
+@eel.expose
+def delSubGroup():
+    print("deleteing subgroup")
+
+@eel.expose
+def delRoutine():
+    print("deleting routine")
+
+@eel.expose
+def delRoutineTask():
+    print("deleting task in routine")
+
+@eel.expose
+def changeRoutineTaskPosition():
+    print("changing position")
+
 
 eel.start('index.html', port=55555, close_callback=exitCode)
 

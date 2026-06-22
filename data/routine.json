@@ -9,8 +9,8 @@
                     "Push ups",
                     "Dead lift"
                 ],
-                "Complete till": "Push ups",
-                "Streak": 3,
+                "Complete till": "",
+                "Streak": 4,
                 "Most difficult": {
                     "name": "Lifting",
                     "score": 3
@@ -23,11 +23,12 @@
                     "Lifting",
                     "Lifting",
                     "Running",
+                    "Push ups",
                     "Push ups"
                 ],
                 "consistancy": [
                     100,
-                    80,
+                    75.0,
                     50,
                     60,
                     70,

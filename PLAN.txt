@@ -28,6 +28,7 @@ day 4-6 {
 add routine steps /\\
 true/false clean //|\\
 delete task/subgroup/group option 
+alert
 clean up
 comment
 video
