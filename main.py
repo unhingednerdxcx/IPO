@@ -595,8 +595,9 @@ def info(name):
         date += char
     time = time[1:]
     print(date, time)
+    name = "/".join(name)
     
-    return f"Deadline: {date}, and do it by {time}"
+    return f"Deadline: {date}, and do it by {time}\n Path: {name}"
     
 
 @eel.expose

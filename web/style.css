@@ -835,8 +835,8 @@ ul {
 .msg-box {
     position: absolute;
     display: grid;
-    width: fit-content;
-    height: 5vh;
+    width: 15vw;
+    height: fit-content;
     outline: 1px solid var(--outline-color);
     transform: translate(100vw, 6vh);
     margin-top: 0vh;
