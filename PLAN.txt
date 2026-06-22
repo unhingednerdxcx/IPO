@@ -27,7 +27,7 @@ day 4-6 {
 "" fix //\\
 add routine steps /\\
 true/false clean //|\\
-delete task/subgroup/group option 
+delete task/subgroup/group option  //|\\
 alert
 time
 

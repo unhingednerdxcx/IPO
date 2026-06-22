@@ -77,12 +77,10 @@ async function main() {
             routine.style.display = "flex"
 
             let val = await eel.listAllRoutineNames()()
-            let key = 0
             let pos = 0
             let once = false
 
-            val.forEach( async(task: any) => {
-                key += 1
+            val.forEach( async(task: any, index: number) => {
                 let routine = document.getElementById(`${task[0]}-routines`) as HTMLElement || null
                 if (routine) {
                     routine.innerHTML = ''
@@ -98,7 +96,7 @@ async function main() {
                     }
 
                     let li = quickHtml("li", "routine-block")
-                    li.dataset.path = `${task[0]}/${task[1]}`
+                    li.dataset.path = `${task[0]}/${task[1]}/${index}`
 
                     let main_info = quickHtml('div', "routine-block-text")
 
@@ -114,7 +112,7 @@ async function main() {
                     let chart_par = quickHtml('div', 'summary-chart-container')
 
                     let graph = quickHtml('canvas', 'routine-block-graph') as HTMLCanvasElement
-                    graph.id = `graph${key}`
+                    graph.id = `graph${index}`
 
                     let labels: any = {
                         "daily": ['Sun', 'Tue', 'Thu', 'Sat'],
@@ -172,6 +170,25 @@ async function main() {
 
                     li.appendChild(main_info)
                     li.appendChild(chart_par)
+
+
+                    li.oncontextmenu = (e) => {
+                        e.preventDefault()
+                        const li = (e.currentTarget as HTMLElement);
+
+                        let more = document.createElement('span')
+                        let path = li.dataset.path?.split('/')
+                        console.log(path)
+                        if (path) {
+                            let formated = `${path[0]}/${path[2]}/${path[1]}`
+                            console.log(li)
+                            more.dataset.path = formated
+                        }
+                        more_func([
+                            ['Delete routine', routine_del, 'delete'],
+                            ['Rename routine', routine_rename, 'edit'],
+                        ], e, more)
+                    }
 
                     routine.appendChild(li)
                 }
@@ -472,6 +489,15 @@ async function ctx_info(){
     }
 }
 
+async function routine_del() {
+    await eel.delRoutine(document.getElementById("more-task-info")?.dataset.path)
+}
+
+async function routine_rename() {
+    let newName = await showContext("Enter new name")
+    await eel.routineRename(document.getElementById("more-task-info")?.dataset.path, newName)
+}
+ 
 
 function more_func(arr: item[], e: MouseEvent, more: HTMLElement) {
     let ctx = document.getElementById("more-task-info")

@@ -634,8 +634,23 @@ def renameSubGroup(name, newName):
     TaskManager('w', data)
 
 @eel.expose
-def delRoutine():
+def delRoutine(name):
     print("deleting routine")
+    data = RoutineManager('r')
+    name = name.split('/')
+    print(name)
+    del data[name[0]][int(name[1])]
+    RoutineManager('w', data)
+
+@eel.expose
+def routineRename(name, newName):
+    print("renaming routine")
+    data = RoutineManager('r')
+    name = name.split('/')
+    print(name)
+    data[name[0]][int(name[1])][newName] = data[name[0]][int(name[1])].pop(name[2])
+    print(data)
+    RoutineManager('w', data)
 
 @eel.expose
 def delRoutineTask():

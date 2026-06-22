@@ -48,11 +48,9 @@ async function main() {
             current = "all-routine";
             routine.style.display = "flex";
             let val = await eel.listAllRoutineNames()();
-            let key = 0;
             let pos = 0;
             let once = false;
-            val.forEach(async (task) => {
-                key += 1;
+            val.forEach(async (task, index) => {
                 let routine = document.getElementById(`${task[0]}-routines`) || null;
                 if (routine) {
                     routine.innerHTML = '';
@@ -66,7 +64,7 @@ async function main() {
                         return el;
                     }
                     let li = quickHtml("li", "routine-block");
-                    li.dataset.path = `${task[0]}/${task[1]}`;
+                    li.dataset.path = `${task[0]}/${task[1]}/${index}`;
                     let main_info = quickHtml('div', "routine-block-text");
                     let main_info_title = quickHtml('div', "routine-block-title", task[1]);
                     let main_info_descript = quickHtml('div', "routine-block-summary");
@@ -75,7 +73,7 @@ async function main() {
                     let streak = document.createTextNode(`Day: ${info.Streak} Killing it!`);
                     let chart_par = quickHtml('div', 'summary-chart-container');
                     let graph = quickHtml('canvas', 'routine-block-graph');
-                    graph.id = `graph${key}`;
+                    graph.id = `graph${index}`;
                     let labels = {
                         "daily": ['Sun', 'Tue', 'Thu', 'Sat'],
                         "weekly": ['W1', 'W2', 'W3', 'W4'],
@@ -126,6 +124,22 @@ async function main() {
                     chart_par.appendChild(graph);
                     li.appendChild(main_info);
                     li.appendChild(chart_par);
+                    li.oncontextmenu = (e) => {
+                        e.preventDefault();
+                        const li = e.currentTarget;
+                        let more = document.createElement('span');
+                        let path = li.dataset.path?.split('/');
+                        console.log(path);
+                        if (path) {
+                            let formated = `${path[0]}/${path[2]}/${path[1]}`;
+                            console.log(li);
+                            more.dataset.path = formated;
+                        }
+                        more_func([
+                            ['Delete routine', routine_del, 'delete'],
+                            ['Rename routine', routine_rename, 'edit'],
+                        ], e, more);
+                    };
                     routine.appendChild(li);
                 }
             });
@@ -393,6 +407,13 @@ async function ctx_info() {
             box.classList.remove('active');
         }, 4000);
     }
+}
+async function routine_del() {
+    await eel.delRoutine(document.getElementById("more-task-info")?.dataset.path);
+}
+async function routine_rename() {
+    let newName = await showContext("Enter new name");
+    await eel.routineRename(document.getElementById("more-task-info")?.dataset.path, newName);
 }
 function more_func(arr, e, more) {
     let ctx = document.getElementById("more-task-info");
