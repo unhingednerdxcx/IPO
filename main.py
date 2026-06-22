@@ -601,8 +601,19 @@ def info(name):
     
 
 @eel.expose
-def delGroup():
+def delGroup(name):
     print("deleteing group")
+    data = TaskManager('r')
+    print(name)
+    del data[name]
+    TaskManager('w', data)
+
+@eel.expose
+def renameGroup(name, newName):
+    print("Renaming group")
+    data = TaskManager('r')
+    data[newName] = data.pop(name)
+    TaskManager('w', data)
     
 @eel.expose
 def delSubGroup():

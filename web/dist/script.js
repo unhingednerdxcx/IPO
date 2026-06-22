@@ -20,30 +20,6 @@ if (canvas) {
 console.log(eel);
 async function main() {
     await eel.checkForStart()();
-    document.getElementById("ctx-delete")?.addEventListener('click', async () => {
-        await eel.delete(document.getElementById("more-task-info")?.dataset.path)();
-    });
-    document.getElementById("ctx-rename")?.addEventListener('click', async () => {
-        let newName = await showContext('Enter new name');
-        await eel.rename(document.getElementById("more-task-info")?.dataset.path, newName)();
-    });
-    document.getElementById("ctx-dead")?.addEventListener('click', async () => {
-        let time = await showContext("Enter new time", 'time');
-        let date = await showContext("Enter new date", 'date');
-        await eel.dead(document.getElementById("more-task-info")?.dataset.path, time, date)();
-    });
-    document.getElementById("ctx-info")?.addEventListener('click', async () => {
-        let msg = await eel.info(document.getElementById("more-task-info")?.dataset.path)();
-        let box = document.getElementById('msg-box') || null;
-        if (box) {
-            box.innerText = msg;
-            console.log(msg);
-            box.classList.add('active');
-            setTimeout(() => {
-                box.classList.remove('active');
-            }, 4000);
-        }
-    });
     document.getElementById("side-search")?.addEventListener("click", async () => {
         let value = await showContext("Enter the task you want to search for", 'text');
         let search_val = await eel.searchTask(value)();
@@ -394,6 +370,65 @@ async function setColors() {
         setTheme(arr[0], arr[1]);
     });
 }
+async function ctx_delete() {
+    await eel.delete(document.getElementById("more-task-info")?.dataset.path)();
+}
+async function ctx_rename() {
+    let newName = await showContext('Enter new name');
+    await eel.rename(document.getElementById("more-task-info")?.dataset.path, newName)();
+}
+async function ctx_dead() {
+    let time = await showContext("Enter new time", 'time');
+    let date = await showContext("Enter new date", 'date');
+    await eel.dead(document.getElementById("more-task-info")?.dataset.path, time, date)();
+}
+async function ctx_info() {
+    let msg = await eel.info(document.getElementById("more-task-info")?.dataset.path)();
+    let box = document.getElementById('msg-box') || null;
+    if (box) {
+        box.innerText = msg;
+        console.log(msg);
+        box.classList.add('active');
+        setTimeout(() => {
+            box.classList.remove('active');
+        }, 4000);
+    }
+}
+function more_func(arr, e, more) {
+    let ctx = document.getElementById("more-task-info");
+    if (ctx) {
+        ctx.innerHTML = "";
+        arr.forEach((val) => {
+            let option = document.createElement('div');
+            option.classList = "more-cts-info";
+            option.onclick = val[1];
+            let icon = document.createElement('span');
+            icon.classList = "material-symbols-outlined more-cts-ico";
+            icon.innerText = String(val[2]);
+            let text = document.createTextNode(String(val[0]));
+            option.appendChild(icon);
+            option.appendChild(text);
+            ctx.appendChild(option);
+        });
+        ctx.style.top = `${String(e.clientY)}px`;
+        ctx.style.left = `${String(e.clientX)}px`;
+        ctx.style.display = "flex";
+        Object.assign(ctx.dataset, more.dataset);
+        setTimeout(() => {
+            click_need = true;
+            click_kind = ctx;
+        }, 20);
+    }
+}
+function group_del() {
+    let path = document.getElementById("more-task-info")?.dataset.path;
+    eel.delGroup(path)();
+}
+async function group_rename() {
+    let path = document.getElementById("more-task-info")?.dataset.path;
+    let newName = await showContext("Enter new name");
+    eel.renameGroup(path, newName)();
+}
 async function list_items(tasks, challange = false) {
     let lists = document.getElementById('tasks') || null;
     let today = document.getElementById('Today') || null;
@@ -479,17 +514,12 @@ async function list_items(tasks, challange = false) {
                 task_par.appendChild(more);
                 setcheck(taskKey);
                 more.onclick = async (e) => {
-                    let ctx = document.getElementById("more-task-info");
-                    if (ctx) {
-                        ctx.style.top = `${String(e.clientY)}px`;
-                        ctx.style.left = `${String(e.clientX)}px`;
-                        ctx.style.display = "flex";
-                        Object.assign(ctx.dataset, more.dataset);
-                        setTimeout(() => {
-                            click_need = true;
-                            click_kind = ctx;
-                        }, 20);
-                    }
+                    more_func([
+                        ['Delete task', ctx_delete, 'delete'],
+                        ['Rename task', ctx_rename, 'edit'],
+                        ['Change deadline task', ctx_dead, 'timer'],
+                        ['Task info', ctx_info, 'info'],
+                    ], e, more);
                 };
             }
             lists?.appendChild(task_par);
@@ -522,12 +552,8 @@ async function makeSubGroupTree() {
             group_title.innerText = grp;
             let subgroup_btn_par = document.createElement('div');
             subgroup_btn_par.classList = 'subgroup-wrap';
-            subgroup_btn_par.onclick = () => {
-                makeNewSubGroup(grp);
-                makeSubGroupTree();
-            };
             let content = document.createElement('div');
-            content.classList = 'tab-content';
+            content.classList = 'sub-content';
             let span = document.createElement('span');
             span.classList = 'material-symbols-outlined sub-icon';
             span.innerText = 'add';
@@ -537,6 +563,17 @@ async function makeSubGroupTree() {
             content.appendChild(span);
             content.appendChild(span_desc);
             subgroup_btn_par.appendChild(content);
+            let more = document.createElement('span');
+            more.classList = "material-symbols-outlined group-more";
+            more.innerText = "more_horiz";
+            more.dataset.path = grp;
+            more.onclick = (e) => {
+                more_func([
+                    ['Delete group', group_del, 'delete'],
+                    ['Rename group', group_rename, 'edit'],
+                ], e, more);
+            };
+            group_title.appendChild(more);
             group_par.appendChild(group_title);
             group_par.appendChild(subgroup_btn_par);
             let subgrp_par = document.createElement('div');
