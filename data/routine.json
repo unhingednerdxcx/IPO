@@ -5,11 +5,11 @@
                 "index": 0,
                 "tasks": [
                     "Running",
-                    "Lifting",
-                    "Push ups",
+                    "madonna",
+                    "Running",
                     "Dead lift"
                 ],
-                "Complete till": "Running",
+                "Complete till": "Dead lift",
                 "Streak": 4,
                 "Most difficult": {
                     "name": "Lifting",

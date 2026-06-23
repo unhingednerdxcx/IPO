@@ -653,17 +653,71 @@ def routineRename(name, newName):
     RoutineManager('w', data)
 
 @eel.expose
-def delRoutineTask():
+def delRoutineTask(name):
     print("deleting task in routine")
+    print(name)
+    data = RoutineManager('r')
+    name = name.split('/')
+    tar_index = 0
+    for index, value in enumerate(data[name[0]]):
+        print("value: ", list(value.keys())[0])
+        if list(value.keys())[0] == name[2]:
+            tar_index = index
+            break
+    print(tar_index)
+    del data[name[0]][tar_index][name[2]]["tasks"][int(name[3])]
+    RoutineManager('w', data)
 
 @eel.expose
-def changeRoutineTaskPosition():
+def changeRoutineTaskPosition(name, direction):
     print("changing position")
 
-@eel.expose
-def routineTaskRename():
-    print("renaming routine task")
+    data = RoutineManager('r')
+    name = name.split('/')
+    tar_index = 0
 
+    for index, value in enumerate(data[name[0]]):
+        print("value: ", list(value.keys())[0])
+        if list(value.keys())[0] == name[2]:
+            tar_index = index
+            break
+    print(tar_index)
+
+    current = data[name[0]][tar_index][name[2]]["tasks"][int(name[3])]
+    next = ""
+
+    if direction == "up":
+        next = data[name[0]][tar_index][name[2]]["tasks"][int(name[3]) + 1]
+        data[name[0]][tar_index][name[2]]["tasks"][int(name[3])], data[name[0]][tar_index][name[2]]["tasks"][int(name[3]) - 1] = next, current
+
+
+    else:
+        next = data[name[0]][tar_index][name[2]]["tasks"][int(name[3]) - 1]
+        data[name[0]][tar_index][name[2]]["tasks"][int(name[3])], data[name[0]][tar_index][name[2]]["tasks"][int(name[3]) + 1] = next, current
+    
+
+    RoutineManager('w', data)    
+
+
+
+    print(name)
+
+@eel.expose
+def routineTaskRename(name, newName):
+    print("renaming routine task")
+    data = RoutineManager('r')
+    name = name.split('/')
+    tar_index = 0
+    for index, value in enumerate(data[name[0]]):
+        print("value: ", list(value.keys())[0])
+        if list(value.keys())[0] == name[2]:
+            tar_index = index
+            break
+    print(tar_index)
+
+    data[name[0]][tar_index][name[2]]['tasks'][int(name[3])] = newName
+    
+    RoutineManager('w', data)
 
 eel.start('index.html', port=55555, close_callback=exitCode)
 

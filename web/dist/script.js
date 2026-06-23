@@ -25,221 +25,7 @@ async function main() {
         let search_val = await eel.searchTask(value)();
         searchBoxShow(search_val, String(value));
     });
-    document.getElementById('side-routine')?.addEventListener('click', async () => {
-        let routine = document.getElementById('routine') || null;
-        let current_el = document.getElementById(`${current}`) || null;
-        let all_el = document.getElementById('all-routine') || null;
-        let tab_el = document.getElementById(current_tab) || null;
-        let this_el = document.getElementById('side-routine') || null;
-        if (routine && current_el && all_el && this_el) {
-            current_el.style.display = "none";
-            if (tab_el) {
-                tab_el.classList.remove('active');
-            }
-            current_tab = "side-routine";
-            this_el.classList.add('active');
-            if (current == "Default") {
-                let el = document.getElementById('Today') || null;
-                if (el) {
-                    el.style.display = "none";
-                }
-            }
-            all_el.style.display = "flex";
-            current = "all-routine";
-            routine.style.display = "flex";
-            let val = await eel.listAllRoutineNames()();
-            let pos = 0;
-            let once = false;
-            val.forEach(async (task, index) => {
-                let routine = document.getElementById(`${task[0]}-routines`) || null;
-                if (routine) {
-                    routine.innerHTML = '';
-                    let info = await eel.listRoutineTraits(task[0], task[1])();
-                    function quickHtml(type, classes = "", innerText = "") {
-                        let el = document.createElement(type);
-                        el.classList = classes;
-                        if (innerText != "") {
-                            el.innerText = innerText;
-                        }
-                        return el;
-                    }
-                    let li = quickHtml("li", "routine-block");
-                    li.dataset.path = `${task[0]}/${task[1]}/${index}`;
-                    let main_info = quickHtml('div', "routine-block-text");
-                    let main_info_title = quickHtml('div', "routine-block-title", task[1]);
-                    let main_info_descript = quickHtml('div', "routine-block-summary");
-                    let main_info_descript_hardest = quickHtml('div', "", `Hardest task: ${info['Most difficult'].name}`);
-                    let main_info_descript_easiest = quickHtml('div', "", `Easiest task: ${info['Most easiest'].name}`);
-                    let streak = document.createTextNode(`Day: ${info.Streak} Killing it!`);
-                    let chart_par = quickHtml('div', 'summary-chart-container');
-                    let graph = quickHtml('canvas', 'routine-block-graph');
-                    graph.id = `graph${index}`;
-                    let labels = {
-                        "daily": ['Sun', 'Tue', 'Thu', 'Sat'],
-                        "weekly": ['W1', 'W2', 'W3', 'W4'],
-                        "monthly": ['Jan', 'May', 'Sept', 'Dec']
-                    };
-                    let fix_dataPoints = [];
-                    let label = [];
-                    switch (task[0]) {
-                        case "daily": {
-                            label = labels['daily'];
-                            fix_dataPoints = [info['consistancy'][0], info['consistancy'][2], info['consistancy'][4], info['consistancy'][6]];
-                            once = true;
-                            break;
-                        }
-                        case "weekly": {
-                            if (once) {
-                                pos = 0;
-                                once = false;
-                            }
-                            label = labels['weekly'];
-                            fix_dataPoints = info['consistancy'];
-                            break;
-                        }
-                        case "monthly": {
-                            if (once) {
-                                pos = 0;
-                                once = false;
-                            }
-                            label = labels['monthly'];
-                            fix_dataPoints = [info['consistancy'][0], info['consistancy'][4], info['consistancy'][8], info['consistancy'][11]];
-                            break;
-                        }
-                    }
-                    li.onclick = () => {
-                        showroutinedetails(String(li.dataset.path), pos);
-                    };
-                    const primary_highlight_color = getComputedStyle(document.documentElement).getPropertyValue('--primary-highlight-color').trim();
-                    let config = await eel.routineSummaryConfig(label, fix_dataPoints, primary_highlight_color)();
-                    let chart = "";
-                    if (canvas) {
-                        chart = new Chart(graph, config);
-                    }
-                    main_info_descript.appendChild(main_info_descript_hardest);
-                    main_info_descript.appendChild(main_info_descript_easiest);
-                    main_info_descript.appendChild(streak);
-                    main_info.appendChild(main_info_title);
-                    main_info.appendChild(main_info_descript);
-                    chart_par.appendChild(graph);
-                    li.appendChild(main_info);
-                    li.appendChild(chart_par);
-                    li.oncontextmenu = (e) => {
-                        e.preventDefault();
-                        const li = e.currentTarget;
-                        let more = document.createElement('span');
-                        let path = li.dataset.path?.split('/');
-                        console.log(path);
-                        if (path) {
-                            let formated = `${path[0]}/${path[2]}/${path[1]}`;
-                            console.log(li);
-                            more.dataset.path = formated;
-                        }
-                        more_func([
-                            ['Delete routine', routine_del, 'delete'],
-                            ['Rename routine', routine_rename, 'edit'],
-                        ], e, more);
-                    };
-                    routine.appendChild(li);
-                }
-            });
-        }
-        async function showroutinedetails(path, pos) {
-            const current_element = document.getElementById(`${current}`);
-            const el = document.getElementById("routine-stats") || null;
-            const title = document.getElementById('routine-stat-title') || null;
-            const diff = document.getElementById('most-difficult-task') || null;
-            const easy = document.getElementById('most-easiest-task') || null;
-            const streak = document.getElementById('streak') || null;
-            const path_arr = path.split('/');
-            const canvas = document.getElementById('routineChart');
-            const data = await eel.listRoutineTraits(path_arr[0], path_arr[1])();
-            if (el && title && diff && easy && streak && canvas && path_arr && current_element) {
-                current_element.style.display = "none";
-                current = "routine-stats";
-                el.style.display = 'block';
-                title.innerText = String(path_arr[1]);
-                current_routine = String(path_arr[1]);
-                diff.innerText = data['Most difficult'].name;
-                easy.innerText = data['Most easiest'].name;
-                streak.innerText = data.Streak;
-                let labels = {
-                    "daily": ['Sun', 'Mon', 'Tue', 'Thu', 'Fri', 'Sat'],
-                    "weekly": ['W1', 'W2', 'W3', 'W4'],
-                    "monthly": ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
-                };
-                let label = [];
-                switch (path_arr[0]) {
-                    case "daily": {
-                        label = labels['daily'];
-                        break;
-                    }
-                    case "weekly": {
-                        label = labels['weekly'];
-                        break;
-                    }
-                    case "monthly": {
-                        label = labels['monthly'];
-                        break;
-                    }
-                }
-                config.data.labels = label;
-                config.data.datasets[0].data = data['consistancy'];
-                chart.update();
-                populate_routine_tasks(data['tasks'], data["Complete till"], path_arr[0], pos, path_arr[1]);
-            }
-        }
-        function populate_routine_tasks(tasks, complete, time, pos, title) {
-            let complete_reach = true;
-            let tree = document.getElementById('routine-task-tree') || null;
-            if (tree) {
-                tree.innerHTML = "";
-                tasks.forEach((task) => {
-                    let li = document.createElement('li');
-                    li.classList = 'routine-step';
-                    let btn = document.createElement('div');
-                    btn.classList = 'routine-task-button';
-                    btn.dataset.name = String(task);
-                    btn.dataset.complete = 'false';
-                    let desc = document.createElement('div');
-                    desc.classList = 'routine-discript';
-                    desc.innerText = String(task);
-                    console.log(complete);
-                    if (complete != "") {
-                        if (task == complete) {
-                            complete_reach = false;
-                            btn.dataset.complete = 'true';
-                            setComplete(btn);
-                        }
-                        else if (complete_reach) {
-                            btn.dataset.complete = 'false';
-                            setComplete(btn);
-                        }
-                    }
-                    else {
-                        btn.dataset.complete = 'false';
-                        complete_reach = false;
-                    }
-                    btn.onclick = () => {
-                        if (btn.dataset.complete == 'false') {
-                            setComplete(btn);
-                            btn.dataset.complete = 'true';
-                            eel.setComplete(`${time}/${pos}/${btn.dataset.name}/${title}`);
-                        }
-                    };
-                    function setComplete(btn) {
-                        let check = document.createElement('span');
-                        check.classList = "material-symbols-outlined routine-complete-icon";
-                        check.innerText = 'check';
-                        btn.appendChild(check);
-                    }
-                    li.appendChild(btn);
-                    li.appendChild(desc);
-                    tree.appendChild(li);
-                });
-            }
-        }
-    });
+    document.getElementById('side-routine')?.addEventListener('click', routine_population);
     document.getElementById('add-new-step')?.addEventListener('click', async () => {
         let name = await showContext('Enter name of the new task');
         let tasks = await eel.listTasks(current_routine)();
@@ -358,6 +144,235 @@ async function main() {
         }
     }
 }
+async function routine_population() {
+    let routine = document.getElementById('routine') || null;
+    let current_el = document.getElementById(`${current}`) || null;
+    let all_el = document.getElementById('all-routine') || null;
+    let tab_el = document.getElementById(current_tab) || null;
+    let this_el = document.getElementById('side-routine') || null;
+    if (routine && current_el && all_el && this_el) {
+        current_el.style.display = "none";
+        if (tab_el) {
+            tab_el.classList.remove('active');
+        }
+        current_tab = "side-routine";
+        this_el.classList.add('active');
+        if (current == "Default") {
+            let el = document.getElementById('Today') || null;
+            if (el) {
+                el.style.display = "none";
+            }
+        }
+        all_el.style.display = "flex";
+        current = "all-routine";
+        routine.style.display = "flex";
+        let val = await eel.listAllRoutineNames()();
+        let pos = 0;
+        let once = false;
+        val.forEach(async (task, index) => {
+            let routine = document.getElementById(`${task[0]}-routines`) || null;
+            if (routine) {
+                routine.innerHTML = '';
+                let info = await eel.listRoutineTraits(task[0], task[1])();
+                function quickHtml(type, classes = "", innerText = "") {
+                    let el = document.createElement(type);
+                    el.classList = classes;
+                    if (innerText != "") {
+                        el.innerText = innerText;
+                    }
+                    return el;
+                }
+                let li = quickHtml("li", "routine-block");
+                li.dataset.path = `${task[0]}/${task[1]}/${index}`;
+                let main_info = quickHtml('div', "routine-block-text");
+                let main_info_title = quickHtml('div', "routine-block-title", task[1]);
+                let main_info_descript = quickHtml('div', "routine-block-summary");
+                let main_info_descript_hardest = quickHtml('div', "", `Hardest task: ${info['Most difficult'].name}`);
+                let main_info_descript_easiest = quickHtml('div', "", `Easiest task: ${info['Most easiest'].name}`);
+                let streak = document.createTextNode(`Day: ${info.Streak} Killing it!`);
+                let chart_par = quickHtml('div', 'summary-chart-container');
+                let graph = quickHtml('canvas', 'routine-block-graph');
+                graph.id = `graph${index}`;
+                let labels = {
+                    "daily": ['Sun', 'Tue', 'Thu', 'Sat'],
+                    "weekly": ['W1', 'W2', 'W3', 'W4'],
+                    "monthly": ['Jan', 'May', 'Sept', 'Dec']
+                };
+                let fix_dataPoints = [];
+                let label = [];
+                switch (task[0]) {
+                    case "daily": {
+                        label = labels['daily'];
+                        fix_dataPoints = [info['consistancy'][0], info['consistancy'][2], info['consistancy'][4], info['consistancy'][6]];
+                        once = true;
+                        break;
+                    }
+                    case "weekly": {
+                        if (once) {
+                            pos = 0;
+                            once = false;
+                        }
+                        label = labels['weekly'];
+                        fix_dataPoints = info['consistancy'];
+                        break;
+                    }
+                    case "monthly": {
+                        if (once) {
+                            pos = 0;
+                            once = false;
+                        }
+                        label = labels['monthly'];
+                        fix_dataPoints = [info['consistancy'][0], info['consistancy'][4], info['consistancy'][8], info['consistancy'][11]];
+                        break;
+                    }
+                }
+                li.onclick = () => {
+                    showroutinedetails(String(li.dataset.path), pos);
+                };
+                const primary_highlight_color = getComputedStyle(document.documentElement).getPropertyValue('--primary-highlight-color').trim();
+                let config = await eel.routineSummaryConfig(label, fix_dataPoints, primary_highlight_color)();
+                let chart = "";
+                if (canvas) {
+                    chart = new Chart(graph, config);
+                }
+                main_info_descript.appendChild(main_info_descript_hardest);
+                main_info_descript.appendChild(main_info_descript_easiest);
+                main_info_descript.appendChild(streak);
+                main_info.appendChild(main_info_title);
+                main_info.appendChild(main_info_descript);
+                chart_par.appendChild(graph);
+                li.appendChild(main_info);
+                li.appendChild(chart_par);
+                li.oncontextmenu = (e) => {
+                    e.preventDefault();
+                    const li = e.currentTarget;
+                    let more = document.createElement('span');
+                    let path = li.dataset.path?.split('/');
+                    console.log(path);
+                    if (path) {
+                        let formated = `${path[0]}/${path[2]}/${path[1]}`;
+                        console.log(li);
+                        more.dataset.path = formated;
+                    }
+                    more_func([
+                        ['Delete routine', routine_del, 'delete'],
+                        ['Rename routine', routine_rename, 'edit'],
+                    ], e, more);
+                };
+                routine.appendChild(li);
+            }
+        });
+    }
+}
+async function showroutinedetails(path, pos) {
+    const current_element = document.getElementById(`${current}`);
+    const el = document.getElementById("routine-stats") || null;
+    const title = document.getElementById('routine-stat-title') || null;
+    const diff = document.getElementById('most-difficult-task') || null;
+    const easy = document.getElementById('most-easiest-task') || null;
+    const streak = document.getElementById('streak') || null;
+    const path_arr = path.split('/');
+    const canvas = document.getElementById('routineChart');
+    const data = await eel.listRoutineTraits(path_arr[0], path_arr[1])();
+    if (el && title && diff && easy && streak && canvas && path_arr && current_element) {
+        current_element.style.display = "none";
+        current = "routine-stats";
+        el.style.display = 'block';
+        title.innerText = String(path_arr[1]);
+        current_routine = String(path_arr[1]);
+        diff.innerText = data['Most difficult'].name;
+        easy.innerText = data['Most easiest'].name;
+        streak.innerText = data.Streak;
+        let labels = {
+            "daily": ['Sun', 'Mon', 'Tue', 'Thu', 'Fri', 'Sat'],
+            "weekly": ['W1', 'W2', 'W3', 'W4'],
+            "monthly": ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+        };
+        let label = [];
+        switch (path_arr[0]) {
+            case "daily": {
+                label = labels['daily'];
+                break;
+            }
+            case "weekly": {
+                label = labels['weekly'];
+                break;
+            }
+            case "monthly": {
+                label = labels['monthly'];
+                break;
+            }
+        }
+        config.data.labels = label;
+        config.data.datasets[0].data = data['consistancy'];
+        chart.update();
+        populate_routine_tasks(data['tasks'], data["Complete till"], path_arr[0], pos, path_arr[1]);
+    }
+}
+function populate_routine_tasks(tasks, complete, time, pos, title) {
+    let complete_reach = true;
+    let tree = document.getElementById('routine-task-tree') || null;
+    if (tree) {
+        tree.innerHTML = "";
+        tasks.forEach((task, index) => {
+            let li = document.createElement('li');
+            li.classList = 'routine-step';
+            let btn = document.createElement('div');
+            btn.classList = 'routine-task-button';
+            btn.dataset.name = String(task);
+            btn.dataset.complete = 'false';
+            let desc = document.createElement('div');
+            desc.classList = 'routine-discript';
+            desc.innerText = String(task);
+            console.log(complete);
+            if (complete != "") {
+                if (task == complete) {
+                    complete_reach = false;
+                    btn.dataset.complete = 'true';
+                    setComplete(btn);
+                }
+                else if (complete_reach) {
+                    btn.dataset.complete = 'false';
+                    setComplete(btn);
+                }
+            }
+            else {
+                btn.dataset.complete = 'false';
+                complete_reach = false;
+            }
+            btn.onclick = () => {
+                if (btn.dataset.complete == 'false') {
+                    setComplete(btn);
+                    btn.dataset.complete = 'true';
+                    eel.setComplete(`${time}/${pos}/${btn.dataset.name}/${title}`);
+                }
+            };
+            function setComplete(btn) {
+                let check = document.createElement('span');
+                check.classList = "material-symbols-outlined routine-complete-icon";
+                check.innerText = 'check';
+                btn.appendChild(check);
+            }
+            let more = document.createElement('span');
+            more.classList = "material-symbols-outlined routine-task-more";
+            more.innerText = "more_horiz";
+            more.dataset.path = `${time}/${pos}/${title}/${index}`;
+            more.dataset.moreinfo = `${time}/${title}\\${pos}`;
+            more.onclick = (e) => {
+                more_func([
+                    ["Delete", routine_task_del, "delete"],
+                    ["Rename", routine_task_rename, "edit"],
+                    ["Move up", routine_task_changePos_up, "move_up"],
+                    ["Move down", routine_task_changePos_down, "move_down"]
+                ], e, more);
+            };
+            li.appendChild(btn);
+            li.appendChild(desc);
+            li.appendChild(more);
+            tree.appendChild(li);
+        });
+    }
+}
 function side_mainFunc(par_el, this_tab_name, func) {
     const par = document.getElementById(par_el) || null;
     const current_element = document.getElementById(current);
@@ -410,12 +425,43 @@ async function ctx_info() {
 }
 async function routine_del() {
     await eel.delRoutine(document.getElementById("more-task-info")?.dataset.path);
+    routine_population();
 }
 async function routine_rename() {
     let newName = await showContext("Enter new name");
     await eel.routineRename(document.getElementById("more-task-info")?.dataset.path, newName);
+    routine_population();
 }
-function more_func(arr, e, more) {
+async function routine_task_del() {
+    await eel.delRoutineTask(document.getElementById("more-task-info")?.dataset.path)();
+    let path = document.getElementById("more-task-info")?.dataset.moreinfo?.split("\\");
+    if (path) {
+        showroutinedetails(String(path[0]), Number(path[1]));
+    }
+}
+async function routine_task_rename() {
+    let newName = await showContext("Enter new name");
+    await eel.routineTaskRename(document.getElementById("more-task-info")?.dataset.path, newName)();
+    let path = document.getElementById("more-task-info")?.dataset.moreinfo?.split("\\");
+    if (path) {
+        showroutinedetails(String(path[0]), Number(path[1]));
+    }
+}
+async function routine_task_changePos_up() {
+    await eel.changeRoutineTaskPosition(document.getElementById("more-task-info")?.dataset.path, "up")();
+    let path = document.getElementById("more-task-info")?.dataset.moreinfo?.split("\\");
+    if (path) {
+        showroutinedetails(String(path[0]), Number(path[1]));
+    }
+}
+async function routine_task_changePos_down() {
+    await eel.changeRoutineTaskPosition(document.getElementById("more-task-info")?.dataset.path, "down")();
+    let path = document.getElementById("more-task-info")?.dataset.moreinfo?.split("\\");
+    if (path) {
+        showroutinedetails(String(path[0]), Number(path[1]));
+    }
+}
+async function more_func(arr, e, more) {
     let ctx = document.getElementById("more-task-info");
     if (ctx) {
         ctx.innerHTML = "";
@@ -444,20 +490,24 @@ function more_func(arr, e, more) {
 async function group_del() {
     let path = document.getElementById("more-task-info")?.dataset.path;
     await eel.delGroup(path)();
+    await makeSubGroupTree();
 }
 async function group_rename() {
     let path = document.getElementById("more-task-info")?.dataset.path;
     let newName = await showContext("Enter new name");
     eel.renameGroup(path, newName)();
+    await makeSubGroupTree();
 }
 async function sub_group_del() {
     let path = document.getElementById("more-task-info")?.dataset.path;
     await eel.delSubGroup(path)();
+    await makeSubGroupTree();
 }
 async function sub_group_rename() {
     let path = document.getElementById("more-task-info")?.dataset.path;
     let newName = await showContext("Enter new name");
     eel.renameSubGroup(path, newName)();
+    await makeSubGroupTree();
 }
 async function list_items(tasks, challange = false) {
     let lists = document.getElementById('tasks') || null;
@@ -597,7 +647,7 @@ async function makeSubGroupTree() {
             more.classList = "material-symbols-outlined group-more";
             more.innerText = "more_horiz";
             more.dataset.path = grp;
-            more.onclick = (e) => {
+            more.onclick = async (e) => {
                 more_func([
                     ['Delete group', group_del, 'delete'],
                     ['Rename group', group_rename, 'edit'],
@@ -637,11 +687,12 @@ async function makeSubGroupTree() {
                 more.classList = "material-symbols-outlined sub-group-more";
                 more.innerText = "more_vert";
                 more.dataset.path = `${grp}/${subgrp}`;
-                more.onclick = (e) => {
-                    more_func([
+                more.onclick = async (e) => {
+                    await more_func([
                         ['Delete subgroup', sub_group_del, 'delete'],
                         ['Rename subgroup', sub_group_rename, 'edit'],
                     ], e, more);
+                    await makeSubGroupTree();
                 };
                 subgrp_desc.appendChild(subgrp_ico);
                 subgrp_desc.appendChild(subgrp_name);
