@@ -3,5 +3,5 @@ declare global {
         makeNewSubGroup: (catagory: string) => void;
     }
 }
-export {};
+export declare function showContext(descriptions: string, type?: string, val?: any[], disc_2?: string): Promise<any>;
 //# sourceMappingURL=script.d.ts.map

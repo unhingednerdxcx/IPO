@@ -28,13 +28,19 @@ day 4-6 {
 add routine steps /\\
 true/false clean //|\\
 delete task/subgroup/group option  //\\
-
 populate //|\\
-true/false
-alert
-time -- (streak thing)
+
+time -- (streak thing) --e {
+    -consistancy //\\
+    index fix
+    streack //\\
+    true/false
+}
+
+login ops {
+    -pfp url fix
+}
 - comment
-login ops 
 
 video
 readMe

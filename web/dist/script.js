@@ -721,7 +721,7 @@ document.addEventListener('click', (e) => {
         click_need = false;
     }
 });
-function showContext(descriptions, type = "text", val = [], disc_2 = "") {
+export function showContext(descriptions, type = "text", val = [], disc_2 = "") {
     return new Promise((resolve) => {
         const hide = document.getElementById('hide-all') || null;
         const desc = document.getElementById("context-description") || null;
@@ -752,6 +752,13 @@ function showContext(descriptions, type = "text", val = [], disc_2 = "") {
                 drop_ops.style.display = drop_ops.style.display == "flex" ? "none" : "flex";
                 let drop = document.getElementById('dropdown') || null;
                 drop.style.display = 'flex';
+            };
+            let file_handle = (e) => {
+                let target = e.target;
+                const files = target.files;
+                if (files) {
+                    resolve(files[0]);
+                }
             };
             if (type == "text") {
                 mode = "keydown";
@@ -786,9 +793,9 @@ function showContext(descriptions, type = "text", val = [], disc_2 = "") {
                     drop_icon.addEventListener(mode, drop_handle);
                 }
             }
-            else {
+            else if (type == "file") {
                 mode = "change";
-                input.addEventListener(mode, handle);
+                input.addEventListener(mode, file_handle);
             }
         }
     });

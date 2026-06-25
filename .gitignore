@@ -18,3 +18,4 @@ data/tasks.json
 .agents
 firestore.rules
 PLAN.txt
+!data/settings.json

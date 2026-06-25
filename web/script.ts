@@ -115,11 +115,13 @@ async function main() {
         let name = await showContext("Enter the name of the new task", 'text')
         let date: any = await showContext("Enter the date of the new task", 'date')
         let time: any = await showContext("Enter the time of the new task", 'time')
+        let grp: any = await showContext("Which group show we store the task in", 'text')
+        let subgrp: any = await showContext("Which subgroup show we store the task in", 'text')
         const dateTime = new Date(`${date}T${time}`)
         if (await eel.validateDateTime(dateTime.toISOString())()) {
             date = date.split('-')
             time = time.split(':')
-            eel.addTask(name, "My project", "Axter", `${date[0]}/${date[1]}/${date[2]}/${time[0]}/${time[1]}`)
+            eel.addTask(name, grp, subgrp, `${date[0]}/${date[1]}/${date[2]}/${time[0]}/${time[1]}`)
         }
     });
 
@@ -854,7 +856,7 @@ document.addEventListener('click', (e)=>{
     }
 })
 
-function showContext(descriptions: string, type="text", val: any[] =[], disc_2=""): Promise<String> {
+export function showContext(descriptions: string, type="text", val: any[] =[], disc_2=""): Promise<any> {
     return new Promise((resolve) => {
         const hide = document.getElementById('hide-all') as HTMLElement || null
         const desc = document.getElementById("context-description") as HTMLElement || null
@@ -889,6 +891,14 @@ function showContext(descriptions: string, type="text", val: any[] =[], disc_2="
                 drop.style.display = 'flex'
             }
 
+            let file_handle = (e: Event) => {
+                let target = e.target as HTMLInputElement
+                const files = target.files
+                if (files) {
+                    resolve(files[0])
+                }
+            }
+
             if (type == "text") {
                 mode = "keydown"
                 input.addEventListener(mode, key_handle);
@@ -919,9 +929,9 @@ function showContext(descriptions: string, type="text", val: any[] =[], disc_2="
                     })
                     drop_icon.addEventListener(mode, drop_handle);
                 }
-            } else {
+            } else if(type == "file") {
                 mode = "change"
-                input.addEventListener(mode, handle);
+                input.addEventListener(mode, file_handle);
             }
         }
     })

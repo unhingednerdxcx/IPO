@@ -2,36 +2,35 @@
     "daily": [
         {
             "Work out plan": {
-                "index": 0,
+                "index": 1,
                 "tasks": [
-                    "Running",
+                    "squats",
                     "madonna",
                     "Running",
                     "Dead lift"
                 ],
-                "Complete till": "Dead lift",
-                "Streak": 4,
+                "Complete till": "Running",
+                "Streak": 17,
                 "Most difficult": {
-                    "name": "Lifting",
-                    "score": 3
+                    "name": "Running",
+                    "score": 2
                 },
                 "Most easiest": {
-                    "name": "Dead lift",
+                    "name": "Lifting",
                     "score": 1
                 },
                 "stops": [
-                    "Lifting",
+                    "Running",
                     "Lifting",
                     "Running",
-                    "Push ups",
-                    "Push ups"
+                    "Dead Lift"
                 ],
                 "consistancy": [
                     100,
                     75.0,
                     50,
                     60,
-                    70,
+                    75.0,
                     70,
                     75.0
                 ]
@@ -47,14 +46,14 @@
                     "Hydrate"
                 ],
                 "Complete till": "",
-                "Streak": 5,
+                "Streak": 0,
                 "Most difficult": {
                     "name": "Meditate",
-                    "score": 4
+                    "score": 2
                 },
                 "Most easiest": {
-                    "name": "Make bed",
-                    "score": 0
+                    "name": "Meditate",
+                    "score": 2
                 },
                 "stops": [
                     "Meditate",
@@ -67,7 +66,7 @@
                     75,
                     100,
                     100,
-                    100,
+                    125.0,
                     100,
                     75.0
                 ]
@@ -83,26 +82,27 @@
                     "Moisturizer"
                 ],
                 "Complete till": "",
-                "Streak": 12,
+                "Streak": 0,
                 "Most difficult": {
                     "name": "Serum",
-                    "score": 2
+                    "score": 1
                 },
                 "Most easiest": {
-                    "name": "Cleanser",
+                    "name": "Serum",
                     "score": 1
                 },
                 "stops": [
                     "Serum",
                     "Toner",
-                    "Moisturizer"
+                    "Moisturizer",
+                    "TEST"
                 ],
                 "consistancy": [
+                    125.0,
                     100,
                     100,
                     100,
-                    100,
-                    100,
+                    125.0,
                     100,
                     100.0
                 ]
@@ -118,14 +118,14 @@
                     "Plan tomorrow"
                 ],
                 "Complete till": "",
-                "Streak": 2,
+                "Streak": 0,
                 "Most difficult": {
                     "name": "No screens",
-                    "score": 6
+                    "score": 2
                 },
                 "Most easiest": {
-                    "name": "Stretch",
-                    "score": 1
+                    "name": "No screens",
+                    "score": 2
                 },
                 "stops": [
                     "No screens",
@@ -134,11 +134,11 @@
                     "Read book"
                 ],
                 "consistancy": [
-                    0,
+                    125.0,
                     25,
                     50,
                     50,
-                    25,
+                    125.0,
                     50,
                     50.0
                 ]
@@ -156,13 +156,13 @@
                     "Bathroom scrub"
                 ],
                 "Complete till": "",
-                "Streak": 4,
+                "Streak": 0,
                 "Most difficult": {
                     "name": "Dusting",
-                    "score": 5
+                    "score": 3
                 },
                 "Most easiest": {
-                    "name": "Vacuuming",
+                    "name": "Mopping",
                     "score": 1
                 },
                 "stops": [
@@ -172,10 +172,10 @@
                     "Dusting"
                 ],
                 "consistancy": [
-                    75,
+                    125.0,
                     50,
                     75,
-                    75.0
+                    125.0
                 ]
             }
         },
@@ -189,25 +189,26 @@
                     "Cooking batches"
                 ],
                 "Complete till": "",
-                "Streak": 8,
+                "Streak": 0,
                 "Most difficult": {
                     "name": "Grocery shopping",
-                    "score": 3
+                    "score": 1
                 },
                 "Most easiest": {
-                    "name": "Inventory check",
-                    "score": 0
+                    "name": "Grocery shopping",
+                    "score": 1
                 },
                 "stops": [
                     "Grocery shopping",
                     "Chopping veggies",
-                    "Cooking batches"
+                    "Cooking batches",
+                    "TEST"
                 ],
                 "consistancy": [
+                    125.0,
                     100,
                     100,
-                    100,
-                    100.0
+                    125.0
                 ]
             }
         },
@@ -221,13 +222,13 @@
                     "Transfer to savings"
                 ],
                 "Complete till": "",
-                "Streak": 1,
+                "Streak": 0,
                 "Most difficult": {
                     "name": "Update budget",
-                    "score": 4
+                    "score": 2
                 },
                 "Most easiest": {
-                    "name": "Transfer to savings",
+                    "name": "Track expenses",
                     "score": 1
                 },
                 "stops": [
@@ -237,10 +238,10 @@
                     "Update budget"
                 ],
                 "consistancy": [
-                    25,
+                    125.0,
                     50,
                     50,
-                    50.0
+                    125.0
                 ]
             }
         },
@@ -254,25 +255,26 @@
                     "Call a friend"
                 ],
                 "Complete till": "",
-                "Streak": 3,
+                "Streak": 0,
                 "Most difficult": {
                     "name": "Hair mask",
                     "score": 2
                 },
                 "Most easiest": {
-                    "name": "Long bath",
+                    "name": "Manicure",
                     "score": 1
                 },
                 "stops": [
                     "Hair mask",
                     "Manicure",
-                    "Hair mask"
+                    "Hair mask",
+                    "TEST"
                 ],
                 "consistancy": [
-                    50,
+                    125.0,
                     100,
                     100,
-                    50.0
+                    125.0
                 ]
             }
         }
@@ -288,13 +290,13 @@
                     "Organize closet"
                 ],
                 "Complete till": "",
-                "Streak": 2,
+                "Streak": 0,
                 "Most difficult": {
                     "name": "Wipe windows",
-                    "score": 4
+                    "score": 3
                 },
                 "Most easiest": {
-                    "name": "Clean AC filters",
+                    "name": "Wash curtains",
                     "score": 1
                 },
                 "stops": [
@@ -304,12 +306,12 @@
                     "Wipe windows"
                 ],
                 "consistancy": [
-                    50,
+                    125.0,
                     75,
                     50,
                     50,
                     50,
-                    75,
+                    125.0,
                     75.0,
                     100,
                     50,
@@ -329,27 +331,28 @@
                     "Set next KPIs"
                 ],
                 "Complete till": "",
-                "Streak": 6,
+                "Streak": 0,
                 "Most difficult": {
                     "name": "Review Analytics",
-                    "score": 3
+                    "score": 2
                 },
                 "Most easiest": {
-                    "name": "Update portfolio",
+                    "name": "Client feedback audit",
                     "score": 1
                 },
                 "stops": [
                     "Review Analytics",
                     "Client feedback audit",
-                    "Review Analytics"
+                    "Review Analytics",
+                    "TEST"
                 ],
                 "consistancy": [
-                    25,
+                    125.0,
                     50,
                     25,
                     100,
                     100,
-                    100,
+                    125.0,
                     25.0,
                     75,
                     100,
@@ -369,26 +372,28 @@
                     "Tire pressure check"
                 ],
                 "Complete till": "",
-                "Streak": 10,
+                "Streak": 0,
                 "Most difficult": {
                     "name": "Interior vacuum",
-                    "score": 2
+                    "score": 1
                 },
                 "Most easiest": {
-                    "name": "Car wash",
-                    "score": 0
+                    "name": "Interior vacuum",
+                    "score": 1
                 },
                 "stops": [
                     "Interior vacuum",
-                    "Tire pressure check"
+                    "Tire pressure check",
+                    "TEST",
+                    "Test"
                 ],
                 "consistancy": [
-                    100,
+                    125.0,
                     100,
                     100,
                     50,
                     100,
-                    100,
+                    125.0,
                     100.0,
                     100,
                     100,
@@ -408,14 +413,14 @@
                     "Update resume"
                 ],
                 "Complete till": "",
-                "Streak": 1,
+                "Streak": 0,
                 "Most difficult": {
                     "name": "Watch a documentary",
-                    "score": 5
+                    "score": 2
                 },
                 "Most easiest": {
-                    "name": "Finish 1 book",
-                    "score": 2
+                    "name": "Attend a webinar",
+                    "score": 1
                 },
                 "stops": [
                     "Watch a documentary",
@@ -424,12 +429,12 @@
                     "Watch a documentary"
                 ],
                 "consistancy": [
-                    50,
+                    125.0,
                     75,
                     25,
                     50,
                     0,
-                    50,
+                    125.0,
                     50.0,
                     25,
                     50,

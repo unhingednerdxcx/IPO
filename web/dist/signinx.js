@@ -1,6 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification, signOut, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+import { showContext } from "./script.js";
 const Config = {
     apiKey: "AIzaSyDiXBfMU_Kfj2yrklW1yWrMNvEHBRcq848",
     authDomain: "sequender-73c25.firebaseapp.com",
@@ -11,10 +13,12 @@ const Config = {
 };
 const app = initializeApp(Config);
 const auth = getAuth(app);
+const storage = getStorage();
 let uid;
 onAuthStateChanged(auth, (user) => {
     if (user) {
         let pfpUrl = user.photoURL;
+        console.log(pfpUrl);
         let name = user.displayName || (user.providerData && user.providerData[0]?.displayName) || "User";
         uid = user.uid;
         complete(name, pfpUrl, uid);
@@ -29,6 +33,105 @@ const db = getFirestore();
 document.getElementById('gmail-enter').addEventListener('click', async () => {
     login_gmail();
 });
+document.getElementById('mail-enter').addEventListener('click', async () => {
+    sign_up();
+});
+document.getElementById('sign-in-op').addEventListener('click', async () => {
+    login_mail();
+});
+async function sign_up() {
+    document.getElementById('sign-in').style.display = 'none';
+    let box = document.getElementById('msg-box');
+    let mail = await showContext("Enter you're email");
+    console.log(mail);
+    while (!(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(mail))) {
+        box.innerText = "Enter a correct email";
+        box.classList.add('active');
+        setTimeout(() => {
+            box.classList.remove('active');
+        }, 4000);
+        mail = await showContext("Enter you're email");
+    }
+    box.innerText = "Password must be atleast 8 characters and contain a number and a uppercase letter";
+    box.classList.add('active');
+    setTimeout(() => {
+        box.classList.remove('active');
+    }, 4000);
+    let pass = await showContext("Enter you're password");
+    console.log(pass);
+    while (pass.length < 8 || !/[0-9]/.test(pass) || !/[A-Z]/.test(pass)) {
+        let box = document.getElementById('msg-box');
+        box.innerText = "Password must be atleast 8 characters and contain a number and a uppercase letter";
+        box.classList.add('active');
+        setTimeout(() => {
+            box.classList.remove('active');
+        }, 4000);
+        pass = await showContext("Enter you're password");
+    }
+    try {
+        let cred = await createUserWithEmailAndPassword(auth, mail, pass);
+        let user = cred.user;
+        await sendEmailVerification(user);
+        await signOut(auth);
+        box.innerText = "Sign in after reload...";
+        box.classList.add('active');
+        setTimeout(() => {
+            box.classList.remove('active');
+            window.location.reload();
+        }, 4000);
+    }
+    catch (e) {
+        box.innerText = `ERROR:- ${e}`;
+        box.classList.add('active');
+        setTimeout(() => {
+            box.classList.remove('active');
+            window.location.reload();
+        }, 2000);
+    }
+}
+async function login_mail() {
+    console.log("zakir_hasan@icloud.com1A");
+    document.getElementById('sign-in').style.display = 'none';
+    let mail = await showContext("Hi again, enter you're mail");
+    let pass = await showContext("Enter your password");
+    let user;
+    try {
+        let userCredential = await signInWithEmailAndPassword(auth, mail, pass);
+        user = userCredential.user;
+        if (!user.emailVerified) {
+            await signOut(auth);
+            let box = document.getElementById('msg-box');
+            box.innerText = "Access Denied, please check your inbox and verify your account first";
+            box.classList.add('active');
+            setTimeout(() => {
+                box.classList.remove('active');
+                window.location.reload();
+            }, 4000);
+        }
+    }
+    catch (e) {
+        let box = document.getElementById('msg-box');
+        box.innerText = `ERROR:- ${e}`;
+        box.classList.add('active');
+        setTimeout(() => {
+            box.classList.remove('active');
+            window.location.reload();
+        }, 4000);
+    }
+    let pfpUrl = user.photoURL;
+    let name = user.displayName || (user.providerData && user.providerData[0]?.displayName);
+    if (!(name || pfpUrl)) {
+        const storeRef = ref(storage, `avatars/${user.uid}.jpg`);
+        name = await showContext("What should we call you?");
+        let pfp = await showContext("Enter profile picture", "file");
+        let snapshot = await uploadBytes(storeRef, pfp);
+        let downloadURL = await getDownloadURL(snapshot.ref);
+        await updateProfile(user, {
+            displayName: name,
+            photoURL: downloadURL
+        });
+    }
+}
 async function login_gmail() {
     try {
         let res = await signInWithPopup(auth, googleProv);
@@ -36,6 +139,7 @@ async function login_gmail() {
         console.log("USER:", user);
         console.log(Object.keys(user));
         let pfpUrl = user.photoURL;
+        console.log(pfpUrl);
         let name = user.displayName || (user.providerData && user.providerData[0]?.displayName) || "User";
         uid = user.uid;
         console.log(uid, uidx);

@@ -5,11 +5,12 @@ from rapidfuzz import process
 import time
 from datetime import datetime
 from datetime import date as datetime_date
-from datetime import timezone
+from datetime import timezone, timedelta
+from dateutil.relativedelta import relativedelta
 import sys
 import statistics
 from collections import Counter
-
+import pandas
 FOLDER = os.path.dirname(os.path.abspath(__file__))
 WFOLDER = os.path.join(FOLDER, "web")
 LOGFILE = os.path.join(FOLDER, "log.txt")
@@ -257,11 +258,19 @@ def validateDateTime(fullIso):
         return False
     return True
 
+
 @eel.expose
 def addRoutine(time, name):
     log("SUDDEND_ROUTINE")
     data = RoutineManager('r')
     data = dict(data)
+    arr = []
+    if time.lower() == "daily":
+        arr = [0, 0, 0, 0, 0, 0, 0]
+    elif time.lower() == "weekly":
+        arr = [0, 0, 0, 0]
+    elif time.lower() == "monthly":
+        arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     data[time.lower()].append({
         name: {
             "tasks": [],
@@ -276,9 +285,7 @@ def addRoutine(time, name):
                 "score": 0
             },
             "stops": [],
-            "consistancy": [
-                0, 0, 0, 0, 0, 0, 0
-            ]
+            "consistancy": arr
         }
     })
     RoutineManager('w', data)
@@ -449,73 +456,140 @@ def make3d(info, completed):
 
 @eel.expose
 def checkForStart():
-    data = settingsManager('r')
-    if data['LastChecked'] != datetime.now().date().isoformat():
-        data["LastChecked"] = datetime.now().date().isoformat()
-        settingsManager('w', data)
-        times = [["daily", 7], ["weekly", 4], ["monthly", 30]]
-        routineData = RoutineManager('r')
+    setData = settingsManager('r')
+    rData = RoutineManager('r')
+    now = datetime.now().date()
+    times = ['daily', 'weekly', 'monthly']
+    if now.isoformat() <= setData["LastChecked"]:
+        return
+        
+    def getIndex(time):
+        day = 0
+        match (time):
+            case "daily":
+                day = (now.weekday() + 1) % 7
+                print(day)
+            
+            case "weekly":
+                day = min((now.day - 1) // 7 + 1, 4) - 1 # resort to 4 is week is '4' (but i consider 4 as part of next month)
+                print(day)
+            
+            case "monthly":
+                day = now.month - 1
+                print(day)
+        return day
+
+    def stops_handling(time, index, routine):
+
+        def handle_correct_index():
+            br_index = rData[time][index][routine]["index"]
+            complete_till = rData[time][index][routine]["Complete till"]
+            if complete_till != "":
+                rData[time][index][routine]["stops"][br_index] = complete_till
+                rData[time][index][routine]["index"] += 1
+        
+        def handle_append():
+            complete_till = rData[time][index][routine]["Complete till"]
+            if complete_till != "":
+                rData[time][index][routine]["stops"].append(complete_till)
+
+        if len(rData[time][index][routine]["stops"]) == 3:
+            handle_correct_index()
+        elif len(rData[time][index][routine]["stops"]) < 3:
+            handle_append()
+        elif len(rData[time][index][routine]["stops"]) > 3:
+            rData[time][index][routine]["index"] = 0
+            handle_correct_index()        
+
+    def addHardest(time, index, routine):
+        counts = pandas.Series(rData[time][index][routine]["stops"]).value_counts()
+        
+        max_val = counts.idxmax()
+        max_count = int(counts.max())
+
+        min_val = counts.idxmin()
+        min_count = int(counts.min())
+
+        print(type(max_val), type(max_count), type(min_count), type(min_val))
+
+        rData[time][index][routine]["Most difficult"]["name"] = max_val
+        rData[time][index][routine]["Most difficult"]["score"] = max_count
+        rData[time][index][routine]["Most easiest"]["name"] = min_val
+        rData[time][index][routine]["Most easiest"]["score"] = min_count
+
+    def calcConsistancy(time, index, routine):
+        count = 1
+        for task in rData[time][index][routine]["tasks"]:
+            if task == rData[time][index][routine]["Complete till"]:
+                break;
+            count += 1
+        consistancy = (count / len(rData[time][index][routine]["tasks"])) * 100
+        br_index = getIndex(time)
+        print(time)
+        rData[time][index][routine]["consistancy"][br_index] = consistancy
+
+    def setStreak(time, index, routine):
+        match (time):
+            case "daily":
+                last_check = setData["LastChecked"]
+                last_check = datetime_date.fromisoformat(last_check.split('T')[0])
+                if now - last_check >= timedelta(days=1):
+                    if rData[time][index][routine]["Complete till"] == "":
+                        rData[time][index][routine]["Streak"] = 0
+                    else:
+                        rData[time][index][routine]["Streak"] += 1
+            case "weekly":
+                last_check = setData["LastWeekChecked"]
+                last_check = datetime_date.fromisoformat(last_check.split('T')[0])
+                if now - last_check >= timedelta(weeks=1):
+                    if rData[time][index][routine]["Complete till"] == "":
+                        rData[time][index][routine]["Streak"] = 0
+                    else:
+                        rData[time][index][routine]["Streak"] += 1
+            case "monthly":
+                last_check = setData["LastMonthChecked"]
+                last_check = datetime_date.fromisoformat(last_check.split('T')[0])
+                if now >= last_check + relativedelta(months=1):
+                    if rData[time][index][routine]["Complete till"] == "":
+                        rData[time][index][routine]["Streak"] = 0
+                    else:
+                        rData[time][index][routine]["Streak"] += 1
+    
+    def clearChallanges():
+        if setData["LastChecked"] < now.isoformat():
+            eel.clearChallangeData()
+
+    def cleanUp():
+            last_check = setData["LastWeekChecked"]
+            last_check = datetime_date.fromisoformat(last_check.split('T')[0])
+            if now - last_check >= timedelta(weeks=1):
+                setData["LastWeekChecked"] = now.isoformat()
+
+            
+            last_check = setData["LastMonthChecked"]
+            last_check = datetime_date.fromisoformat(last_check.split('T')[0])
+            if now >= last_check + relativedelta(months=1):
+                setData["LastMonthChecked"] = now.isoformat()
+
+    def mainProc():
         for time in times:
-            index = -1
-            for routine in routineData[time[0]]:
+            index = 0
+            for routine_dict in rData[time]:
+                routine = list(routine_dict.keys())[0]
+                stops_handling(time, index, routine)
+                addHardest(time, index, routine)
+                calcConsistancy(time, index, routine)
+                setStreak(time, index, routine)
                 index += 1
-                value = routine[list(routine.keys())[0]]
-                completeTill = value["Complete till"]
+        clearChallanges()
+        cleanUp()
+        
+        RoutineManager('w', rData)
+        settingsManager('w', setData)
+    
+    mainProc()
 
-                if completeTill != "":
-                    if len(value["stops"]) < 5:
-                        print(list(routine.keys())[0], "\n\n\n")
-                        print("x:", routineData[time[0]][index][list(routine.keys())[0]]["Most difficult"]["name"])
-                        routineData[time[0]][index][list(routine.keys())[0]]["Complete till"] = ""
-                        routineData[time[0]][index][list(routine.keys())[0]]["stops"].append(completeTill)
-                        modes = statistics.multimode(value["stops"])
-                        routineData[time[0]][index][list(routine.keys())[0]]["Most difficult"]["name"] = modes[0]
-                        tasksDone = 0
-                        for task in value["tasks"]:
-                            if task != completeTill:
-                                print(task, completeTill)
-                                tasksDone += 1
-                            else:
-                                break
-                        print(tasksDone + 1)
-                        tasksDone += 1
-                        percentage = (tasksDone/len(value["tasks"])) * 100
-                        print(percentage)
-                        day = 0
-                        match (time[0]):
-                            case "daily":
-                                day = datetime.now().isoweekday() # Sun = 1... Sat = 7
-                            case "weekly":
-                                day = (datetime.now().day - 1) // 7 + 1
-                            case "monthly":
-                                day = datetime.now().month
-                        print("y", day)
-                        routineData[time[0]][index][list(routine.keys())[0]]["consistancy"][day] = percentage
 
-                        counts = Counter(value["tasks"] + value["stops"])
-                        min_freq = min(counts.values())
-                        least_common = []
-                        for task, count in counts.items():
-                            if count == min_freq:
-                                least_common.append(task)
-
-                        print("xy", least_common)
-                        routineData[time[0]][index][list(routine.keys())[0]]["Most easiest"]["name"] = least_common[0]
-                        routineData[time[0]][index][list(routine.keys())[0]]["Streak"] += 1 # HERE
-                        RoutineManager('w', routineData)
-                else:
-                    day = 0
-                    match (time[0]):
-                        case "daily":
-                            day = datetime.now().isoweekday() # Sun = 1... Sat = 7
-                        case "weekly":
-                            day = (datetime.now().day - 1) // 7 + 1
-                        case "monthly":
-                            day = datetime.now().month
-                    print("y: ", day)
-                    routineData[time[0]][index][list(routine.keys())[0]]["consistancy"][day] = 0.0
-                    routineData[time[0]][index][list(routine.keys())[0]]["Streak"] = 0 # HERE
-        eel.clearChallangeData()
 
 @eel.expose
 def listTasks(name):
@@ -718,6 +792,6 @@ def routineTaskRename(name, newName):
     data[name[0]][tar_index][name[2]]['tasks'][int(name[3])] = newName
     
     RoutineManager('w', data)
-
-eel.start('index.html', port=55555, close_callback=exitCode)
+checkForStart()
+#eel.start('index.html', port=55555, close_callback=exitCode)
 
