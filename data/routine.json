@@ -2,7 +2,7 @@
     "daily": [
         {
             "Work out plan": {
-                "index": 1,
+                "index": 3,
                 "tasks": [
                     "squats",
                     "madonna",
@@ -10,18 +10,18 @@
                     "Dead lift"
                 ],
                 "Complete till": "Running",
-                "Streak": 17,
+                "Streak": 19,
                 "Most difficult": {
                     "name": "Running",
-                    "score": 2
+                    "score": 3
                 },
                 "Most easiest": {
-                    "name": "Lifting",
+                    "name": "Dead Lift",
                     "score": 1
                 },
                 "stops": [
                     "Running",
-                    "Lifting",
+                    "Running",
                     "Running",
                     "Dead Lift"
                 ],

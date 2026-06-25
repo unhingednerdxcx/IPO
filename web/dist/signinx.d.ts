@@ -4,4 +4,5 @@ export function listCompletedTasks(): Promise<any>;
 export function increaseXP(gotXp: any): Promise<void>;
 export function decreaseXP(gotXp: any): Promise<void>;
 export function setTask(key: any, val: any): Promise<void>;
+export function clearChallangeData(): Promise<void>;
 //# sourceMappingURL=signinx.d.ts.map

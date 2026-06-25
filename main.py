@@ -556,9 +556,6 @@ def checkForStart():
                     else:
                         rData[time][index][routine]["Streak"] += 1
     
-    def clearChallanges():
-        if setData["LastChecked"] < now.isoformat():
-            eel.clearChallangeData()
 
     def cleanUp():
             last_check = setData["LastWeekChecked"]
@@ -571,7 +568,6 @@ def checkForStart():
             last_check = datetime_date.fromisoformat(last_check.split('T')[0])
             if now >= last_check + relativedelta(months=1):
                 setData["LastMonthChecked"] = now.isoformat()
-            setData["LastChecked"] = now.isoformat()
 
     def mainProc():
         for time in times:
@@ -583,11 +579,10 @@ def checkForStart():
                 calcConsistancy(time, index, routine)
                 setStreak(time, index, routine)
                 index += 1
-        clearChallanges()
         cleanUp()
         
         RoutineManager('w', rData)
-        #settingsManager('w', setData)
+        settingsManager('w', setData)
     
     mainProc()
 
@@ -795,5 +790,17 @@ def routineTaskRename(name, newName):
     data[name[0]][tar_index][name[2]]['tasks'][int(name[3])] = newName
     
     RoutineManager('w', data)
+
+@eel.expose
+def notcheckedtoday():
+    data = settingsManager('r')
+    now = datetime.now().date()
+    if now.isoformat() > data["LastChecked"]:
+        data["LastChecked"] = now.isoformat()
+        settingsManager('w', data)
+        return True
+    return False
+
+checkForStart()
 eel.start('index.html', port=55555, close_callback=exitCode)
 

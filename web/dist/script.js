@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", main);
-import { listTodaysChallange, increaseXP, decreaseXP, updateInfo, listCompletedTasks, setTask } from "./signinx.js";
+import { listTodaysChallange, increaseXP, decreaseXP, updateInfo, listCompletedTasks, setTask, clearChallangeData } from "./signinx.js";
 const eel = window.eel;
 if (!eel) {
     window.location.reload();
@@ -17,9 +17,8 @@ const canvas = document.getElementById('routineChart');
 if (canvas) {
     chart = new Chart(canvas, config);
 }
-console.log(eel);
 async function main() {
-    await eel.checkForStart()();
+    console.log(await eel.notcheckedtoday()());
     document.getElementById("side-search")?.addEventListener("click", async () => {
         let value = await showContext("Enter the task you want to search for", 'text');
         let search_val = await eel.searchTask(value)();

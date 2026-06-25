@@ -15,13 +15,17 @@ const app = initializeApp(Config);
 const auth = getAuth(app);
 const storage = getStorage();
 let uid;
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
     if (user) {
         let pfpUrl = user.photoURL;
         console.log(pfpUrl);
         let name = user.displayName || (user.providerData && user.providerData[0]?.displayName) || "User";
         uid = user.uid;
         complete(name, pfpUrl, uid);
+        console.log(await eel.notcheckedtoday()());
+        if (await eel.notcheckedtoday()()) {
+            clearChallangeData();
+        }
     }
     else {
         document.getElementById('sign-in').style.display = "flex";
@@ -90,7 +94,6 @@ async function sign_up() {
     }
 }
 async function login_mail() {
-    console.log("zakir_hasan@icloud.com1A");
     document.getElementById('sign-in').style.display = 'none';
     let mail = await showContext("Hi again, enter you're mail");
     let pass = await showContext("Enter your password");
@@ -152,6 +155,10 @@ async function login_gmail() {
     }
 }
 async function complete(name, pfp, uid) {
+    console.log(await eel.notcheckedtoday()());
+    if (await eel.notcheckedtoday()()) {
+        clearChallangeData();
+    }
     console.log(pfp);
     document.getElementById('sign-in').style.display = 'none';
     document.getElementById('username').innerText = name;
@@ -266,10 +273,9 @@ export async function setTask(key, val) {
         });
     }
 }
-eel.expose(clearChallangeData);
-async function clearChallangeData() {
-    let ref = doc(db, "users", uid);
-    TasksDone = [
+export async function clearChallangeData() {
+    console.log("here");
+    let TasksDone = [
         false,
         false,
         false,
@@ -278,6 +284,9 @@ async function clearChallangeData() {
         false,
         false,
     ];
+    console.log(uid);
+    let ref;
+    ref = doc(db, "users", uid);
     await updateDoc(ref, {
         TasksDone: TasksDone
     });
