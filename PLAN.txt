@@ -31,10 +31,10 @@ delete task/subgroup/group option  //\\
 populate //|\\
 
 time -- (streak thing) --e {
+    index fix //\\
     -consistancy //\\
-    index fix
     streack //\\
-    true/false
+    true/false //\\
 }
 
 login ops {

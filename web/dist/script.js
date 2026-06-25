@@ -78,11 +78,13 @@ async function main() {
         let name = await showContext("Enter the name of the new task", 'text');
         let date = await showContext("Enter the date of the new task", 'date');
         let time = await showContext("Enter the time of the new task", 'time');
+        let grp = await showContext("Which group show we store the task in", 'text');
+        let subgrp = await showContext("Which subgroup show we store the task in", 'text');
         const dateTime = new Date(`${date}T${time}`);
         if (await eel.validateDateTime(dateTime.toISOString())()) {
             date = date.split('-');
             time = time.split(':');
-            eel.addTask(name, "My project", "Axter", `${date[0]}/${date[1]}/${date[2]}/${time[0]}/${time[1]}`);
+            eel.addTask(name, grp, subgrp, `${date[0]}/${date[1]}/${date[2]}/${time[0]}/${time[1]}`);
         }
     });
     document.getElementById('new-routine')?.addEventListener('click', async () => {

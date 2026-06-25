@@ -481,25 +481,26 @@ def checkForStart():
 
     def stops_handling(time, index, routine):
 
-        def handle_correct_index():
-            br_index = rData[time][index][routine]["index"]
+        def handle_correct_index(br_index):
             complete_till = rData[time][index][routine]["Complete till"]
             if complete_till != "":
                 rData[time][index][routine]["stops"][br_index] = complete_till
                 rData[time][index][routine]["index"] += 1
+                
         
         def handle_append():
             complete_till = rData[time][index][routine]["Complete till"]
             if complete_till != "":
                 rData[time][index][routine]["stops"].append(complete_till)
-
-        if len(rData[time][index][routine]["stops"]) == 3:
-            handle_correct_index()
-        elif len(rData[time][index][routine]["stops"]) < 3:
-            handle_append()
-        elif len(rData[time][index][routine]["stops"]) > 3:
+        
+        if rData[time][index][routine]["index"] > 3:
             rData[time][index][routine]["index"] = 0
-            handle_correct_index()        
+            handle_correct_index(rData[time][index][routine]["index"])   
+
+        elif len(rData[time][index][routine]["stops"]) == 4:
+            handle_correct_index(rData[time][index][routine]["index"])
+        elif len(rData[time][index][routine]["stops"]) < 4:
+            handle_append()
 
     def addHardest(time, index, routine):
         counts = pandas.Series(rData[time][index][routine]["stops"]).value_counts()
@@ -570,6 +571,7 @@ def checkForStart():
             last_check = datetime_date.fromisoformat(last_check.split('T')[0])
             if now >= last_check + relativedelta(months=1):
                 setData["LastMonthChecked"] = now.isoformat()
+            setData["LastChecked"] = now.isoformat()
 
     def mainProc():
         for time in times:
@@ -585,7 +587,7 @@ def checkForStart():
         cleanUp()
         
         RoutineManager('w', rData)
-        settingsManager('w', setData)
+        #settingsManager('w', setData)
     
     mainProc()
 
@@ -770,7 +772,8 @@ def changeRoutineTaskPosition(name, direction):
         data[name[0]][tar_index][name[2]]["tasks"][int(name[3])], data[name[0]][tar_index][name[2]]["tasks"][int(name[3]) + 1] = next, current
     
 
-    RoutineManager('w', data)    
+    RoutineManager('w', data)
+        
 
 
 
@@ -792,6 +795,5 @@ def routineTaskRename(name, newName):
     data[name[0]][tar_index][name[2]]['tasks'][int(name[3])] = newName
     
     RoutineManager('w', data)
-checkForStart()
-#eel.start('index.html', port=55555, close_callback=exitCode)
+eel.start('index.html', port=55555, close_callback=exitCode)
 
