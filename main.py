@@ -38,7 +38,7 @@ SETTINGFILE = os.path.join(FOLDER, "data", "settings.json")
 eel.init(WFOLDER) # this tells eel where my frontend files are
 
 """
-    THE DECORATORS (the @)
+    ## THE DECORATORS (the @) ##
 
     @eel.expose
     def add(num1, num2):
@@ -51,7 +51,7 @@ eel.init(WFOLDER) # this tells eel where my frontend files are
 
     add = eel.expose(add)
 
-    but i prefer the decorator as its more concise
+    but i prefer the decorator as its more concise and more readable
 """
 
 @eel.expose
@@ -97,6 +97,8 @@ def settingsManager(mode, val="", req=""):
         case "w":
             with open(SETTINGFILE, 'w') as file:
                 json.dump(val, file, indent=4)
+
+# normal functions #
 
 @eel.expose
 def listTask(catagory="", subcatagory="", op=""):
@@ -382,7 +384,7 @@ def routineDetailConfig():
         here fast without dealing with R/IPC issues.
     """
     return {  
-        "type": 'bar', # bar = barchart
+        "type": 'bar',
         "data": {
             "labels": [],
             "datasets": [{
@@ -475,24 +477,17 @@ def routineSummaryConfig(label, fix_dataPoints, primary_highlight_color):
 def CleanUp():
     data = TaskManager('r')
     now = datetime.now()
-    formated = "/".join([
-        str(now.year),
-        str(now.month),
-        str(now.day),
-        str(now.hour),
-        str(now.minute)
-    ])
     values = listAllTasksDate()
     key = 0
     new_data = data
     for date in values[1]:
         date_arr = date.split('/')
-        target_date = datetime_date(int(date_arr[0]), int(date_arr[1]), int(date_arr[2]))
-        if target_date < now.date():
+        target_date = datetime_date(int(date_arr[0]), int(date_arr[1]), int(date_arr[2])) # turn my path into a date object
+        if target_date < now.date(): # if deadline has already passed
             taskname = values[0][key].split('/')[2]
             taskpath = values[0][key].split('/')[0:2]
             print(taskname, taskpath)
-            del new_data[taskpath[0]][taskpath[1]][taskname]
+            del new_data[taskpath[0]][taskpath[1]][taskname] # delete the task
         key += 1
     print(new_data)
     TaskManager('w', new_data)
@@ -500,8 +495,8 @@ def CleanUp():
     sys.exit()
 
 def exitCode(page_route, remaining_websockets):
-    if not remaining_websockets:
-        CleanUp()
+    if not remaining_websockets: # if there are no more front end instances
+        CleanUp() # start the clean up code
 
 @eel.expose
 def challangeinfo(info, completed):
@@ -521,6 +516,7 @@ def challangeinfo(info, completed):
     """
     val = [
         [info["Tasks"][index], info["XP"][index], value] for index, value in enumerate(completed)
+        # enumerate just means add index too so 'data' turns into (<INDEX>, 'data')
     ]
     print(val)
     return val
@@ -533,6 +529,8 @@ def checkForStart():
     times = ['daily', 'weekly', 'monthly']
     if now.isoformat() <= setData["LastChecked"]:
         return
+    
+    # scroll down to mainProc (within this function) to get the start point
         
     def getIndex(time):
         day = 0
@@ -556,7 +554,7 @@ def checkForStart():
             complete_till = rData[time][index][routine]["Complete till"]
             if complete_till != "":
                 rData[time][index][routine]["stops"][br_index] = complete_till
-                rData[time][index][routine]["index"] += 1
+                rData[time][index][routine]["index"] += 1 # increment the index for the next day
                 
         
         def handle_append():
@@ -564,25 +562,34 @@ def checkForStart():
             if complete_till != "":
                 rData[time][index][routine]["stops"].append(complete_till)
         
-        if rData[time][index][routine]["index"] > 3:
-            rData[time][index][routine]["index"] = 0
-            handle_correct_index(rData[time][index][routine]["index"])   
+        if rData[time][index][routine]["index"] > 3: # if the index is more than the size of the stops array (remember, start from 0 NOT 1)
+            rData[time][index][routine]["index"] = 0 # set index to 0 
+            handle_correct_index(rData[time][index][routine]["index"]) # do NOT append, instead use the index 
 
-        elif len(rData[time][index][routine]["stops"]) == 4:
-            handle_correct_index(rData[time][index][routine]["index"])
-        elif len(rData[time][index][routine]["stops"]) < 4:
-            handle_append()
+        elif len(rData[time][index][routine]["stops"]) == 4: # when we have the correct length of stops
+            handle_correct_index(rData[time][index][routine]["index"]) # do NOT append, instead use the index 
+        elif len(rData[time][index][routine]["stops"]) < 4: # when we have LESS that the correct length of stops
+            handle_append() # APPEND the stop
 
-    def addHardest(time, index, routine):
-        counts = pandas.Series(rData[time][index][routine]["stops"]).value_counts()
+    def addHardestandEasiest(time, index, routine):
+        """
+            INFO:
+                im finding the hardest task by checking the mode of the stops
+                im finding the easiest task by checking the task least appearing in the stops array
+        """
+        counts = pandas.Series(rData[time][index][routine]["stops"]).value_counts()  # convert into pandas series
         
-        max_val = counts.idxmax()
-        max_count = int(counts.max())
+        max_val = counts.idxmax()     # find the most reoccuring task
+        max_count = int(counts.max()) # find the number of times it has reoccured (for futurre purposes) AND NOTE:-
+#                                       this is stored as PANDAS_i64 (integer of 64 bits), and json cant store this,
+#                                       hence, i used the int function to convert i64 to normal traditional python int
+#                                       SAME THING OCCURS FOR LEAST COMMON 
 
-        min_val = counts.idxmin()
-        min_count = int(counts.min())
+        min_val = counts.idxmin()     # find the least occuring task
+        min_count = int(counts.min()) # find the number of times it has happened
 
-        print(type(max_val), type(max_count), type(min_count), type(min_val))
+        print(type(max_val), type(max_count), type(min_count), type(min_val)) # you can remove the int wrappers and see the
+#                                                                               pandas i64 type for yourself
 
         rData[time][index][routine]["Most difficult"]["name"] = max_val
         rData[time][index][routine]["Most difficult"]["score"] = max_count
@@ -590,37 +597,45 @@ def checkForStart():
         rData[time][index][routine]["Most easiest"]["score"] = min_count
 
     def calcConsistancy(time, index, routine):
-        count = 1
+        count = 0
         for task in rData[time][index][routine]["tasks"]:
-            if task == rData[time][index][routine]["Complete till"]:
+            if task == rData[time][index][routine]["Complete till"]: # if we have reached the task
+                count += 1 # remember, its inclusive
                 break;
-            count += 1
-        consistancy = (count / len(rData[time][index][routine]["tasks"])) * 100
-        br_index = getIndex(time)
+            count += 1 # increment
+        consistancy = (count / len(rData[time][index][routine]["tasks"])) * 100 # calculate percentage
+        br_index = getIndex(time)                                               # get the index
         print(time)
         rData[time][index][routine]["consistancy"][br_index] = consistancy
 
     def setStreak(time, index, routine):
         match (time):
-            case "daily":
+            case "daily": # if its daily, streak resets everyday if task isnt done
                 last_check = setData["LastChecked"]
-                last_check = datetime_date.fromisoformat(last_check.split('T')[0])
+                rData[time][index][routine]["Complete till"] = "" # this will reset which task the user has completed till
+                """
+                    INFO:-
+                      in iso, T seperates date and time so 2026-06-12T12:23 could be an iso
+                """
+                last_check = datetime_date.fromisoformat(last_check.split('T')[0]) # convert from iso to date object
                 if now - last_check >= timedelta(days=1):
                     if rData[time][index][routine]["Complete till"] == "":
                         rData[time][index][routine]["Streak"] = 0
                     else:
                         rData[time][index][routine]["Streak"] += 1
-            case "weekly":
+            case "weekly": # if its weekly, streak resets every week if task isnt done
                 last_check = setData["LastWeekChecked"]
-                last_check = datetime_date.fromisoformat(last_check.split('T')[0])
+                rData[time][index][routine]["Complete till"] = "" # this will reset which task the user has completed till
+                last_check = datetime_date.fromisoformat(last_check.split('T')[0]) # convert from iso to date object
                 if now - last_check >= timedelta(weeks=1):
                     if rData[time][index][routine]["Complete till"] == "":
                         rData[time][index][routine]["Streak"] = 0
                     else:
                         rData[time][index][routine]["Streak"] += 1
-            case "monthly":
+            case "monthly": # if its monthly, streak resets every month if task isnt done
                 last_check = setData["LastMonthChecked"]
-                last_check = datetime_date.fromisoformat(last_check.split('T')[0])
+                rData[time][index][routine]["Complete till"] = "" # this will reset which task the user has completed till
+                last_check = datetime_date.fromisoformat(last_check.split('T')[0]) # convert from iso to date object
                 if now >= last_check + relativedelta(months=1):
                     if rData[time][index][routine]["Complete till"] == "":
                         rData[time][index][routine]["Streak"] = 0
@@ -644,11 +659,11 @@ def checkForStart():
         for time in times:
             index = 0
             for routine_dict in rData[time]:
-                routine = list(routine_dict.keys())[0]
-                stops_handling(time, index, routine)
-                addHardest(time, index, routine)
-                calcConsistancy(time, index, routine)
-                setStreak(time, index, routine)
+                routine = list(routine_dict.keys())[0] # this lets us get the routine name
+                stops_handling(time, index, routine) # track which step the user stopped to
+                addHardestandEasiest(time, index, routine) # this will set the easiest/hardest step
+                calcConsistancy(time, index, routine) # this will calculate the percentage of the routine done
+                setStreak(time, index, routine) # this will set the streak
                 index += 1
         cleanUp()
         
@@ -656,8 +671,6 @@ def checkForStart():
         settingsManager('w', setData)
     
     mainProc()
-
-
 
 @eel.expose
 def listTasks(name):
@@ -690,7 +703,8 @@ def delete(name):
     print("deleting task..", name)
     name = name.split('/')
     data = TaskManager('r')
-    del data[name[0]][name[1]][name[2]]
+    del data[name[0]][name[1]][name[2]] # del stands for delete, it is a python 3.10 keyword and removes the particular
+#                                         in this context
     TaskManager('w', data)
 
 @eel.expose
@@ -698,18 +712,26 @@ def rename(name, newName):
     print("renaming task..")
     name = name.split('/')
     data = TaskManager('r')
-    data[name[0]][name[1]][newName] = data[name[0]][name[1]].pop(name[2])
+    data[name[0]][name[1]][newName] = data[name[0]][name[1]].pop(name[2]) # pop is used to get rid
+#                                                                           of the key and then asign a 
+#                                                                           new name in this context
     TaskManager('w', data)
     
 
 @eel.expose
-def dead(name, time, date):
+def dead(name, time, date): # dead stands for deadline
     print("Changing deadline task..")
     name = name.split('/')
     data = TaskManager('r')
     formated = f"{date}/{time}"
     print(formated)
     formated = formated.replace(":", "/").replace("-", "/")
+    """
+        INFO:-
+         in iso format, : is used for time, and - is used for date, but my apps
+         'path' based format, it uses / for both, hence the replace functions was
+         used
+    """
     print(formated)
     data[name[0]][name[1]][name[2]]["date"] = formated
     print(data)
@@ -724,6 +746,13 @@ def info(name):
     date = ""
     time = ""
     slash_count = 0
+    """
+        Right now, we are extracting ONLY the time part from my format
+        y/m/d/h/m (only extracting h/m)
+        You will notice there are 3 slashes before h/m (and this will always be true)
+        hence i will loop over each char of the time and check how many slashes there are
+        if there are 3, then i will start adding the letters to another variable
+    """
     for char in selected_data["date"]:
         if char == "/":
             slash_count += 1
@@ -732,7 +761,7 @@ def info(name):
             time += char
             continue
         date += char
-    time = time[1:]
+    time = time[1:] # getting rid of the /
     print(date, time)
     name = "/".join(name)
     
@@ -822,12 +851,16 @@ def changeRoutineTaskPosition(name, direction):
             break
     print(tar_index)
 
+
+
     current = data[name[0]][tar_index][name[2]]["tasks"][int(name[3])]
     next = ""
 
     if direction == "up":
         next = data[name[0]][tar_index][name[2]]["tasks"][int(name[3]) + 1]
+        # This is called tuple asignment, same as regular asignment just simpler:-
         data[name[0]][tar_index][name[2]]["tasks"][int(name[3])], data[name[0]][tar_index][name[2]]["tasks"][int(name[3]) - 1] = next, current
+
 
 
     else:
@@ -859,16 +892,35 @@ def routineTaskRename(name, newName):
     
     RoutineManager('w', data)
 
-@eel.expose
+@eel.expose # NOT A PART OF THE CONTEXT FUNCTIONS
 def notcheckedtoday():
     data = settingsManager('r')
     now = datetime.now().date()
     if now.isoformat() > data["LastChecked"]:
-        data["LastChecked"] = now.isoformat()
+        data["LastChecked"] = now.isoformat() # update the date
         settingsManager('w', data)
         return True
     return False
 
-checkForStart()
+
+checkForStart() # doing our start up checks
 eel.start('index.html', port=55555, close_callback=exitCode)
+
+"""
+    eel.start has several important parameters
+    the first parameter will be our main html file
+    then we have other optional parameters we can use (2 are used here)
+
+    port -> A port number can be between 0 to 65,535 but only 1 backend
+            can connect to one backend. hence, we can use the port parameter
+            to specifiy which port our backend will connect to. HOWEVER, we
+            used port 0. port 0 means, provide my backend ANY port that is
+            not occupied
+
+    close_callback -> When the app closes, normally, eel deals with closing
+                      the ports and performs other functions. however, I need
+                      to run my own clean up functions and hence, I used
+                      close_callback parameter to tell eel to run my one closing
+                      function.
+"""
 
