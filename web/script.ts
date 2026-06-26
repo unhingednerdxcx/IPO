@@ -1,10 +1,10 @@
-document.addEventListener("DOMContentLoaded", main);
-declare const Chart: typeof import('chart.js').Chart;
-import { listTodaysChallange, increaseXP, decreaseXP, updateInfo, listCompletedTasks, setTask, clearChallangeData } from "./signinx.js"
+document.addEventListener("DOMContentLoaded", main); // only after the DOM tree has been loaded, run main
+declare const Chart: typeof import('chart.js').Chart; // import Chart from chart.js
+import { listTodaysChallange, increaseXP, decreaseXP, updateInfo, listCompletedTasks, setTask, clearChallangeData } from "./signinx.js" 
 
-const eel = (window as any).eel;
+const eel = (window as any).eel; // use eel
 if (!eel) {
-    window.location.reload()
+    window.location.reload() // reload if there is no eel
 }
 declare global {
   interface Window {
@@ -12,38 +12,34 @@ declare global {
   }
 }
 
-type challangeData = {
+type challangeData = { // this will store the challanges
   Tasks: string[];
   XP: Number[];
 };
 
-type item = [
+type item = [ // this will store the context data (you will see soon)
     string,
     () => void,
     string
 ]
 
 
-let current = "Default";
-let current_tab = "."
+let current = "Default"; // store the current scene
+let current_tab = "."    // store the current tab
+let current_routine = "" // store the current routine open
 
-let current_routine = ""
-
-let esc_need = false
-let esc_kind: HTMLElement;
-let click_need = false
-let click_kind: HTMLElement;
+let click_need = false       // if the clicks something, we need to hide an element,
+let click_kind: HTMLElement; // this var determines which element will my listener hide
 
 
 let chart: any = ""
-let config: import('chart.js').ChartConfiguration<'bar'> = await eel.routineDetailConfig()()
-const canvas = document.getElementById('routineChart') as HTMLCanvasElement | null;
-if (canvas) {
-    chart = new Chart(canvas, config);
+let config: import('chart.js').ChartConfiguration<'bar'> = await eel.routineDetailConfig()() // get config from py
+const canvas = document.getElementById('routineChart') as HTMLCanvasElement || null; // get the canvas element or return null
+if (canvas) { // if canvas DOES exist
+    chart = new Chart(canvas, config); // store the config 
 }
 
 async function main() {
-    console.log(await eel.notcheckedtoday()())
     document.getElementById("side-search")?.addEventListener("click", async() => {
         let value = await showContext("Enter the task you want to search for", 'text')
         let search_val = await eel.searchTask(value)()
@@ -51,9 +47,6 @@ async function main() {
     });
 
     document.getElementById('side-routine')?.addEventListener('click', routine_population);
-
-
-
 
     document.getElementById('add-new-step')?.addEventListener('click', async() => {
         let name = await showContext('Enter name of the new task')
@@ -110,7 +103,6 @@ async function main() {
     }
 
     document.getElementById("side-new-task")?.addEventListener("click", async() => {
-        const text = "Enter the name of the new task";
         let name = await showContext("Enter the name of the new task", 'text')
         let date: any = await showContext("Enter the date of the new task", 'date')
         let time: any = await showContext("Enter the time of the new task", 'time')
@@ -125,7 +117,6 @@ async function main() {
     });
 
     document.getElementById('new-routine')?.addEventListener('click', async() => {
-        eel.log("NEW_SUDDEND_ROUTINE")()
         let name = await showContext("Enter the name of the new routine", 'text')
         let time = await showContext("Select how often this routine is", 'dropdown', ["Daily", "Weekly", "Monthly"], 'Select')
         eel.addRoutine(time, name)()
@@ -175,6 +166,7 @@ async function main() {
     makeSubGroupTree()
     await setColors()
     const primary_highlight_color = getComputedStyle(document.documentElement).getPropertyValue('--primary-highlight-color').trim()
+    // because of TypeScripts strict syntax, this extremly-nested if condition was made
     if (config.options) {
         if (config.options.scales) {
             if (config.options.scales.y) {
@@ -472,12 +464,9 @@ function side_mainFunc(par_el: string, this_tab_name: string, func: Function) {
 }
 
 async function setColors() {
-    function setTheme(name: string, color: string) {
-        document.documentElement.style.setProperty(`--${name}`, color)
-    }
     let colorTheme = await eel.getColors()()
     Object.entries(colorTheme).forEach((arr: any) => {
-        setTheme(arr[0], arr[1])
+        document.documentElement.style.setProperty(`--${arr[0]}`, arr[1])
     });
 }
 
@@ -611,8 +600,6 @@ async function sub_group_rename() {
     eel.renameSubGroup(path, newName)()
     await makeSubGroupTree()
 }
-
-
 
 async function list_items(tasks: Array<any>, challange=false) {
     let lists = document.getElementById('tasks') as HTMLElement|| null
@@ -841,12 +828,6 @@ async function makeNewSubGroup(catagory: string) {
 }
 
 
-document.addEventListener('keydown', (e)=>{
-    if (e.key == "Esc" && esc_need) {
-        esc_kind.style.display = 'none'
-        esc_need = false
-    }
-})
 
 document.addEventListener('click', (e)=>{
     if (click_need) {
@@ -861,8 +842,6 @@ export function showContext(descriptions: string, type="text", val: any[] =[], d
         const desc = document.getElementById("context-description") as HTMLElement || null
         const input = document.getElementById("context-input") as HTMLInputElement || null
         if (hide && desc && input) {
-            esc_need = true
-            esc_kind = hide
             hide.style.display = 'flex'
             desc.innerText = descriptions
             input.type = type

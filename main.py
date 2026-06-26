@@ -169,7 +169,7 @@ def searchTask(name):
     data = TaskManager('r')
     taskArr = [] # this will store the top 4 most similar names based on the input provided
     taskMap = [] # this will store the top 4 most similar name's paths
-    res_dict = {} # this will store the top 4 most similar names based on the input provided AND their paths
+    res_arr = [] # this will store the top 4 most similar names based on the input provided AND their paths
     for catagory, subcat in data.items():
         for sub, tasks in subcat.items():
             i = 0 # resetting the index
@@ -181,12 +181,12 @@ def searchTask(name):
         print(taskArr[i])
     matches = process.extract(name, taskArr, limit=4) # find the most common patterns
     for match, score, index in matches:
-        res_dict.append({ # append to result dict
+        res_arr.append({ # append to result arr
             "name": match,
             "map": taskMap[index]
         })
-    print(res_dict)
-    return res_dict
+    print(res_arr)
+    return res_arr
 
 @eel.expose
 def addNewGroup(name):

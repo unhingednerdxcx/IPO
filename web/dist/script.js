@@ -1,24 +1,21 @@
-document.addEventListener("DOMContentLoaded", main);
+document.addEventListener("DOMContentLoaded", main); // only after the DOM tree has been loaded, run main
 import { listTodaysChallange, increaseXP, decreaseXP, updateInfo, listCompletedTasks, setTask, clearChallangeData } from "./signinx.js";
-const eel = window.eel;
+const eel = window.eel; // use eel
 if (!eel) {
-    window.location.reload();
+    window.location.reload(); // reload if there is no eel
 }
-let current = "Default";
-let current_tab = ".";
-let current_routine = "";
-let esc_need = false;
-let esc_kind;
-let click_need = false;
-let click_kind;
+let current = "Default"; // store the current scene
+let current_tab = "."; // store the current tab
+let current_routine = ""; // store the current routine open
+let click_need = false; // if the clicks something, we need to hide an element,
+let click_kind; // this var determines which element will my listener hide
 let chart = "";
-let config = await eel.routineDetailConfig()();
-const canvas = document.getElementById('routineChart');
-if (canvas) {
-    chart = new Chart(canvas, config);
+let config = await eel.routineDetailConfig()(); // get config from py
+const canvas = document.getElementById('routineChart') || null; // get the canvas element or return null
+if (canvas) { // if canvas DOES exist
+    chart = new Chart(canvas, config); // store the config 
 }
 async function main() {
-    console.log(await eel.notcheckedtoday()());
     document.getElementById("side-search")?.addEventListener("click", async () => {
         let value = await showContext("Enter the task you want to search for", 'text');
         let search_val = await eel.searchTask(value)();
@@ -37,7 +34,7 @@ async function main() {
         side_mainFunc("Today", 'side-challange', async () => {
             if (val) {
                 let check = await listCompletedTasks();
-                let res = await eel.make3d(val, check)();
+                let res = await eel.challangeinfo(val, check)();
                 list_items(res, true);
             }
         });
@@ -73,7 +70,6 @@ async function main() {
         }
     }
     document.getElementById("side-new-task")?.addEventListener("click", async () => {
-        const text = "Enter the name of the new task";
         let name = await showContext("Enter the name of the new task", 'text');
         let date = await showContext("Enter the date of the new task", 'date');
         let time = await showContext("Enter the time of the new task", 'time');
@@ -87,7 +83,6 @@ async function main() {
         }
     });
     document.getElementById('new-routine')?.addEventListener('click', async () => {
-        eel.log("NEW_SUDDEND_ROUTINE")();
         let name = await showContext("Enter the name of the new routine", 'text');
         let time = await showContext("Select how often this routine is", 'dropdown', ["Daily", "Weekly", "Monthly"], 'Select');
         eel.addRoutine(time, name)();
@@ -133,6 +128,7 @@ async function main() {
     makeSubGroupTree();
     await setColors();
     const primary_highlight_color = getComputedStyle(document.documentElement).getPropertyValue('--primary-highlight-color').trim();
+    // because of TypeScripts strict syntax, this extremly-nested if condition was made
     if (config.options) {
         if (config.options.scales) {
             if (config.options.scales.y) {
@@ -392,12 +388,9 @@ function side_mainFunc(par_el, this_tab_name, func) {
     }
 }
 async function setColors() {
-    function setTheme(name, color) {
-        document.documentElement.style.setProperty(`--${name}`, color);
-    }
     let colorTheme = await eel.getColors()();
     Object.entries(colorTheme).forEach((arr) => {
-        setTheme(arr[0], arr[1]);
+        document.documentElement.style.setProperty(`--${arr[0]}`, arr[1]);
     });
 }
 async function ctx_delete() {
@@ -710,12 +703,6 @@ async function makeNewSubGroup(catagory) {
     await eel.newSubGroup(catagory, value);
     makeSubGroupTree();
 }
-document.addEventListener('keydown', (e) => {
-    if (e.key == "Esc" && esc_need) {
-        esc_kind.style.display = 'none';
-        esc_need = false;
-    }
-});
 document.addEventListener('click', (e) => {
     if (click_need) {
         click_kind.style.display = 'none';
@@ -728,8 +715,6 @@ export function showContext(descriptions, type = "text", val = [], disc_2 = "") 
         const desc = document.getElementById("context-description") || null;
         const input = document.getElementById("context-input") || null;
         if (hide && desc && input) {
-            esc_need = true;
-            esc_kind = hide;
             hide.style.display = 'flex';
             desc.innerText = descriptions;
             input.type = type;
