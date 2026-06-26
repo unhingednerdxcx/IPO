@@ -25,22 +25,25 @@ day 4-6 {
 - id/class/... //\\
 
 "" fix //\\
-add routine steps /\\
-true/false clean //|\\
+add routine steps //\\
+true/false clean //\\
 delete task/subgroup/group option  //\\
-populate //|\\
 
-time -- (streak thing) --e {
+time -- (streak thing) {//\\
     index fix //\\
     -consistancy //\\
     streack //\\
     true/false //\\
 }
 
+populate //|\\
 login ops {
     -pfp url fix
 }
-- comment
+- test
 
+## accesroy ##
+
+- comment
 video
 readMe

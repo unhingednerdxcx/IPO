@@ -68,7 +68,7 @@ async function main() {
         side_mainFunc("Today", 'side-challange', async() => {
             if (val) {
                 let check: Boolean[] = await listCompletedTasks()
-                let res = await eel.make3d(val, check)()
+                let res = await eel.challangeinfo(val, check)()
                 list_items(res, true)
             }
         })

@@ -1,34 +1,71 @@
-import eel
-import os
-import json
-from rapidfuzz import process
-import time
+
+"""
+    Reading the README specifically section: [x] is highly recomendable for
+    context
+"""
+
+### IMPORTS ###
+import eel # eel will basically provide a web server for my app to run on, additionally it acts as an RPC-style bridge between JS(converted from TS) and python
+# Remember RPC = sharing functions, IPC = sharing data
+import os # OS provides a clearer cross-platform way to do things (For example with paths, c:\user\... vs ~/...)
+import json # json allows me to eaily manupilate json files (used to store data even after program is terminated)
+from rapidfuzz import process # for search options, it checks the best possible pattern like if i'm searching for fruits, and i type 'ap', 
+#                               rapidfuzz returns 'apple' (assuming its the most similiar pattern to 'ap')
+
+import time # This library provides functions to manupilate time
 from datetime import datetime
-from datetime import date as datetime_date
-from datetime import timezone, timedelta
-from dateutil.relativedelta import relativedelta
-import sys
-import statistics
-from collections import Counter
-import pandas
-FOLDER = os.path.dirname(os.path.abspath(__file__))
+from datetime import date as datetime_date # to avoid variable name collision, i chose the to import it as datetime_date
+from datetime import timezone, timedelta # to compare with days 
+from dateutil.relativedelta import relativedelta # to compare with month (1 month = 28/29/30/31 days)
+"""
+    type      = meaning
+    datetime  = date + time
+    date      = date
+"""
+
+import sys # i only used this library to close the app
+import pandas # pandas allows me to do complex data processing using only a few statements
+
+# Storing paths
+FOLDER = os.path.dirname(os.path.abspath(__file__)) # Find the correct paths dirname (for example if path is:-
+#        C:\User\really_cool_user\Downloads\IPO -GUI based\main.py, it will only extract 
+#        C:\User\really_cool_user\Downloads\IPO -GUI based)
 WFOLDER = os.path.join(FOLDER, "web")
 LOGFILE = os.path.join(FOLDER, "log.txt")
 TASKFILE = os.path.join(FOLDER, "data", "tasks.json")
 ROUTINEFILE =  os.path.join(FOLDER, "data", "routine.json")
 SETTINGFILE = os.path.join(FOLDER, "data", "settings.json")
-eel.init(WFOLDER)
+eel.init(WFOLDER) # this tells eel where my frontend files are
+
+"""
+    THE DECORATORS (the @)
+
+    @eel.expose
+    def add(num1, num2):
+        return num1 + num2
+
+    is the same as
+
+    def add(num1, num2):
+        return num1 + num2
+
+    add = eel.expose(add)
+
+    but i prefer the decorator as its more concise
+"""
 
 @eel.expose
 def log(msg):
     with open(LOGFILE, 'a') as f:
         f.write(f"- {msg}\n")
 
-@eel.expose
+# JSON HANDLERS #
+
 def TaskManager(mode, val="", req=""):
-    match mode:
+    match mode: # match is a python 3.10 function, its the same as switch/case or if/elif/else
         case "r":
-            with open(TASKFILE, 'r') as file:
+            with open(TASKFILE, 'r') as file: # with ensures even if something breaks, the file wll properly close (meaning 
+#                                               there wont be random open files)
                 val = json.load(file)
                 if req == "arr":
                     return list(val)
@@ -63,72 +100,60 @@ def settingsManager(mode, val="", req=""):
 
 @eel.expose
 def listTask(catagory="", subcatagory="", op=""):
-    log(f"Listing task {catagory}..")
+    log(f"Listing task {catagory}..") # f-strings are used to make strings look better (NO difference between (",,", var) and (f".. {var}") )
     data = TaskManager('r')
     log(f"{data}")
-    if op != "":
-        if op == "today":
-            res = []
+    if op != "": # if an option was provided
+        if op == "today": 
+            res = [] # the array we will  populate with our results
             now = datetime.now()
-            formated = "/".join([
-                str(now.year),
-                str(now.month),
-                str(now.day),
-                str(now.hour),
-                str(now.minute)
-            ])
             values = listAllTasksDate()
-            key = 0
+            key = 0 # to track index (will use enumarate later [x])
             for date in values[1]:
-                date_arr = date.split('/')
-                if int(date_arr[0]) == now.year and int(date_arr[1]) == now.month and int(date_arr[2]) == now.day:
+                print(date)
+                date_arr = date.split('/') # get individual date times like year, month, day
+                if int(date_arr[0]) == now.year and int(date_arr[1]) == now.month and int(date_arr[2]) == now.day: # check if the date is today
                     print(key)
-                    selected = (values[0][key].split("\\"), values[1][key].split("\\"))
+                    selected = (values[0][key].split("/")[2], values[0][key]) # format the data
                     print(selected)
-                    res.append(selected[0])
-                key += 1
+                    res.append(selected) # apppend the format to the result array 
+                key += 1 # increment the index
             print(res)
-            return res
+            return res # return the result back to JS/TS
 
         if op == "upcomming":
             res = []
             now = datetime.now()
-            formated = "/".join([
-                str(now.year),
-                str(now.month),
-                str(now.day),
-                str(now.hour),
-                str(now.minute)
-            ])
             values = listAllTasksDate()
             key = 0
             for date in values[1]:
                 date_arr = date.split('/')
-                if not(int(date_arr[0]) == now.year and int(date_arr[1]) == now.month and int(date_arr[2]) == now.day):
+                if not(int(date_arr[0]) == now.year and int(date_arr[1]) == now.month and int(date_arr[2]) == now.day): # check if its NOT today
                     print(key)
-                    selected = (values[0][key].split("\\"), values[1][key].split("\\"))
-                    res.append(selected[0])
+                    selected = (values[0][key].split("/")[2], values[0][key])
+                    res.append(selected)
                 key += 1
             print(res)
             return res
+    # the following steps will happen if NO option was provided
     for loopCat, val in data.items():
 
-        if loopCat == catagory:
+        if loopCat == catagory: # if we got the catagory correct,
 
             log(data[loopCat].items())
             log(data[loopCat])
 
             for loopSubCat, val in data[loopCat].items():
-                if loopSubCat == subcatagory:
-                    return list(val)
+                if loopSubCat == subcatagory: # if the subcatagory is correct,
+                    return list(val) # we will retrun the contents
 
 
 @eel.expose
 def addTask(name="", catagory="", subcatagory="", date=""):
     log(f"Making new task {name}, {catagory}, {subcatagory} {date}..")
-    data = TaskManager('r')
-    data.setdefault(catagory, {}).setdefault(subcatagory, {})
-    data[catagory][subcatagory].update({
+    data = TaskManager('r') 
+    data.setdefault(catagory, {}).setdefault(subcatagory, {}) # This ensures the subcatagory exists (if it doesent, it will make it and store {})
+    data[catagory][subcatagory].update({ # update is to add, = means to rewrite
         name: {
             "date": date,
             "done": False
@@ -139,24 +164,22 @@ def addTask(name="", catagory="", subcatagory="", date=""):
 @eel.expose
 def searchTask(name):
     log("Searching for a new task {name}..")
-    res_dict = []
     data = TaskManager('r')
-    taskArr = []
-    taskMap = []
-    c = data
-    i = 0
+    taskArr = [] # this will store the top 4 most similar names based on the input provided
+    taskMap = [] # this will store the top 4 most similar name's paths
+    res_dict = {} # this will store the top 4 most similar names based on the input provided AND their paths
     for catagory, subcat in data.items():
         for sub, tasks in subcat.items():
+            i = 0 # resetting the index
             for task in list(tasks.keys()):
-                taskArr.append(task)
-                taskMap.append(f"{catagory}/{list(subcat.keys())[i]}/{task}")
-            i += 1
-        i = 0
+                taskArr.append(task) # store the name
+                taskMap.append(f"{catagory}/{list(subcat.keys())[i]}/{task}") # store the path
+            i += 1 # increment the index
     for i in range(0, len(taskArr)):
         print(taskArr[i])
-    matches = process.extract(name, taskArr, limit=4)
+    matches = process.extract(name, taskArr, limit=4) # find the most common patterns
     for match, score, index in matches:
-        res_dict.append({
+        res_dict.append({ # append to result dict
             "name": match,
             "map": taskMap[index]
         })
@@ -167,14 +190,14 @@ def searchTask(name):
 def addNewGroup(name):
     log("Making new group {name}..")
     data = TaskManager('r')
-    data[name] = {}
+    data[name] = {} # makes an empty dictionary
     TaskManager('w', data)
 
 @eel.expose
 def newSubGroup(catagory, sub):
     log("Making new subgroup {catagory}..")
     data = TaskManager('r')
-    data.setdefault(catagory, {})
+    data.setdefault(catagory, {}) # again, to check if the group exists or not
     data[catagory].update({
         sub: {}
     })
@@ -186,13 +209,15 @@ def listAllSubGrp(catagory):
     data = TaskManager('r')
     for grp, subgrp in data.items():
         for i in range(0, len(list(subgrp.keys())) ):
-            res_arr.append(list(subgrp.keys())[i])
+            res_arr.append(list(subgrp.keys())[i]) # add the subgroup
     print(res_arr)
     return res_arr
 
 @eel.expose
 def listGroupDict():
     data = TaskManager('r')
+
+    #this is a short hand way to populate a dictionary
     data = {
         key: list(value.keys())
         for key, value in data.items()
@@ -200,12 +225,21 @@ def listGroupDict():
     return data
 
 def listAllTasksDate():
-    res_arr = [[], [], []]
+    res_arr = [[], [], []] # 2d array to store results. structure:-
+    """
+        [
+            [
+             'path' of the task (group/subgroup/task),
+             deadline of the task y/m/d/h/m
+             is the task done of not (true/false)
+            ]
+        ]
+    """
     data = TaskManager('r')
     for cat, subcat in data.items():
         for subcatt, task in subcat.items():
             for taskt, info in task.items():
-                res_arr[0].append(f"{taskt}\\{cat}/{subcatt}")
+                res_arr[0].append(f"{cat}/{subcatt}/{taskt}")
                 res_arr[1].append(info['date'])
                 res_arr[2].append(info["done"])
     return res_arr
@@ -214,14 +248,14 @@ def listAllTasksDate():
 def listCatItems(cat, subcat):
     data = TaskManager('r')
     print(list(data[cat][subcat]))
-    return list(data[cat][subcat])
+    return list(data[cat][subcat]) # this provides the result as a LIST 
 
 @eel.expose
 def toggletask(path, setto):
     path_arr = path.split('/')
     data = TaskManager('r')
     print(path_arr)
-    data[path_arr[0]][path_arr[1]][path_arr[2]]['done'] = setto
+    data[path_arr[0]][path_arr[1]][path_arr[2]]['done'] = setto # this sets the task's status to done/not done
     print("DATA:", data[path_arr[0]][path_arr[1]][path_arr[2]]['done'])
     TaskManager('w', data)
 
@@ -229,12 +263,20 @@ def toggletask(path, setto):
 def donestatus(path):
     path_arr = path.split('/')
     data = TaskManager('r')
-    return data[path_arr[0]][path_arr[1]][path_arr[2]]['done']
+    return data[path_arr[0]][path_arr[1]][path_arr[2]]['done'] # returns the status of the task
 
 @eel.expose
 def listAllRoutineNames():
     data = RoutineManager('r')
-    res_arr = []
+    res_arr = [] # res_arr is a 2D array that stores data like so:-
+    """
+        [
+            [
+                time (daily, weekly, monthly),
+                routine name
+            ]
+        ]
+    """
     for time in data:
         for routineName in data[time]:
             res_arr.append([time, list(routineName)[0]])
@@ -244,17 +286,17 @@ def listAllRoutineNames():
 @eel.expose
 def listRoutineTraits(time, routineName):
     data = RoutineManager('r')
-    if data[time]:
-        for testRoutineName in data[time]:
-            print(list(testRoutineName)[0])
-            if list(testRoutineName)[0] == routineName:
-                return testRoutineName[next(iter(testRoutineName))]
+    if data[time]: 
+        for iterRoutineName in data[time]:
+            print(list(iterRoutineName)[0])
+            if list(iterRoutineName)[0] == routineName: # check if the routine name matches
+                return iterRoutineName[next(iter(iterRoutineName))] # return its contents
 
 @eel.expose
 def validateDateTime(fullIso):
-    target = datetime.fromisoformat(fullIso)
-    now = datetime.now(timezone.utc)
-    if (target < now):
+    target = datetime.fromisoformat(fullIso) # convert time from iso to datetime object
+    now = datetime.now(timezone.utc) # convert to utc timezone
+    if (target < now): # if the time is before today, the deadline is impossible
         return False
     return True
 
@@ -266,11 +308,11 @@ def addRoutine(time, name):
     data = dict(data)
     arr = []
     if time.lower() == "daily":
-        arr = [0, 0, 0, 0, 0, 0, 0]
+        arr = [0, 0, 0, 0, 0, 0, 0] # 7 values for 7 days of the week
     elif time.lower() == "weekly":
-        arr = [0, 0, 0, 0]
+        arr = [0, 0, 0, 0] # 4 values for 4 weeks of the month
     elif time.lower() == "monthly":
-        arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] # 12 values for 12 months of the year
     data[time.lower()].append({
         name: {
             "tasks": [],
@@ -295,14 +337,16 @@ def setComplete(path):
     arr = path.split('/')
     data = RoutineManager('r')
     print(arr)
-    data[arr[0]][int(arr[1])][arr[3]]["Complete till"] = arr[2]
+    data[arr[0]][int(arr[1])][arr[3]]["Complete till"] = arr[2] # sets which step of the routine the user completed till (inclusive,
+#                                                               so if the user completed value is 'push ups' they have done push ups AND
+#                                                               the tasks before that       
 
     RoutineManager('w', data)
 
 @eel.expose
 def loggedin():
     data = settingsManager('r')
-    return data["AccMade"]
+    return data["AccMade"] # returns logged in status (if not logged in, send false, else send true)
 
 @eel.expose
 def setloggedin():
@@ -313,19 +357,32 @@ def setloggedin():
 @eel.expose
 def getColors():
     data = settingsManager('r')
-    colorTheme = data['colors'][data['color']]
+    colorTheme = data['colors'][data['color']] # send the color theme (so the primary background color or outline color and stuff)
+    """
+        FUN FACT:-
+          for the color, Just convert #hex to hsl (hue saturation lightness) to change colors
+          while maintaining your brightness. so for example, because i started off by making pastle
+          green, remaking the 'correct' pastel red, orange... would have been hard. hence, i made a
+          python script to convert hex to hsl to a specific color automatically!
+    """
     return colorTheme
 
 @eel.expose
 def changeColor(color):
     data = settingsManager('r')
-    data['color'] = color
+    data['color'] = color 
     settingsManager('w', data)
 
 @eel.expose
 def routineDetailConfig():
-    return {
-        "type": 'bar',
+    """
+        this is actually a chart.js (an extension im using to make graphs) that i have used, but i used it 
+        here because python is fit to manipulate data easily (libraries like pandas, tensor, etc. make this 
+        possible) Hence, by using python, in the future if i want to add in extra graph details, i can do it
+        here fast without dealing with R/IPC issues.
+    """
+    return {  
+        "type": 'bar', # bar = barchart
         "data": {
             "labels": [],
             "datasets": [{
@@ -432,8 +489,8 @@ def CleanUp():
         date_arr = date.split('/')
         target_date = datetime_date(int(date_arr[0]), int(date_arr[1]), int(date_arr[2]))
         if target_date < now.date():
-            taskname = values[0][key].split('\\')[0]
-            taskpath = values[0][key].split('\\')[1].split('/')
+            taskname = values[0][key].split('/')[2]
+            taskpath = values[0][key].split('/')[0:2]
             print(taskname, taskpath)
             del new_data[taskpath[0]][taskpath[1]][taskname]
         key += 1
@@ -447,7 +504,21 @@ def exitCode(page_route, remaining_websockets):
         CleanUp()
 
 @eel.expose
-def make3d(info, completed):
+def challangeinfo(info, completed):
+    # info is data from firebase, its basically a dict that says which tasks the user has to do today
+    # and what the rewards (xp) are and has the user done it or not. again, i have moved this logic
+    # to python just in case if in the future i want to do more data manupilation 
+
+    # val is a 3d array that looks like this:-
+    """
+        [
+            [
+                "The name of the challange"
+                "The ammount of XP the challange is worth"
+                "If the task is done or not (true/false)"
+            ]
+        ]
+    """
     val = [
         [info["Tasks"][index], info["XP"][index], value] for index, value in enumerate(completed)
     ]
@@ -591,13 +662,13 @@ def checkForStart():
 @eel.expose
 def listTasks(name):
     data = RoutineManager('r')
-    times = ["daily", "weekly", "monthly"]
+    times = ["daily", "weekly", "monthly"] # the times for routine
     for time in times:
         print(len(list(data[time])))
         for index in range(len(list(data[time]))):
             print(index)
             if list(data[time][index].keys())[0] == name:
-                return data[time][index][name]['tasks']
+                return data[time][index][name]['tasks'] # return the tasks of that routine
 
 @eel.expose
 def appendRoutineTask(task, name, newTask):
@@ -605,13 +676,10 @@ def appendRoutineTask(task, name, newTask):
     times = ['daily', 'weekly', 'monthly']
     for time in times:
         for index in range(len(list(data[time]))):
-
-            print("HWEWE")
-            
             if list(data[time][index].keys())[0] == name:
-                indx = data[time][index][name]['tasks'].index(task)
+                indx = data[time][index][name]['tasks'].index(task) # get the index of the task we want put the new task after
                 print(indx)
-                data[time][index][name]['tasks'].insert(indx + 1, newTask)
+                data[time][index][name]['tasks'].insert(indx + 1, newTask) # this adds a new task to the routine
     RoutineManager('w', data)
 
 

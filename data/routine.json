@@ -2,7 +2,7 @@
     "daily": [
         {
             "Work out plan": {
-                "index": 3,
+                "index": 4,
                 "tasks": [
                     "squats",
                     "madonna",
@@ -10,20 +10,20 @@
                     "Dead lift"
                 ],
                 "Complete till": "Running",
-                "Streak": 19,
+                "Streak": 20,
                 "Most difficult": {
                     "name": "Running",
-                    "score": 3
+                    "score": 4
                 },
                 "Most easiest": {
-                    "name": "Dead Lift",
-                    "score": 1
+                    "name": "Running",
+                    "score": 4
                 },
                 "stops": [
                     "Running",
                     "Running",
                     "Running",
-                    "Dead Lift"
+                    "Running"
                 ],
                 "consistancy": [
                     100,
@@ -31,7 +31,7 @@
                     50,
                     60,
                     75.0,
-                    70,
+                    75.0,
                     75.0
                 ]
             }
@@ -67,7 +67,7 @@
                     100,
                     100,
                     125.0,
-                    100,
+                    125.0,
                     75.0
                 ]
             }
@@ -103,7 +103,7 @@
                     100,
                     100,
                     125.0,
-                    100,
+                    125.0,
                     100.0
                 ]
             }
@@ -139,7 +139,7 @@
                     50,
                     50,
                     125.0,
-                    50,
+                    125.0,
                     50.0
                 ]
             }
