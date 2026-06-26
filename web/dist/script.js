@@ -1,5 +1,16 @@
 document.addEventListener("DOMContentLoaded", main); // only after the DOM tree has been loaded, run main
-import { listTodaysChallange, increaseXP, decreaseXP, updateInfo, listCompletedTasks, setTask, clearChallangeData } from "./signinx.js";
+import { listTodaysChallange, increaseXP, decreaseXP, updateInfo, listCompletedTasks, setTask } from "./signinx.js";
+/*
+    in TS whenever fetching any element, we do:-
+        let el = document.getElementById("myel") as HTMLElement || null
+        if (el) {
+            console.log("I exist!")
+        }
+        
+        basically, 'as HTMLElement || null' means, represent the result as HTMLElement tyoe
+        or null if its not possible to store the data as HTMLElement.
+        if (el) checks if the result was null (null is falsy in TS). if it was null, that means element dosent exist.
+*/
 const eel = window.eel; // use eel
 if (!eel) {
     window.location.reload(); // reload if there is no eel

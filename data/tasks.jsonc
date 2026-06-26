@@ -1,13 +1,10 @@
-/* example task
 {
-  "catagory": {
-    "subcatagory": {
-      "name": {
-        "date": "date: Y/M/D/H/M"
-        "priority": 0-9
+  "catagory": { // the main catagory
+      "subcatagory": { // the subcatagory within the main catagory
+          "task": {    // the task's name itself
+              "date": "year/month/day/hour/minute", // the deadline
+              "done": false // is the task done or not
+          }
       }
     }
-  }
 }
-*/
-

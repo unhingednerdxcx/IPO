@@ -16,7 +16,7 @@ const auth = getAuth(app);
 const storage = getStorage();
 let uid;
 onAuthStateChanged(auth, async (user) => {
-    if (user) {
+    if (user) { // checks if user object actuallly exists or not
         let pfpUrl = user.photoURL;
         console.log(pfpUrl);
         let name = user.displayName || (user.providerData && user.providerData[0]?.displayName) || "User";
@@ -198,7 +198,7 @@ export async function updateInfo() {
     }
 }
 export async function listTodaysChallange() {
-    let ref = doc(db, "Tasks", "Tasks");
+    let ref = doc(db, "Tasks", "Tasks"); // You can think of ref as providing the path to the task
     let content = await getDoc(ref);
     if (content.exists()) {
         let data = content.data();
@@ -250,7 +250,11 @@ export async function decreaseXP(gotXp) {
         let xp = data.xp - gotXp;
         if (xp < 0) {
             max /= 2;
-            xp = max - Math.abs(xp); // +- = -, -- = + !!
+            xp = max - Math.abs(xp);
+            // Math.abs means turn 9 -> -9, -34 -> -34, -Math.abs means, 9 -> -9, 9 or,
+            //             -34 -> -34 -> 34 (or in simple words, turns any number positive). this is
+            //             important becuase if i decreaseXP with a negative number, - and - would make + and
+            //             now xp is being increased instead
             level -= 1;
         }
         await updateDoc(ref, {
