@@ -8,16 +8,7 @@
     --dark-text-color: #ffffff;
     --text-color: #ffffff;
     --outline-color: #ffffff;
-
-    --text-l1: 12vw;
-    --text-l2: 6vw;
-    --text-l3: 3vw;
-    --text-l4: 1vw;
-    --text-l5: 0.5vw;
     --border-radi: 10px;
-    --border-extra-radi: 20px;
-    --outline-weight: 1px;
-    --outline-heavy-weight: 2px;
 }
 
 .title {
