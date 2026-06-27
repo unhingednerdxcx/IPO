@@ -25,21 +25,27 @@ Sequender combines multiple key UX principles to create an amazing user experien
 # Technical details
 
 ## Frontend
+
 The frontend was built with HTML/CSS/TS and JS. I imported **Google** material icons and sour gummy font and used them throughout the UI. It's important to note that I chose to not use any frameworks like Vue, or React to reduce bundle size and for future flexibility. Furthermore, I used chart.js(**CDN** style) to generate graphs quickly. Additionally, I decided to use **Typescript** because it improves maintainability, it is more scalable, and finds error before runtime to ensure there are no underlying bugs🐛. However, you will also notice that I also used JS. I opted to use ***JavaScript*** strictly for **firebase** related commands. This is because JavaScript already has a well documented SDK support while also reducing boilerplate. In the future, if my firebase does get even complexer, TypeScript would bring unnecessary complexity in the form of additional type definitions, boilerplate and setup, while providing only marginal benefits for the scope of this project. All the compiled Typescript and JavaScript files are in the dist folder 📁.
 
 ## Backend
+
 The backend is fully made with python. Python was best suited for the backend because of its incredible data manipulation tools, so in the future, if I would like to add even more features, python would make it easier to do. In python, the main module I am using is **Eel** (⚠️ Even though its deprecated). I preferred to use **Eel** instead of other libraries like **FastAPI** because Eel is more lightweight and is more flexible. Due to its simple setup, it allows rapid prototype. That being said, later in the future if my scales beyond, I will eventually use **FastAPI** or **Electron**. Eel more like an RPC rather than an IPC, because it bridges functions. I would have preferred to move the firebase functions from JS to python, but firebase provides only the admin SDK for python and leaking my service-account.json would be extremely risky 🔑. Hence, I didn't move the logic. The backend deals with all the JSON fetching and everything else. For data handling I used **pandas** and for search options, I used **rapidfuzz**. I like using a 'file-pathy' way to transfer data (so if taskA is stored in subcatA which is stored in catA, I would send it like:- `"catA/subcatA/taskA"`)
 
 ## Database
+
 I used **Firebase** to store data. We will go over a couple sections to cover the database.
 
 ### Rules
+
 I unfortunately did not make my firebase rules public as it contains keys that are proprietary and leaking them can endanger my database. However, I will provide an overview of the rules. In the users/ collection, users will have their own document and **USERS CAN ONLY READ THEIR OWN DOCUMENT**. The Tasks/ collection stores all the challenge details and can be read by anyone (even if not signed in) **BUT CANT BE WRITTEN BY ANYONE (the automation section will explain how I still update the challenges each day even though its hardcoded to not let anyone write to the document)**
 
 ### User collection
+
 Each user's document consists of the keys `level`, `maxXp`, `xp`, `TasksDone`, and their types are `i64`, `i64`, `i64`, `bool arr[7]` (respectively). The level stores the level user is at, maxXp stores how much xp the user needs to get to before they can increase their level (for example if the maxXp is 100, and the users level is at 0, and the xp is at 99, and then do a task, causing their xp to go beyond 100, maxXp will be increased, and the level would be incremented by 1)
 
 ### Tasks document
+
 The Tasks document consists of 2 keys, `Tasks` and `XP` and their types are `str arr[7]`, `int arr[7]`. The Tasks key stores the tasks the user must do and the XP key stores the xp that will be awarded if they do the task corresponding (For example if they do Tasks[0], their xp will be incremented by XP[0]).
 
 ### Additional information
@@ -51,9 +57,11 @@ The Tasks document consists of 2 keys, `Tasks` and `XP` and their types are `str
 
 
 # Automation and Cybersecurity
+
 GitHub actions automatically run `generator.py` every midnight which updates Tasks document (check out schedual.yaml for more automation information). However, you will notice `generator.py` will fail on your device. This is due to the use environmental variables 🔒. In GitHub, you can set up secrets in the form of environment variables. Like I said before in the Technical details, the Tasks document can't be edited by anyone. However, with a `service-account.json` (You can think of `service-account.json` as a master key which lets you do anything you want to a specific database without following its rules), I can bypass that rule and edit it. Hence, one environment variable is `'SUPER_KEY'` and its content is the contents of the `service-account.json`. All the tasks are also stored in another secret environment variable called 'TASKLIST'. The use of these secret GitHub environment variable creates proper security. These tasks are categorized. Going back to the generator.py, let's see how it really works. Firstly it randomly takes a few tasks and creates random xp awarded for doing each task.
 
 # Dependencies
+
 Firstly, you will need chromium (Google Chrome). Then you will need Python >= 3.10. Install the following libraries, `eel`, `pandas`, `rapidfuzz`. You can also just run the command:-
 
 ```bash
@@ -63,10 +71,16 @@ pip install -r modules.txt
 ```
 (this command works using both PowerShell and Bash (MacOS and Linux))
 
-> If you are using an **Arch** based linux distribution, set up a virtual environment by running python -m venv .venv then activate it then run the command above
-
+If you want to test generator.py with your own firebase, or anything like that, install `firebase-admin` and `google-cloud-firestore`. To do that you can just run:-
+```bash
+cd #<INSERT DIRECTORY>
+pip install firebase-admin google-cloud-firestore
+# if that command fails try, python -m pip install firebase-admin google-cloud-firestore
+```
+> If you are using an **Arch** based linux distribution, set up a virtual environment by running python -m venv .venv then activate it then run the command(s) above
 
 # Sources
+
 ```GitHub: https://github.com/unhingednerdxcx/IPO
 Eel: https://github.com/python-eel/Eel
 Pandas: https://github.com/pandas-dev/pandas
