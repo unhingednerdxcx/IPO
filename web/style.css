@@ -871,3 +871,31 @@ ul {
     margin-right: 5vw;
 }
 
+.key-box {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+    height: 30vh;
+    background-color: var(--secondary-background-color);
+    padding: 24px;
+    outline: 1px solid var(--outline-color);
+    border-radius: 5px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Sour Gummy', sans-serif;
+}
+
+.key {
+    margin-left: 3vw;
+    display: flex;
+    gap: 1vw;
+}
+.keybind {
+  background: var(--tertiary-background-color);
+  padding: 0.3vw;
+  border-radius: 4px;
+  margin-top: -0.2vh;
+}
+

@@ -78,40 +78,7 @@ async function main() {
         })
     })
 
-    function searchBoxShow(searches: Object, value: string ) {
-        let hideall = document.getElementById("hide-all-search") as HTMLElement || null
-        if (hideall) {
-            hideall.style.display = "flex"
-            let title = document.getElementById('search-title') as HTMLElement || null
-            title.innerText = `Searching for: ${value}`
 
-            let results_par = document.getElementById('search-ress') as HTMLElement || null
-            results_par.innerHTML = ""
-            Object.entries(searches).forEach(([k, v]) => {
-                let li = document.createElement('li')
-                li.classList = 'search-res'
-
-                let name = document.createElement('div')
-                name.classList = "search-content"
-                name.innerText = v.name
-
-                let map = document.createElement('div')
-                map.classList = "search-map"
-                map.innerText = v.map
-                
-                li.appendChild(name)
-                li.appendChild(map)
-                results_par.appendChild(li)
-            })
-            let hideallhandle = (e: KeyboardEvent) => {
-                if (e.key == 'Escape') {
-                    hideall.style.display = "none"
-                    document.removeEventListener('keydown', hideallhandle)
-                }
-            }
-            document.addEventListener('keydown', hideallhandle)
-        }
-    }
 
     document.getElementById("side-new-task")?.addEventListener("click", async() => {
         let name = await showContext("Enter the name of the new task", 'text')
@@ -847,6 +814,84 @@ document.addEventListener('click', (e)=>{
     }
 })
 
+document.addEventListener('keydown', async(e) => {
+    if (e.altKey && /^[1-4]$/.test(e.key)) {
+        e.preventDefault()
+        switch (e.key) {
+            case "1": {
+                side_mainFunc("Today", 'side-Today',  async() => {
+                    let val = await eel.listTask("", "", "today")()
+                    list_items(val)
+                })
+                break;
+            }
+            case "2": {
+                side_mainFunc("Today", 'side-upcoming', async() => {
+                    let val = await eel.listTask("", "", "upcomming")()
+                    list_items(val)
+                })
+                break;
+            }
+            case "3": {
+                routine_population()
+                break;
+            }
+            
+            case "4": {
+                let val = await listTodaysChallange() as challangeData
+                side_mainFunc("Today", 'side-challange', async() => {
+                    if (val) {
+                        let check: Boolean[] = await listCompletedTasks()
+                        let res = await eel.challangeinfo(val, check)()
+                        list_items(res, true)
+                    }
+                })
+                break;
+            }
+        }
+    }
+    else if (e.ctrlKey && e.key === "t") {
+        e.preventDefault()
+        let name = await showContext("Enter the name of the new task", 'text')
+        let date: any = await showContext("Enter the date of the new task", 'date')
+        let time: any = await showContext("Enter the time of the new task", 'time')
+        let grp: any = await showContext("Which group show we store the task in", 'text')
+        let subgrp: any = await showContext("Which subgroup show we store the task in", 'text')
+        const dateTime = new Date(`${date}T${time}`)
+        if (await eel.validateDateTime(dateTime.toISOString())()) {
+            date = date.split('-')
+            time = time.split(':')
+            eel.addTask(name, grp, subgrp, `${date[0]}/${date[1]}/${date[2]}/${time[0]}/${time[1]}`)
+        }
+    }
+    else if (e.ctrlKey && e.shiftKey && e.key === "R" ) {
+        e.preventDefault()
+        let name = await showContext("Enter the name of the new routine", 'text')
+        let time = await showContext("Select how often this routine is", 'dropdown', ["Daily", "Weekly", "Monthly"], 'Select')
+        eel.addRoutine(time, name)()
+    }
+    else if (e.ctrlKey && e.key === "f") {
+        e.preventDefault()
+        let value = await showContext("Enter the task you want to search for", 'text')
+        let search_val = await eel.searchTask(value)()
+        searchBoxShow(search_val, String(value))
+    }
+
+    else if (e.ctrlKey && e.key == "/") {
+        let box = document.getElementById('key-box') as HTMLElement || null
+        if (box) {
+            box.style.display = "flex"
+            let handler =  (e: KeyboardEvent) => {
+                if (e.key === "Escape") {
+                    box.style.display = "none"
+                    document.removeEventListener("keydown", handler)
+                }
+            }
+            document.addEventListener("keydown", handler)
+        }
+    }
+})
+
 export function showContext(descriptions: string, type="text", val: any[] =[], disc_2=""): Promise<any> {
     return new Promise((resolve) => {
         const hide = document.getElementById('hide-all') as HTMLElement || null
@@ -924,6 +969,41 @@ export function showContext(descriptions: string, type="text", val: any[] =[], d
             }
         }
     })
+}
+
+function searchBoxShow(searches: Object, value: string ) {
+    let hideall = document.getElementById("hide-all-search") as HTMLElement || null
+    if (hideall) {
+        hideall.style.display = "flex"
+        let title = document.getElementById('search-title') as HTMLElement || null
+        title.innerText = `Searching for: ${value}`
+
+        let results_par = document.getElementById('search-ress') as HTMLElement || null
+        results_par.innerHTML = ""
+        Object.entries(searches).forEach(([k, v]) => {
+            let li = document.createElement('li')
+            li.classList = 'search-res'
+
+            let name = document.createElement('div')
+            name.classList = "search-content"
+            name.innerText = v.name
+
+            let map = document.createElement('div')
+            map.classList = "search-map"
+            map.innerText = v.map
+            
+            li.appendChild(name)
+            li.appendChild(map)
+            results_par.appendChild(li)
+        })
+        let hideallhandle = (e: KeyboardEvent) => {
+            if (e.key == 'Escape') {
+                hideall.style.display = "none"
+                document.removeEventListener('keydown', hideallhandle)
+            }
+        }
+        document.addEventListener('keydown', hideallhandle)
+    }
 }
 window.makeNewSubGroup = makeNewSubGroup;
 

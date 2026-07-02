@@ -645,13 +645,13 @@ def checkForStart():
 
     def cleanUp():
             last_check = setData["LastWeekChecked"]
-            last_check = datetime_date.fromisoformat(last_check.split('T')[0])
+            last_check = datetime_date.fromisoformat(last_check)
             if now - last_check >= timedelta(weeks=1):
                 setData["LastWeekChecked"] = now.isoformat()
 
             
             last_check = setData["LastMonthChecked"]
-            last_check = datetime_date.fromisoformat(last_check.split('T')[0])
+            last_check = datetime_date.fromisoformat(last_check)
             if now >= last_check + relativedelta(months=1):
                 setData["LastMonthChecked"] = now.isoformat()
 
@@ -904,7 +904,7 @@ def notcheckedtoday():
 
 
 checkForStart() # doing our start up checks
-eel.start('index.html', port=55555, close_callback=exitCode)
+eel.start('index.html', port=0, close_callback=exitCode)
 
 """
     eel.start has several important parameters

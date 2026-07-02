@@ -8,7 +8,7 @@ day 1 {
 day 2 {
     - small ui fix //\\
     - update account info //\\
-    - delete task/subgroup/group option
+    - delete task/subgroup/group option //\\
 }
 day 3 {
     - conv js -> ts
@@ -39,7 +39,7 @@ time -- (streak thing) {//\\
 css //\\
 
 populate //|\\
-iso T thing (multi)
+iso T thing (multi) //\\
 login ops {
     -pfp url fix
 }
@@ -49,4 +49,4 @@ login ops {
 
 - comment //\\
 video
-readMe
+readMe //\\
