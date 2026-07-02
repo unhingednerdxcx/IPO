@@ -28,7 +28,7 @@ Sequender combines multiple key UX principles to create an amazing user experien
 | Ctrl + Shift + R       | New Routine |
 | Ctrl + F               | Find Task   |
 | Alt + 1–4              | Switch Tab  |
-| Ctrl + / (or Ctrl + ?) | Shift Tab   |
+| Ctrl + / (or Ctrl + ?) | Get keybind information   |
 
 
 # Technical details
