@@ -1,21 +1,11 @@
 {
     "My projects": {
         "a": {},
-        "b": {
-            "hi": {
-                "date": "2026/07/01/09/59",
-                "done": false
-            }
-        },
+        "b": {},
         "My projects": {}
     },
     "My projectsx": {
-        "a": {
-            "tears": {
-                "date": "2026/07/01/09/59",
-                "done": false
-            }
-        }
+        "a": {}
     },
     "x": {
         "k": {}

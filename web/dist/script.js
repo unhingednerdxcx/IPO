@@ -756,7 +756,6 @@ document.addEventListener('keydown', async (e) => {
         if (box) {
             box.style.display = "flex";
             let handler = (e) => {
-                console.log(e.key);
                 if (e.key === "Escape") {
                     box.style.display = "none";
                     document.removeEventListener("keydown", handler);
@@ -797,11 +796,14 @@ export function showContext(descriptions, type = "text", val = [], disc_2 = "") 
                 drop.style.display = 'flex';
             };
             let file_handle = (e) => {
-                let target = e.target;
-                const files = target.files;
-                if (files) {
-                    resolve(files[0]);
+                const target = e.target;
+                if (target.files && target.files.length > 0) {
+                    const file = target.files[0];
+                    hide.style.display = "none";
+                    return file;
                 }
+                hide.style.display = "none";
+                return target.files;
             };
             if (type == "text") {
                 mode = "keydown";

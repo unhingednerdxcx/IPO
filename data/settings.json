@@ -1,5 +1,5 @@
 {
-    "AccMade": true,
+    "AccMade": false,
     "colors": {
         "red": {
             "primary-background-color": "#FFE8E8",
@@ -62,7 +62,7 @@
             "outline-color": "#3F2F4F"
         }
     },
-    "color": "red",
+    "color": "green",
     "LastChecked": "2026-07-02",
     "LastWeekChecked": "2026-07-02",
     "LastMonthChecked": "2026-06-25"

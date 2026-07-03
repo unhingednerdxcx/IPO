@@ -24,6 +24,7 @@ onAuthStateChanged(auth, async(user) => { // if the user is already logged in
         console.log(pfpUrl)
         let name = user.displayName || (user.providerData && user.providerData[0]?.displayName) || "User"
         uid = user.uid
+        console.log(uid)
         complete(name, pfpUrl, uid)
         console.log(await eel.notcheckedtoday()())
         if (await eel.notcheckedtoday()()) {
@@ -104,7 +105,7 @@ async function sign_up () {
 
 async function login_mail() {
     document.getElementById('sign-in').style.display= 'none'
-    let mail = await showContext("Hi again, enter you're mail")
+    let mail = await showContext("Hi again, Enter you're mail")
     let pass = await showContext("Enter your password")
     let user;
 
@@ -138,8 +139,9 @@ async function login_mail() {
     let name = user.displayName || (user.providerData && user.providerData[0]?.displayName)
     if (!(name || pfpUrl)){
         const storeRef = ref(storage, `avatars/${user.uid}.jpg`)
-        name = await showContext("What should we call you?")
-        let pfp = await showContext("Enter profile picture", "file")
+        let name = await showContext("What should we call you?");
+        let pfp = await showContext("Enter profile picture", "file"); 
+        if (!pfp) throw new Error("No file selected");
         let snapshot = await uploadBytes(storeRef, pfp);
         let downloadURL = await getDownloadURL(snapshot.ref);
         await updateProfile(user, {
