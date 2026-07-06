@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", main); // only after the DOM tree has been loaded, run main
-declare const Chart: typeof import('chart.js').Chart; // import Chart from chart.js
 import { listTodaysChallange, increaseXP, decreaseXP, updateInfo, listCompletedTasks, setTask } from "./signinx.js" 
+import { Chart } from "chart.js/auto";
+import type { ChartConfiguration } from "chart.js";
 
 /* 
     in TS whenever fetching any element, we do:-
@@ -44,7 +45,7 @@ let click_kind: HTMLElement; // this var determines which element will my listen
 
 
 let chart: any = ""
-let config: import('chart.js').ChartConfiguration<'bar'> = await eel.routineDetailConfig()() // get config from py
+let config: ChartConfiguration<'bar'> = await eel.routineDetailConfig()() // get config from py
 const canvas = document.getElementById('routineChart') as HTMLCanvasElement || null; // get the canvas element or return null
 if (canvas) { // if canvas DOES exist
     chart = new Chart(canvas, config); // store the config 
@@ -258,7 +259,7 @@ async function routine_population() {
                 }
                 const primary_highlight_color = getComputedStyle(document.documentElement).getPropertyValue('--primary-highlight-color').trim()
                 
-                let config: import('chart.js').ChartConfiguration<'line'> = await eel.routineSummaryConfig(label, fix_dataPoints, primary_highlight_color)()
+                let config: ChartConfiguration<'line'> = await eel.routineSummaryConfig(label, fix_dataPoints, primary_highlight_color)()
 
                 let chart: any = ""
                 if (canvas) {
