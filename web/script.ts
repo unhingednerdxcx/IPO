@@ -931,10 +931,10 @@ export function showContext(descriptions: string, type="text", val: any[] =[], d
                 if (target.files && target.files.length > 0) {
                     const file: File | undefined = target.files[0];
                     hide.style.display = "none"
-                    return file
+                    resolve(file)
                 }
                 hide.style.display = "none"
-                return target.files
+                resolve(target.files)
             }
 
             if (type == "text") {

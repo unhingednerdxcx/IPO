@@ -31,7 +31,6 @@ FOLDER = os.path.dirname(os.path.abspath(__file__)) # Find the correct paths dir
 #        C:\User\really_cool_user\Downloads\IPO -GUI based\main.py, it will only extract 
 #        C:\User\really_cool_user\Downloads\IPO -GUI based)
 WFOLDER = os.path.join(FOLDER, "web")
-LOGFILE = os.path.join(FOLDER, "log.txt")
 TASKFILE = os.path.join(FOLDER, "data", "tasks.json")
 ROUTINEFILE =  os.path.join(FOLDER, "data", "routine.json")
 SETTINGFILE = os.path.join(FOLDER, "data", "settings.json")
@@ -54,10 +53,6 @@ eel.init(WFOLDER) # this tells eel where my frontend files are
     but i prefer the decorator as its more concise and more readable
 """
 
-@eel.expose
-def log(msg):
-    with open(LOGFILE, 'a') as f:
-        f.write(f"- {msg}\n")
 
 # JSON HANDLERS #
 
@@ -102,9 +97,8 @@ def settingsManager(mode, val="", req=""):
 
 @eel.expose
 def listTask(catagory="", subcatagory="", op=""):
-    log(f"Listing task {catagory}..") # f-strings are used to make strings look better (NO difference between (",,", var) and (f".. {var}") )
+    # NOTE: f-strings are used to make strings look better (NO difference between (",,", var) and (f".. {var}") )
     data = TaskManager('r')
-    log(f"{data}")
     if op != "": # if an option was provided
         if op == "today": 
             res = [] # the array we will  populate with our results
@@ -141,10 +135,6 @@ def listTask(catagory="", subcatagory="", op=""):
     for loopCat, val in data.items():
 
         if loopCat == catagory: # if we got the catagory correct,
-
-            log(data[loopCat].items())
-            log(data[loopCat])
-
             for loopSubCat, val in data[loopCat].items():
                 if loopSubCat == subcatagory: # if the subcatagory is correct,
                     return list(val) # we will retrun the contents
@@ -152,7 +142,6 @@ def listTask(catagory="", subcatagory="", op=""):
 
 @eel.expose
 def addTask(name="", catagory="", subcatagory="", date=""):
-    log(f"Making new task {name}, {catagory}, {subcatagory} {date}..")
     data = TaskManager('r') 
     data.setdefault(catagory, {}).setdefault(subcatagory, {}) # This ensures the subcatagory exists (if it doesent, it will make it and store {})
     data[catagory][subcatagory].update({ # update is to add, = means to rewrite
@@ -165,7 +154,6 @@ def addTask(name="", catagory="", subcatagory="", date=""):
 
 @eel.expose
 def searchTask(name):
-    log("Searching for a new task {name}..")
     data = TaskManager('r')
     taskArr = [] # this will store the top 4 most similar names based on the input provided
     taskMap = [] # this will store the top 4 most similar name's paths
@@ -190,14 +178,12 @@ def searchTask(name):
 
 @eel.expose
 def addNewGroup(name):
-    log("Making new group {name}..")
     data = TaskManager('r')
     data[name] = {} # makes an empty dictionary
     TaskManager('w', data)
 
 @eel.expose
 def newSubGroup(catagory, sub):
-    log("Making new subgroup {catagory}..")
     data = TaskManager('r')
     data.setdefault(catagory, {}) # again, to check if the group exists or not
     data[catagory].update({
@@ -305,7 +291,6 @@ def validateDateTime(fullIso):
 
 @eel.expose
 def addRoutine(time, name):
-    log("SUDDEND_ROUTINE")
     data = RoutineManager('r')
     data = dict(data)
     arr = []
@@ -317,6 +302,7 @@ def addRoutine(time, name):
         arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] # 12 values for 12 months of the year
     data[time.lower()].append({
         name: {
+            "index": 0,
             "tasks": [],
             "Complete till": '',
             "Streak": 0,

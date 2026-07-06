@@ -13,6 +13,7 @@ It uses **eel**
 - **Automation and Cybersecurity**
 - **Dependencies**
 - **Sources**
+-- **How to run**
 
 # About
 
@@ -88,6 +89,56 @@ pip install firebase-admin google-cloud-firestore
 ```
 > If you are using an **Arch** based linux distribution, set up a virtual environment by running python -m venv .venv then activate it then run the command(s) above
 
+# How to run
+
+Firstly initialize Typescript:-
+
+```sh
+cd <PROJECT ROOT>
+npm install 
+```
+
+To run the main app:-
+
+```sh
+cd <PROJECT ROOT>
+python main.py # ENSURE YOU HAVE INSTALLED THE DEPENDENCIES
+# if that dosen't work try:- # paste your service-account.json
+python -m venv .venv/
+source .venv/bin/activate
+python main.py
+```
+
+for Windows user, use powershell then try:-
+
+```pwsh
+cd <PROJECT ROOT>
+python main.py # ENSURE YOU HAVE INSTALLED THE DEPENDENCIES
+# if that dosen't work try:-
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+python main.py
+```
+
+---
+
+If you want to test generator.py, do these steps:-
+
+```sh
+export SUPER_KEY = "#r9xz3Jd...." # paste your service-account.json
+export TASKLIST = "{...}" # paste an example list of tasking that follows the pattern mentioned in
+# generator.py (check get_challanges() function)
+
+python generator.py
+```
+
+```pwsh
+$env:SUPER_KEY = "#r9xz3Jd...." # paste your service-account.json
+$env:TASKLIST = "{...}" # paste an example list of tasking that follows the pattern mentioned in
+# generator.py (check get_challanges() function)
+python generator.py
+```
+
 # Sources
 
 ```
@@ -95,3 +146,4 @@ GitHub: https://github.com/unhingednerdxcx/IPO
 Eel: https://github.com/python-eel/Eel
 Pandas: https://github.com/pandas-dev/pandas
 RapidFuzz: https://github.com/rapidfuzz/RapidFuzz
+```

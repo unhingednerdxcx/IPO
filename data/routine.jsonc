@@ -4,6 +4,7 @@
     "daily": [{
         // summary
         "name": {
+            "index": 0,
             "tasks": [],
             "Complete till": "task",
             "streaks": 1,
@@ -24,6 +25,7 @@
         },
 
         "Work out plan": {
+            "index": 0, // -> which stop was edited last
             "tasks": [
                 "Running",
                 "Lifting",

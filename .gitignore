@@ -1,21 +1,14 @@
-.venv/
-venv/
-__pycache__/
-*.pyc
+
+# venv(virutal environment) ensures i can maintain my python version and libraries, but venv 
+# dosent need to be as you can start you can start it easily just by running 
+# python -m venv <INSERT FOLDER NAME I CHOSE .venv/>
+.venv/ 
+
+# node_modules contains the Typescript module and is platform-specific meaning, while
+# node_modules works on my computer it wont work on your's, and you can recreate it by running
+# npm install
 node_modules/
-package-lock.json
-skills-lock.json
-.firebase/
-*-debug.log
-firebase-debug.log
-dispose/
-log.txt
-data/tasks.json
-*.json
-!firebase.json
-!package.json
-!package-lock.json
-.agents
-firestore.rules
-PLAN.txt
-!data/settings.json
+
+# these are my vscode extension, not necessary
+.vscode/
+
