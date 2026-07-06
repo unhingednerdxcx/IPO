@@ -580,6 +580,8 @@ async function sub_group_rename() {
 }
 
 async function list_items(tasks: Array<any>, challange=false) {
+
+    console.log("JI")
     let lists = document.getElementById('tasks') as HTMLElement|| null
     let today = document.getElementById('Today') as HTMLElement || null
     let nothing = document.getElementById('nothingHere') as HTMLElement || null
@@ -608,9 +610,17 @@ async function list_items(tasks: Array<any>, challange=false) {
                 let icon = document.getElementById(`task_ico${key}`) as HTMLElement || null
                 let task_par = document.getElementById(`task_par${key}`) as HTMLElement || null
                 let task_desc = document.getElementById(`task_desc${key}`) as HTMLElement || null
+                console.log(task_par)
+                console.log(icon)
+                console.log(task_desc)
+                console.log(key)
+
+
                 if (icon && task_par && task_desc) {
+                    console.log("CXCXCXCX")
                     let path = task_par.dataset.path
                     let donestatus = await eel.donestatus(`${path}/${task_desc.innerText}`)()
+                    console.log("CXCXCXCX", donestatus)
                     if (!donestatus) {
                         icon.innerText = ""
                     } else {
@@ -660,7 +670,19 @@ async function list_items(tasks: Array<any>, challange=false) {
             task_btn.appendChild(ico)
             task_par.appendChild(task_btn)
             task_par.appendChild(task_desc)
+            lists?.appendChild(task_par)
+
+            if (challange) {
+                if (tasks[taskKey-1]![2]) {
+                    let ico = document.getElementById(`task_ico${taskKey}`) as HTMLElement || null
+                    if (ico) {
+                        ico.innerText = "check_small"
+                    }
+                }
+            }
+
             if (!challange) {
+                console.log("supahey")
                 let more = document.createElement('span')
                 more.classList = "material-symbols-outlined moreTask"
                 more.innerText = "more_horiz"
@@ -676,15 +698,7 @@ async function list_items(tasks: Array<any>, challange=false) {
                     ], e, more)
                 }
             }
-            lists?.appendChild(task_par)
-            if (challange) {
-                if (tasks[taskKey-1]![2]) {
-                    let ico = document.getElementById(`task_ico${taskKey}`) as HTMLElement || null
-                    if (ico) {
-                        ico.innerText = "check_small"
-                    }
-                }
-            }
+
         });
         if (taskKey == 0) {
             today.style.display = 'none'

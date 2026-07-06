@@ -1,0 +1,31 @@
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {}, 'My projects': {}}, 'My projectsx': {'a': {}}, 'x': {'k': {}}, 'My project': {'Axter': {}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {}, 'My projects': {}}, 'My projectsx': {'a': {}}, 'x': {'k': {}}, 'My project': {'Axter': {}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {}, 'My projects': {}}, 'My projectsx': {'a': {}}, 'x': {'k': {}}, 'My project': {'Axter': {}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {}, 'My projects': {}}, 'My projectsx': {'a': {}}, 'x': {'k': {}}, 'My project': {'Axter': {}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {}, 'My projects': {}}, 'My projectsx': {'a': {}}, 'x': {'k': {}}, 'My project': {'Axter': {}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {}, 'My projects': {}}, 'My projectsx': {'a': {}}, 'x': {'k': {}}, 'My project': {'Axter': {}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {}, 'My projects': {}}, 'My projectsx': {'a': {}}, 'x': {'k': {}}, 'My project': {'Axter': {}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {}, 'My projects': {}}, 'My projectsx': {'a': {}}, 'x': {'k': {}}, 'My project': {'Axter': {}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {}, 'My projects': {}}, 'My projectsx': {'a': {}}, 'x': {'k': {}}, 'My project': {'Axter': {}}}
+- Making new task 09:42, 21:44, 21:44 2026/07/08/21/44..
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {}, 'My projects': {}}, 'My projectsx': {'a': {}}, 'x': {'k': {}}, 'My project': {'Axter': {}}, '21:44': {'21:44': {'09:42': {'date': '2026/07/08/21/44', 'done': False}}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {}, 'My projects': {}}, 'My projectsx': {'a': {}}, 'x': {'k': {}}, 'My project': {'Axter': {}}, '21:44': {'21:44': {'09:42': {'date': '2026/07/08/21/44', 'done': False}}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {}, 'My projects': {}}, 'My projectsx': {'a': {}}, 'x': {'k': {}}, 'My project': {'Axter': {}}, '21:44': {'21:44': {'09:42': {'date': '2026/07/08/21/44', 'done': True}}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {}, 'My projects': {}}, 'My projectsx': {'a': {}}, 'x': {'k': {}}, 'My project': {'Axter': {}}, '21:44': {'21:44': {'09:42': {'date': '2026/07/08/21/44', 'done': True}}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {}, 'My projects': {}}, 'My projectsx': {'a': {}}, 'x': {'k': {}}, 'My project': {'Axter': {}}, '21:44': {'21:44': {'09:42': {'date': '2026/07/08/21/44', 'done': True}}}}
+- Listing task ..
+- {'My projects': {'a': {}, 'b': {}, 'My projects': {}}, 'My projectsx': {'a': {}}, 'x': {'k': {}}, 'My project': {'Axter': {}}, '21:44': {'21:44': {'09:42': {'date': '2026/07/08/21/44', 'done': True}}}}
