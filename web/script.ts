@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", main); // only after the DOM tree has been loaded, run main
 import { listTodaysChallange, increaseXP, decreaseXP, updateInfo, listCompletedTasks, setTask } from "./signinx.js" 
-import { Chart } from "chart.js/auto";
 import type { ChartConfiguration } from "chart.js";
+declare const Chart: any;
 
 /* 
     in TS whenever fetching any element, we do:-
@@ -44,7 +44,7 @@ let click_need = false       // if the clicks something, we need to hide an elem
 let click_kind: HTMLElement; // this var determines which element will my listener hide
 
 
-let chart: any = ""
+let chart: any | null = null;
 let config: ChartConfiguration<'bar'> = await eel.routineDetailConfig()() // get config from py
 const canvas = document.getElementById('routineChart') as HTMLCanvasElement || null; // get the canvas element or return null
 if (canvas) { // if canvas DOES exist
@@ -345,7 +345,7 @@ async function showroutinedetails(path: string, pos: Number) {
         }
         config.data.labels = label;
         (config as any).data.datasets[0].data = data['consistancy']
-        chart.update()
+        chart?.update()
         populate_routine_tasks(data['tasks'], data["Complete till"], path_arr[0], pos, path_arr[1])
     }
 }
