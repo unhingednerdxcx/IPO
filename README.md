@@ -1,5 +1,6 @@
 # Internation Python Olympiad (IPO) 2026
-Hi, this is a repo for my To-Do list for the IPO 2026.
+Hi, this is a repo for my To-Do list for the IPO 2026. THIS IS NOT THE BRANCH FOR THE MAIN PROJECT
+SUBMSSION, GO TO BRANCH 'GUI-BASED' INSTEAD, THIS IS ONLY FOR FUN
 
 # Information
 This To-Do list uses `questionary` to allow users to use arrow keys or pointer to select
